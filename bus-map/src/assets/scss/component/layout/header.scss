@@ -1,0 +1,16 @@
+@import "../../variable";
+.header{
+    background-color: $baseColor;
+    height: $headerHeight;
+    &__avatar{
+        &__icon{
+            font-size: 1.5em !important;
+        }
+        &__background{
+            background-color: $busColor !important ;
+            // height: 8vh !important;
+            // width: 4vw !important;
+            transform: scale(1.5);
+        }
+    }
+}
