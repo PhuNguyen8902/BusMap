@@ -1,5 +1,5 @@
 import DirectionsBusFilledIcon from "@mui/icons-material/DirectionsBusFilled";
-import { CardHeader, Typography, Avatar } from "@mui/material";
+import { CardHeader, Typography, Avatar, Box } from "@mui/material";
 import { styled } from "@mui/material/styles";
 
 export default function Header() {
@@ -12,9 +12,11 @@ export default function Header() {
         </Avatar>
       }
       title={
-        <Typography variant="h4" color="white">
-          Bus Tutorial
-        </Typography>
+        <Box className="header__wrap">
+          <Typography className="header__wrap__title">
+            Bus Tutorial
+          </Typography>
+        </Box>
       }
     />
   );

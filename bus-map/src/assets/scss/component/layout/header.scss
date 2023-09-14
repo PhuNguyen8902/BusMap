@@ -2,15 +2,22 @@
 .header{
     background-color: $baseColor;
     height: $headerHeight;
+    width: $headerWidth;
     &__avatar{
         &__icon{
-            font-size: 1.5em !important;
+            font-size: $iconFontSize !important;
         }
         &__background{
             background-color: $busColor !important ;
-            // height: 8vh !important;
-            // width: 4vw !important;
-            transform: scale(1.5);
+            height: $iconFontSize + 3 !important;
+            width: $iconFontSize + 3 !important;
+            // transform: scale(1.2);
+        }
+    }
+    &__wrap{
+        &__title{
+            font-size: 5vh !important;
+            color: white;
         }
     }
 }

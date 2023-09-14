@@ -41,28 +41,28 @@ export default function MapDemo() {
     iconSize: [38, 38], // size of the icon
   });
 
-  // custom cluster icon
-  const createClusterCustomIcon = function (cluster) {
-    return new divIcon({
-      html: `<span class="cluster-icon">${cluster.getChildCount()}</span>`,
-      className: "custom-marker-cluster",
-      iconSize: point(33, 33, true),
-    });
-  };
-  const markers = [
-    {
-      geocode: [10.8231, 106.6297],
-      popUp: "Hello, I am pop up 1",
-    },
-    {
-      geocode: [10.8241, 106.6297],
-      popUp: "Hello, I am pop up 2",
-    },
-    {
-      geocode: [10.8251, 106.6297],
-      popUp: "Hello, I am pop up 3",
-    },
-  ];
+  // // custom cluster icon
+  // const createClusterCustomIcon = function (cluster) {
+  //   return new divIcon({
+  //     html: `<span class="cluster-icon">${cluster.getChildCount()}</span>`,
+  //     className: "custom-marker-cluster",
+  //     iconSize: point(33, 33, true),
+  //   });
+  // };
+  // const markers = [
+  //   {
+  //     geocode: [10.8231, 106.6297],
+  //     popUp: "Hello, I am pop up 1",
+  //   },
+  //   {
+  //     geocode: [10.8241, 106.6297],
+  //     popUp: "Hello, I am pop up 2",
+  //   },
+  //   {
+  //     geocode: [10.8251, 106.6297],
+  //     popUp: "Hello, I am pop up 3",
+  //   },
+  // ];
 
   // const [position2, setPosition] = useState([0, 0]);
 
@@ -99,10 +99,11 @@ export default function MapDemo() {
   // };
   const [active, setActive] = useState(false);
   const [address, setAddress] = useState(["", ""]);
-  const [strAddress, setStrAddress] = useState([[], []]);
-  const [active2, setActive2] = useState(false);
 
-  const [demoStr, setDemoStr] = useState(["", ""]);
+  const [strAddress, setStrAddress] = useState([[], []]);
+  // const [active2, setActive2] = useState(false);
+
+  // const [demoStr, setDemoStr] = useState(["", ""]);
 
   const fetchAdd = async (ar, ar2) => {
     // const ar = "62 Gò Vấp, Việt Nam";
@@ -112,6 +113,7 @@ export default function MapDemo() {
     const apiUrl2 = `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(
       ar2
     )}&format=json`;
+    console.log(apiUrl);
     try {
       const response1 = await fetch(apiUrl);
       const data1 = await response1.json();
@@ -207,10 +209,12 @@ export default function MapDemo() {
         center={position}
         zoom={10}
         style={{ height: "400px", width: "100%" }}
-        maxBounds={[
-          [minLatitude, minLongitude],
-          [maxLatitude, maxLongitude],
-        ]}
+        
+        // maximum toa do khong gian duong xem
+        // maxBounds={[
+        //   [minLatitude, minLongitude],
+        //   [maxLatitude, maxLongitude],
+        // ]}
       >
         <TileLayer
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -247,7 +251,7 @@ export default function MapDemo() {
           />
         )} */}
         {/* <RoutingDemo /> */}
-        {active & (strAddress[1].length > 0) & (strAddress[0].length > 0) ? (
+        {(strAddress[1].length > 0) & (strAddress[0].length > 0) ? (
           <>
             <Marker
               position={[

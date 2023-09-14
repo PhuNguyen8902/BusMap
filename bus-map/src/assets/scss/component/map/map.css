@@ -1,0 +1,14 @@
+.map--wrap {
+  width: 100vw;
+  height: 90vh;
+}
+
+.sidebar--wrap {
+  width: 20vw !important;
+  height: 100% !important;
+}
+
+.sidebar {
+  width: 80vw !important;
+  height: 100% !important;
+}/*# sourceMappingURL=map.css.map */
