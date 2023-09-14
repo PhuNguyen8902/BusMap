@@ -1,0 +1,17 @@
+.header {
+  background-color: #10af7e;
+  height: 10vh;
+  width: 100vw;
+}
+.header__avatar__icon {
+  font-size: 6vh !important;
+}
+.header__avatar__background {
+  background-color: #3ee989 !important;
+  height: 9vh !important;
+  width: 9vh !important;
+}
+.header__wrap__title {
+  font-size: 5vh !important;
+  color: white;
+}/*# sourceMappingURL=header.css.map */

@@ -1,0 +1,52 @@
+@import "../../variable";
+
+.map--wrap{
+    width: 100vw;
+    height: 90vh;
+}
+.sidebar--wrap{
+    width: 25% !important;
+    height: 100% !important;
+}
+.sidebar{
+    width: 100% !important;
+    height: 100% !important;
+}
+.map{
+    height: 100% !important;
+    width: 75% !important;
+    &__searchfield{
+        padding: 30px !important;
+        background-color: white !important;
+        color: white;
+        outline: none !important;
+    }
+}
+.leaflet-control-geosearch {
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    width: 40vw;
+    height: 100%;
+
+    & input{
+        border: none;
+        width: 98%;
+        height: 100%;
+        &:focus{
+            outline: none;
+        }
+    }
+    & button{
+        border: none;
+        background-color: transparent;
+        cursor: pointer;
+    }
+
+    & a{
+        width: 0 !important;
+        height: 0 !important;
+    }
+  }
+
