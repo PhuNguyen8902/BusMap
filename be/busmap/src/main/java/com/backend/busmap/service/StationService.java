@@ -179,7 +179,29 @@ public class StationService {
 
         return list;
     }
-  
+
+    public List<StationRouteMiddle> resultFor1Route(List<StationDistance> list1, List<StationDistance> list2) {
+        List<StationRouteMiddle> list = new ArrayList<>();
+
+        for (StationDistance station1 : list1) {
+            for (StationDistance station2 : list2) {
+                Route route1 = station1.getStationRoute().getRouteId();
+                Route route2 = station2.getStationRoute().getRouteId();
+                Integer order1 = station1.getStationRoute().getOrder();
+                Integer order2 = station2.getStationRoute().getOrder();
+
+                if (route1 == route2 && order1<order2) {
+                    StationRouteMiddle s = new StationRouteMiddle();
+                    s.setStartStation(station1);
+                    s.setEndStation(station2);
+                    list.add(s);
+                }
+
+            }
+        }
+
+        return list;
+    }
 
     public List<StationRouteMiddle> getNearestStations2(double la1, double lo1, double la2, double lo2) {
         List<StationDistance> list1 = findNearestStations(la1, lo1);
@@ -187,5 +209,12 @@ public class StationService {
         List<StationRouteMiddle> list = stationMid(list1, list2);
         return list;
     }
-   
+
+    public List<StationRouteMiddle> getNearestStationsFor1Route(double la1, double lo1, double la2, double lo2) {
+        List<StationDistance> list1 = findNearestStations(la1, lo1);
+        List<StationDistance> list2 = findNearestStations(la2, lo2);
+        List<StationRouteMiddle> list = resultFor1Route(list1, list2);
+        return list;
+    }
+
 }

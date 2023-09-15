@@ -34,10 +34,16 @@ public class StationController {
         return ResponseEntity.ok(this.stationService.findNearestStations(latitude, longitude));
     }
     
-     @GetMapping("/count2")
+     @GetMapping("/route2")
     public ResponseEntity<?> getNearestStations2(@RequestParam Double latitude1, @RequestParam Double longitude1,
             @RequestParam Double latitude2, @RequestParam Double longitude2) {
         return ResponseEntity.ok(this.stationService.getNearestStations2(latitude1, longitude1,latitude2,longitude2));
+    }
+    
+      @GetMapping("/route1")
+    public ResponseEntity<?> getNearestStationsFor1Route(@RequestParam Double latitude1, @RequestParam Double longitude1,
+            @RequestParam Double latitude2, @RequestParam Double longitude2) {
+        return ResponseEntity.ok(this.stationService.getNearestStationsFor1Route(latitude1, longitude1,latitude2,longitude2));
     }
     
       @GetMapping("/find")
