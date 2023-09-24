@@ -19,12 +19,12 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface StationRouteRepository extends JpaRepository<StationRoute, Integer> {
 
-    @Query("select s.routeId from StationRoute s where s.stationId =?1 ")
+    @Query("SELECT r FROM StationRoute s JOIN s.routeId r WHERE s.stationId = ?1 AND r.isActive = 1")
     List<Route> getRouteByStationId(Station sta);
 
     @Query("select s from StationRoute s where s.stationId =?1 and s.routeId =?2 ")
     StationRoute getStationRouteByStation(Station sta, Route route);
 
-    @Query("select s.stationId from StationRoute s where s.order =?1 and s.routeId =?2 ")
-    Station getStationByOrder(Integer order, Route route);
+//    @Query("select sta from StationRoute s join s.stationId sta where s.order =?1 and s.routeId =?2 and sta.isActive = 1")
+//    Station getStationByOrder(Integer order, Route route);
 }

@@ -37,7 +37,7 @@ public class StationRouteService {
          return this.stationRouteRepo.getStationRouteByStation(sta,route);
      }
      
-     public Station getStationByOrder(Integer o , Route r){
-         return this.stationRouteRepo.getStationByOrder(o, r);
-     }
+//     public Station getStationByOrder(Integer o , Route r){
+//         return this.stationRouteRepo.getStationByOrder(o, r);
+//     }
 }
