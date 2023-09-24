@@ -34,7 +34,7 @@ public class RouteService {
 
         List<Route> existingRoute = routeRepo.findRouteByRouteNum(addRoute.getRouteNum());
 
-        if (existingRoute.isEmpty()) {
+        if (!existingRoute.isEmpty()) {
             return false;
         }
 

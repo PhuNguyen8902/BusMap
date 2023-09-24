@@ -190,7 +190,7 @@ public class StationService {
                 Integer order1 = station1.getStationRoute().getOrder();
                 Integer order2 = station2.getStationRoute().getOrder();
 
-                if (route1 == route2 && order1<order2) {
+                if (route1 == route2 && order1 < order2) {
                     StationRouteMiddle s = new StationRouteMiddle();
                     s.setStartStation(station1);
                     s.setEndStation(station2);
@@ -215,6 +215,40 @@ public class StationService {
         List<StationDistance> list2 = findNearestStations(la2, lo2);
         List<StationRouteMiddle> list = resultFor1Route(list1, list2);
         return list;
+    }
+
+    public boolean addNewStation(Station station) {
+
+        Station checkSta = stationRepository.findStationByCode(station.getCode());
+        if (checkSta != null) {
+            return false;
+        }
+
+        Station newStation = new Station();
+        newStation.setName(station.getName());
+        newStation.setLatitude(station.getLatitude());
+        newStation.setLongitude(station.getLongitude());
+        newStation.setCode(station.getCode());
+        newStation.setAddress(station.getAddress());
+        newStation.setIsActive(1);
+
+        stationRepository.save(newStation);
+        return true;
+
+    }
+
+    public boolean editStation(Station station) {
+        Station checkSta = stationRepository.findStationByCode(station.getCode());
+        if (checkSta != null) {
+            return false;
+        }
+        Station newStation = stationRepository.findById(station.getId()).orElseThrow(null);
+        newStation.setName(station.getName());
+        newStation.setCode(station.getCode());
+
+        stationRepository.save(newStation);
+        return true;
+
     }
 
 }
