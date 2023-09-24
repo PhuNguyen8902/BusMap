@@ -1,20 +1,22 @@
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Interface.java to edit this template
  */
 package com.backend.busmap.repository;
 
 import com.backend.busmap.models.Route;
+import com.backend.busmap.models.Trip;
 import java.util.List;
-import org.springframework.stereotype.Repository;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 /**
  *
  * @author ADMIN
  */
 @Repository
-public interface RouteRepository extends JpaRepository<Route, Integer> {
+public interface TripRepository extends JpaRepository<Trip, Integer> {
 
-    List<Route> findRouteByRouteNum (String routeNum);
+    List<Trip> findAllByRouteId(Route r);
+    
 }

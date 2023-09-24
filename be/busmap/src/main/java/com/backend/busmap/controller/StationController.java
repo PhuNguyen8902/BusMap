@@ -30,7 +30,6 @@ public class StationController {
     
     @GetMapping("/count")
     public ResponseEntity<?> getNearestStations(@RequestParam Double latitude, @RequestParam Double longitude) {
-//        int limit = 10;
         return ResponseEntity.ok(this.stationService.findNearestStations(latitude, longitude));
     }
     
