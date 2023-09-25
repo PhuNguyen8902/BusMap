@@ -4,8 +4,10 @@
  */
 package com.backend.busmap.service;
 
+import com.backend.busmap.dto.request.AddTrip;
 import com.backend.busmap.models.Route;
 import com.backend.busmap.models.Trip;
+import com.backend.busmap.repository.RouteRepository;
 import com.backend.busmap.repository.TripRepository;
 import java.time.Duration;
 import java.time.LocalTime;
@@ -23,11 +25,14 @@ public class TripService {
     @Autowired
     private TripRepository tripRepo;
 
+    @Autowired
+    private RouteRepository routeRepo;
+
     public boolean addTripsForRoute(Route route) {
 
-        Duration tripDuration = Duration.ofMinutes(route.getDuration());
+        Duration tripSpacing = Duration.ofMinutes(route.getTripSpacing());
         Duration timeGap = Duration.between(route.getStartTime(), route.getEndTime());
-        long numberOfTrips = timeGap.toMinutes() / tripDuration.toMinutes();
+        long numberOfTrips = timeGap.toMinutes() / tripSpacing.toMinutes();
 
         try {
             LocalTime routeStartTime = route.getStartTime();
@@ -38,8 +43,9 @@ public class TripService {
                 trip.setRouteId(route);
                 tripRepo.save(trip);
 
-                routeStartTime = routeStartTime.plus(tripDuration);
+                routeStartTime = routeStartTime.plus(tripSpacing);
             }
+
             return true;
         } catch (Exception e) {
             return false;
@@ -55,5 +61,33 @@ public class TripService {
         for (Trip t : trips) {
             tripRepo.deleteById(t.getId());
         }
+    }
+
+    public boolean addNewTrip(AddTrip addTrip) {
+        LocalTime startTime = LocalTime.parse(addTrip.getStartTime());
+
+        Trip trip = new Trip();
+        Route route = routeRepo.findById(addTrip.getRouteId()).orElseThrow(null);
+        trip.setStartTime(startTime);
+        trip.setRouteId(route);
+        tripRepo.save(trip);
+        return true;
+    }
+
+    public boolean editTrip(AddTrip addTrip) {
+        LocalTime startTime = LocalTime.parse(addTrip.getStartTime());
+
+        Trip trip = new Trip();
+        Route route = routeRepo.findById(addTrip.getRouteId()).orElseThrow(null);
+        trip.setId(addTrip.getId());
+        trip.setStartTime(startTime);
+        trip.setRouteId(route);
+        tripRepo.save(trip);
+        return true;
+    }
+
+    public boolean deleteTrip(Integer id) {
+        tripRepo.deleteById(id);
+        return true;
     }
 }

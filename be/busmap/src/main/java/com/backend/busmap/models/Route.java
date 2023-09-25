@@ -29,6 +29,7 @@ public class Route {
     private String name;
     private double distance;
     private Integer duration;
+    private Integer tripSpacing;
     private LocalTime startTime;
     private LocalTime endTime;
     private int isActive;

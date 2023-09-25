@@ -15,19 +15,9 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class AddRoute {
+public class AddTrip {
 
-    private Integer idA;
-    private Integer idB;
-    private String locationA;
-    private String locationB;
-    private String startTimeA;
-    private String startTimeB;
-    private double distance;
-    private Integer duration;
-    private Integer tripSpacing;
-    private String endTimeA;
-    private String endTimeB;
-    private String routeNum;
-    private int isActive;
+    private Integer id;
+    private String startTime;
+    private Integer routeId;
 }

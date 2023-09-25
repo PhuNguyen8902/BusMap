@@ -10,6 +10,7 @@ import com.backend.busmap.models.Trip;
 import com.backend.busmap.repository.RouteRepository;
 import java.time.LocalTime;
 import java.util.List;
+import java.util.Objects;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -92,6 +93,12 @@ public class RouteService {
         LocalTime endLocalTimeA = LocalTime.parse(addRoute.getEndTimeA());
         LocalTime endLocalTimeB = LocalTime.parse(addRoute.getEndTimeB());
 
+        boolean rsCheckChangeTime = false;
+        if (!Objects.equals(routeA.getTripSpacing(), addRoute.getTripSpacing()) || routeA.getStartTime() != startLocalTimeA
+                || routeA.getEndTime() != endLocalTimeA || routeB.getStartTime() != startLocalTimeB
+                || routeB.getEndTime() != endLocalTimeB) {
+            rsCheckChangeTime = true;
+        }
         routeA.setName(addRoute.getLocationA() + " - " + addRoute.getLocationB());
         routeA.setDistance(addRoute.getDistance());
         routeA.setDuration(addRoute.getDuration());
@@ -99,43 +106,53 @@ public class RouteService {
         routeA.setEndTime(endLocalTimeA);
         routeA.setRouteNum(addRoute.getRouteNum());
         routeA.setDirection("Đi đến " + addRoute.getLocationA());
+        routeA.setTripSpacing(addRoute.getTripSpacing());
 
-        routeB.setName(addRoute.getLocationA() + "-" + addRoute.getLocationB());
+        routeB.setName(addRoute.getLocationA() + " - " + addRoute.getLocationB());
         routeB.setDistance(addRoute.getDistance());
         routeB.setDuration(addRoute.getDuration());
         routeB.setStartTime(startLocalTimeB);
         routeB.setEndTime(endLocalTimeB);
         routeB.setRouteNum(addRoute.getRouteNum());
         routeB.setDirection("Đi đến " + addRoute.getLocationB());
+        routeB.setTripSpacing(addRoute.getTripSpacing());
 
         Route newRouteA = routeRepo.save(routeA);
         Route newRouteB = routeRepo.save(routeB);
 
         if (newRouteA != null && newRouteB != null) {
-            List<Trip> tripsA = tripSer.getTripByRoute(routeA);
-            List<Trip> tripsB = tripSer.getTripByRoute(routeB);
-            if (!tripsA.isEmpty()) {
-                tripSer.deleteAllTripByRoute(routeA);
+            if (rsCheckChangeTime) {
+                return updateRouteAboutTime(routeA, routeB);
+            } else {
+                return true;
             }
-            if (!tripsB.isEmpty()) {
-                tripSer.deleteAllTripByRoute(routeB);
-            }
-
-            boolean rsA = tripSer.addTripsForRoute(routeA);
-
-            boolean rsB = tripSer.addTripsForRoute(routeB);
-            return true;
         }
         return false;
     }
-    
-    public boolean deleteRoute(Integer id){
+
+    private boolean updateRouteAboutTime(Route routeA, Route routeB) {
+        List<Trip> tripsA = tripSer.getTripByRoute(routeA);
+        List<Trip> tripsB = tripSer.getTripByRoute(routeB);
+        if (!tripsA.isEmpty()) {
+            tripSer.deleteAllTripByRoute(routeA);
+        }
+        if (!tripsB.isEmpty()) {
+            tripSer.deleteAllTripByRoute(routeB);
+        }
+
+        boolean rsA = tripSer.addTripsForRoute(routeA);
+
+        boolean rsB = tripSer.addTripsForRoute(routeB);
+        return rsA && rsB;
+    }
+
+    public boolean deleteRoute(Integer id) {
         Route route = routeRepo.findById(id).orElseThrow(null);
         String routeNum = route.getRouteNum();
         List<Route> routes = routeRepo.findRouteByRouteNum(routeNum);
-        
-        if(!routes.isEmpty()){
-            for(Route r : routes){
+
+        if (!routes.isEmpty()) {
+            for (Route r : routes) {
                 r.setIsActive(0);
                 routeRepo.save(r);
             }
