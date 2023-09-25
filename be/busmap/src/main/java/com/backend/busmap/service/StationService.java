@@ -4,8 +4,9 @@
  */
 package com.backend.busmap.service;
 
-import com.backend.busmap.dto.StationDistance;
-import com.backend.busmap.dto.StationRouteMiddle;
+import com.backend.busmap.dto.response.Station3Route;
+import com.backend.busmap.dto.response.StationDistance;
+import com.backend.busmap.dto.response.StationRouteMiddle;
 import com.backend.busmap.models.Route;
 import com.backend.busmap.models.Station;
 import com.backend.busmap.models.StationRoute;
@@ -16,7 +17,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
-import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -249,6 +249,78 @@ public class StationService {
         stationRepository.save(newStation);
         return true;
 
+    }
+
+    public List<Station3Route> getNearestStationsFor3Route(double la1, double lo1, double la2, double lo2) {
+        List<StationDistance> list1 = findNearestStations(la1, lo1);
+        List<StationDistance> list2 = findNearestStations(la2, lo2);
+        List<Station3Route> list = resultFor3Route(list1, list2);
+        return list;
+    }
+
+    public List<Station3Route> resultFor3Route(List<StationDistance> list1, List<StationDistance> list2) {
+//        List<Station> startStationList = new ArrayList<>();
+//        List<Station> endStationList = new ArrayList<>();
+//
+//        for (StationDistance l : list1) {
+//            startStationList.add(l.getStationRoute().getStationId());
+//        }
+//        for (StationDistance l : list2) {
+//            endStationList.add(l.getStationRoute().getStationId());
+//        }
+//        List<Route> startRouteList = new ArrayList<>();
+//        List<Route> endRouteList = new ArrayList<>();
+//
+//        for (Station l : startStationList) {
+//            List<Route> route = stationRouteService.getRouteByStationId(l);
+//            startRouteList.addAll(route);
+//        }
+//        for (Station l : endStationList) {
+//            List<Route> route = stationRouteService.getRouteByStationId(l);
+//            endRouteList.addAll(route);
+//        }
+
+        List<StationRoute> startList = new ArrayList<>();
+        List<StationRoute> endList = new ArrayList<>();
+
+        for (StationDistance l1 : list1) {
+            List<StationRoute> sta = stationRouteService.getAllStationLeft(l1.getStationRoute().getStationId(), l1.getStationRoute().getOrder());
+            startList.addAll(sta);
+        }
+        for (StationDistance l1 : list2) {
+            List<StationRoute> sta = stationRouteService.getAllStationLeft(l1.getStationRoute().getStationId(), l1.getStationRoute().getOrder());
+            endList.addAll(sta);
+        }
+
+//        for (Route r : startRouteList) {
+//            List<Station> station = stationRouteService.getStationByRouteId(r);
+//            startMidStationList.addAll(station);
+//        }
+//        for (Route r : endRouteList) {
+//            List<Station> station = stationRouteService.getStationByRouteId(r);
+//            endMidStationList.addAll(station);
+//        }
+        List<Station3Route> resultRouteList = new ArrayList<>();
+
+        for (StationRoute sta1 : startList) {
+
+            for (StationRoute sta2 : endList) {
+
+                List<Route> route = stationRouteService.getRouteHave2Station(sta1.getStationId(), sta2.getStationId());
+
+                if (!route.isEmpty()) {
+                    System.out.println("checkcheckcheck" + sta1.getStationId().getName());
+                    System.out.println("checkcheckcheck2" + sta2.getStationId().getName());
+                    Station3Route r = new Station3Route();
+                    r.setStartStation(sta1);
+                    r.setEndStation(sta2);
+                    resultRouteList.add(r);
+                }
+
+            }
+        }
+
+        return resultRouteList;
     }
 
 }
