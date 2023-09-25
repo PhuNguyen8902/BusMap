@@ -4,11 +4,11 @@
  */
 package com.backend.busmap.controller;
 
-import com.backend.busmap.dto.request.AddRoute;
-import com.backend.busmap.service.RouteService;
+import com.backend.busmap.dto.request.AddTrip;
+import com.backend.busmap.service.TripService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -22,29 +22,24 @@ import org.springframework.web.bind.annotation.RestController;
  * @author ADMIN
  */
 @RestController
-@RequestMapping("/api/route")
-public class RouteController {
-
+@RequestMapping("/api/trip")
+public class TripController {
+    
     @Autowired
-    private RouteService routeService;
-
-    @GetMapping("/")
-    public ResponseEntity<?> getAllRoute() {
-        return ResponseEntity.ok(this.routeService.getAllRoute());
-    }
+    private TripService tripSer;
 
     @PostMapping("/add")
-    public ResponseEntity<?> addNewRoute(@RequestBody AddRoute route) {
-        return ResponseEntity.ok(this.routeService.addNewRoute(route));
+    public ResponseEntity<?> addNewTrip(@RequestBody AddTrip trip) {
+        return ResponseEntity.ok(this.tripSer.addNewTrip(trip));
     }
 
     @PutMapping("/edit")
-    public ResponseEntity<?> editRoute(@RequestBody AddRoute route) {
-        return ResponseEntity.ok(this.routeService.updateRoute(route));
+    public ResponseEntity<?> editTrip(@RequestBody AddTrip trip) {
+        return ResponseEntity.ok(this.tripSer.editTrip(trip));
     }
 
-    @PutMapping("/delete/{id}")
-    public ResponseEntity<?> deleteRoute(@PathVariable Integer id) {
-        return ResponseEntity.ok(this.routeService.deleteRoute(id));
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<?> deleteTrip(@PathVariable Integer id) {
+        return ResponseEntity.ok(this.tripSer.deleteTrip(id));
     }
 }
