@@ -42,9 +42,17 @@ public class StationRouteService {
     public StationRoute getStationRouteByStation(Station sta, Route route) {
         return this.stationRouteRepo.getStationRouteByStation(sta, route);
     }
-    
-    public List<StationRoute> getAllStationLeft(Station sta,Integer order){
-        return this.stationRouteRepo.getAllStationLeft(sta, order);
+
+    public List<StationRoute> getAllStationBehind(Station sta, Integer order) {
+        return this.stationRouteRepo.getAllStationBehind(sta, order);
+    }
+
+    public List<StationRoute> getAllStationBefore(Station sta, Integer order) {
+        return this.stationRouteRepo.getAllStationBefore(sta, order);
+    }
+
+    public List<StationRoute> findStationRouteByStationId(Station sta) {
+        return this.stationRouteRepo.findStationRouteByStationId(sta);
     }
 
 //     public Station getStationByOrder(Integer o , Route r){

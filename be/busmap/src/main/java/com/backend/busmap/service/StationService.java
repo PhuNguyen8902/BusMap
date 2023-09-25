@@ -114,64 +114,111 @@ public class StationService {
     public List<StationDistance> findNearestStations(Double latitude, Double longitude) {
         List<Station> allStations = this.stationRepository.getStationNearAdd(latitude, longitude);
 
-        // Tính khoảng cách và lưu vào một danh sách tạm thời
         List<StationDistance> stationDistances = new ArrayList<>();
 //        List<Route> routeDuplicate = new ArrayList<>();
         for (Station station : allStations) {
-            List<Route> route = new ArrayList<>();
+//            List<Route> route = new ArrayList<>();
 //            List<Route> routesToRemove = new ArrayList<>();
             double distance = calculateDistance(latitude, longitude, station.getLatitude(), station.getLongitude());
 //            stationDistances.add(new StationDistance(station, distance));
             if (distance <= 2) {
-                route = this.stationRouteService.getRouteByStationId(station);
-                for (Route r : route) {
-                    StationRoute stationRoute = this.stationRouteService.getStationRouteByStation(station, r);
-                    stationDistances.add(new StationDistance(stationRoute, distance));
+                List<StationRoute> staList = stationRouteService.findStationRouteByStationId(station);
+                for (StationRoute s : staList) {
+                    StationDistance stationDistance = new StationDistance();
+                    stationDistance.setStationRoute(s);
+                    stationDistance.setDistance(distance);
+                    stationDistances.add(stationDistance);
                 }
+//                route = this.stationRouteService.getRouteByStationId(station);
+//                for (Route r : route) {
+//                    StationRoute stationRoute = this.stationRouteService.getStationRouteByStation(station, r);
+//                    stationDistances.add(new StationDistance(stationRoute, distance));
+//                }
             }
         }
 
-        // Sắp xếp danh sách khoảng cách tăng dần
         stationDistances.sort(Comparator.comparingDouble(StationDistance::getDistance));
 
         List<StationDistance> stationNotDuplicates = new ArrayList<>();
-        Set<Route> routeIdsSeen = new HashSet<>(); // Set để theo dõi các route_id đã xuất hiện
+        Set<Route> routeIdsSeen = new HashSet<>();
 
         for (StationDistance stationDistance : stationDistances) {
             Route routeId = stationDistance.getStationRoute().getRouteId();
 
             if (!routeIdsSeen.contains(routeId)) {
-                routeIdsSeen.add(routeId); // Thêm route_id vào set đã xuất hiện
-                stationNotDuplicates.add(stationDistance); // Thêm vào danh sách
+                routeIdsSeen.add(routeId);
+                stationNotDuplicates.add(stationDistance);
             }
         }
         return stationNotDuplicates;
     }
 
-    public List<StationRouteMiddle> stationMid(List<StationDistance> list1, List<StationDistance> list2) {
+//    public List<StationRouteMiddle> stationMid(List<StationDistance> list1, List<StationDistance> list2) {
+//        List<StationRouteMiddle> list = new ArrayList<>();
+//
+//        for (StationDistance station1 : list1) {
+//            for (StationDistance station2 : list2) {
+//                Route route1 = station1.getStationRoute().getRouteId();
+//                Route route2 = station2.getStationRoute().getRouteId();
+//                if (route1 == route2) {
+//                    break;
+//                }
+//                List<Station> listSta = this.stationRepository.findStationsOnRoutes(route1.getId(),
+//                        route2.getId());
+//                if (!listSta.isEmpty()) {
+//                    Station s = listSta.get(0);
+//                    StationRoute stStart = this.stationRouteService.getStationRouteByStation(s, route1);
+//                    StationRoute stEnd = this.stationRouteService.getStationRouteByStation(s, route2);
+//                    Integer orderStart = station1.getStationRoute().getOrder();
+//                    Integer orderEnd = station2.getStationRoute().getOrder();
+//                    Integer order1 = stStart.getOrder();
+//                    Integer order2 = stEnd.getOrder();
+//                    if (orderStart != null && orderEnd != null && order1 != null && order2 != null) {
+//                        if (orderStart < order1 & orderEnd > order2) {
+//                            list.add(new StationRouteMiddle(station1, s, station2));
+//                        }
+//                    }
+//                }
+//            }
+//        }
+//
+//        return list;
+//    }
+//    public List<StationRouteMiddle> resultFor1Route(List<StationDistance> list1, List<StationDistance> list2) {
+//        List<StationRouteMiddle> list = new ArrayList<>();
+//
+//        for (StationDistance station1 : list1) {
+//            for (StationDistance station2 : list2) {
+//                Route route1 = station1.getStationRoute().getRouteId();
+//                Route route2 = station2.getStationRoute().getRouteId();
+//                Integer order1 = station1.getStationRoute().getOrder();
+//                Integer order2 = station2.getStationRoute().getOrder();
+//
+//                if (route1 == route2 && order1 < order2) {
+//                    StationRouteMiddle s = new StationRouteMiddle();
+//                    s.setStartStation(station1);
+//                    s.setEndStation(station2);
+//                    list.add(s);
+//                }
+//
+//            }
+//        }
+//
+//        return list;
+//    }
+    public List<StationRouteMiddle> resultFor1Route(List<StationDistance> list1, List<StationDistance> list2) {
         List<StationRouteMiddle> list = new ArrayList<>();
 
         for (StationDistance station1 : list1) {
-            for (StationDistance station2 : list2) {
-                Route route1 = station1.getStationRoute().getRouteId();
-                Route route2 = station2.getStationRoute().getRouteId();
-                if (route1 == route2) {
-                    break;
-                }
-                List<Station> listSta = this.stationRepository.findStationsOnRoutes(route1.getId(),
-                        route2.getId());
-                if (!listSta.isEmpty()) {
-                    Station s = listSta.get(0);
-                    StationRoute stStart = this.stationRouteService.getStationRouteByStation(s, route1);
-                    StationRoute stEnd = this.stationRouteService.getStationRouteByStation(s, route2);
-                    Integer orderStart = station1.getStationRoute().getOrder();
-                    Integer orderEnd = station2.getStationRoute().getOrder();
-                    Integer order1 = stStart.getOrder();
-                    Integer order2 = stEnd.getOrder();
-                    if (orderStart != null && orderEnd != null && order1 != null && order2 != null) {
-                        if (orderStart < order1 & orderEnd > order2) {
-                            list.add(new StationRouteMiddle(station1, s, station2));
-                        }
+            List<StationRoute> stationRoute1 = stationRouteService.getAllStationBehind(station1.getStationRoute().getStationId(),
+                    station1.getStationRoute().getOrder());
+            for (StationRoute s : stationRoute1) {
+                for (StationDistance station2 : list2) {
+                    if (s == station2.getStationRoute()) {
+                        StationRouteMiddle stationRouteMiddle = new StationRouteMiddle();
+                        stationRouteMiddle.setStartStation(station1);
+                        stationRouteMiddle.setEndStation(station2);
+                        list.add(stationRouteMiddle);
                     }
                 }
             }
@@ -180,23 +227,39 @@ public class StationService {
         return list;
     }
 
-    public List<StationRouteMiddle> resultFor1Route(List<StationDistance> list1, List<StationDistance> list2) {
+    public List<StationRouteMiddle> stationMid(List<StationDistance> list1, List<StationDistance> list2) {
         List<StationRouteMiddle> list = new ArrayList<>();
 
         for (StationDistance station1 : list1) {
+            List<StationRoute> stationRoute1 = stationRouteService.getAllStationBehind(station1.getStationRoute().getStationId(),
+                    station1.getStationRoute().getOrder());
+
             for (StationDistance station2 : list2) {
-                Route route1 = station1.getStationRoute().getRouteId();
-                Route route2 = station2.getStationRoute().getRouteId();
-                Integer order1 = station1.getStationRoute().getOrder();
-                Integer order2 = station2.getStationRoute().getOrder();
+                if (station1.getStationRoute().getRouteId() != station2.getStationRoute().getRouteId()) {
 
-                if (route1 == route2 && order1 < order2) {
-                    StationRouteMiddle s = new StationRouteMiddle();
-                    s.setStartStation(station1);
-                    s.setEndStation(station2);
-                    list.add(s);
+                    List<StationRoute> stationRoute2 = stationRouteService.getAllStationBefore(station2.getStationRoute().getStationId(),
+                            station2.getStationRoute().getOrder());
+                    boolean shouldBreak = false;
+
+                    for (StationRoute s1 : stationRoute1) {
+                        for (StationRoute s2 : stationRoute2) {
+
+                            if (s1.getStationId().equals(s2.getStationId())) {
+                                StationRouteMiddle stationRouteMiddle = new StationRouteMiddle();
+                                stationRouteMiddle.setStartStation(station1);
+                                stationRouteMiddle.setMidStation(s1.getStationId());
+                                stationRouteMiddle.setEndStation(station2);
+                                list.add(stationRouteMiddle);
+
+                                shouldBreak = true;
+                                break;
+                            }
+                        }
+                        if (shouldBreak) {
+                            break;
+                        }
+                    }
                 }
-
             }
         }
 
@@ -284,11 +347,11 @@ public class StationService {
         List<StationRoute> endList = new ArrayList<>();
 
         for (StationDistance l1 : list1) {
-            List<StationRoute> sta = stationRouteService.getAllStationLeft(l1.getStationRoute().getStationId(), l1.getStationRoute().getOrder());
+            List<StationRoute> sta = stationRouteService.getAllStationBehind(l1.getStationRoute().getStationId(), l1.getStationRoute().getOrder());
             startList.addAll(sta);
         }
         for (StationDistance l1 : list2) {
-            List<StationRoute> sta = stationRouteService.getAllStationLeft(l1.getStationRoute().getStationId(), l1.getStationRoute().getOrder());
+            List<StationRoute> sta = stationRouteService.getAllStationBehind(l1.getStationRoute().getStationId(), l1.getStationRoute().getOrder());
             endList.addAll(sta);
         }
 
