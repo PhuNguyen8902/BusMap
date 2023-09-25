@@ -47,6 +47,12 @@ public class StationController {
     public ResponseEntity<?> getNearestStations(@RequestParam Double latitude, @RequestParam Double longitude) {
         return ResponseEntity.ok(this.stationService.findNearestStations(latitude, longitude));
     }
+    
+//    @GetMapping("/route3")
+//    public ResponseEntity<?> getNearestStations3(@RequestParam Double latitude1, @RequestParam Double longitude1,
+//            @RequestParam Double latitude2, @RequestParam Double longitude2) {
+//        return ResponseEntity.ok(this.stationService.getNearestStationsFor3Route(latitude1, longitude1, latitude2, longitude2));
+//    }
 
     @GetMapping("/route2")
     public ResponseEntity<?> getNearestStations2(@RequestParam Double latitude1, @RequestParam Double longitude1,
@@ -71,4 +77,6 @@ public class StationController {
             @RequestParam Double latitude2, @RequestParam Double longitude2) {
         return ResponseEntity.ok(this.stationService.calculateDistance(latitude1, longitude1, latitude2, longitude2));
     }
+    
+    
 }
