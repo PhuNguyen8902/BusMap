@@ -10,7 +10,6 @@ import com.backend.busmap.models.StationRoute;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -21,9 +20,14 @@ import org.springframework.stereotype.Repository;
 public interface StationRouteRepository extends JpaRepository<StationRoute, Integer> {
 
     @Query("SELECT sr FROM StationRoute sr "
-            + "WHERE sr.routeId.id IN (SELECT sr2.routeId.id FROM StationRoute sr2 WHERE sr2.stationId = ?1) "
-            + "AND sr.order > ?2")
-    List<StationRoute> getAllStationLeft(Station station, Integer order);
+            + "WHERE sr.routeId IN (SELECT sr2.routeId FROM StationRoute sr2 WHERE sr2.stationId = ?1) "
+            + "AND sr.order >= ?2")
+    List<StationRoute> getAllStationBehind(Station station, Integer order);
+    
+     @Query("SELECT sr FROM StationRoute sr "
+            + "WHERE sr.routeId IN (SELECT sr2.routeId FROM StationRoute sr2 WHERE sr2.stationId = ?1) "
+            + "AND sr.order <= ?2")
+    List<StationRoute> getAllStationBefore(Station station, Integer order);
 
     @Query("SELECT r FROM StationRoute s JOIN s.routeId r WHERE s.stationId = ?1 AND r.isActive = 1")
     List<Route> getRouteByStationId(Station sta);
@@ -38,6 +42,8 @@ public interface StationRouteRepository extends JpaRepository<StationRoute, Inte
 
     @Query("select s from StationRoute s where s.stationId =?1 and s.routeId =?2 ")
     StationRoute getStationRouteByStation(Station sta, Route route);
+    
+    List<StationRoute> findStationRouteByStationId(Station sta);
 
 //    @Query("select sta from StationRoute s join s.stationId sta where s.order =?1 and s.routeId =?2 and sta.isActive = 1")
 //    Station getStationByOrder(Integer order, Route route);
