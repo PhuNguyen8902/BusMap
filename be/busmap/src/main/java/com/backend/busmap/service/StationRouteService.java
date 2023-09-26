@@ -31,6 +31,7 @@ public class StationRouteService {
         return this.stationRouteRepo.findByStationId(sta);
     }
 
+    @Cacheable("routeHave2Station")
     public List<Route> getRouteHave2Station(Station sta1, Station sta2) {
         return this.stationRouteRepo.getRouteHave2Station(sta1, sta2);
     }
@@ -54,6 +55,7 @@ public class StationRouteService {
         return this.stationRouteRepo.getAllStationBefore(sta, order);
     }
 
+    @Cacheable("stationRoutesOfStationId")
     public List<StationRoute> findStationRouteByStationId(Station sta) {
         return this.stationRouteRepo.findStationRouteByStationId(sta);
     }

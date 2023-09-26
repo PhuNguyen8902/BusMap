@@ -38,7 +38,7 @@ public interface StationRouteRepository extends JpaRepository<StationRoute, Inte
 
     @Query("SELECT r FROM StationRoute s1 JOIN s1.routeId r "
             + "JOIN StationRoute s2 ON s2.routeId = r "
-            + "WHERE s1.stationId = ?1 AND s2.stationId = ?2 AND r.isActive = 1")
+            + "WHERE s1.stationId = ?1 and s1.order < s2.order AND s2.stationId = ?2 AND r.isActive = 1")
     List<Route> getRouteHave2Station(Station sta1, Station sta2);
 
     @Query("select s from StationRoute s where s.stationId =?1 and s.routeId =?2 ")
