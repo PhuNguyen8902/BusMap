@@ -10,6 +10,7 @@ import com.backend.busmap.models.StationRoute;
 import com.backend.busmap.repository.StationRouteRepository;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 /**
@@ -27,7 +28,7 @@ public class StationRouteService {
     }
 
     public List<Route> getRouteByStationId(Station sta) {
-        return this.stationRouteRepo.getRouteByStationId(sta);
+        return this.stationRouteRepo.findByStationId(sta);
     }
 
     public List<Route> getRouteHave2Station(Station sta1, Station sta2) {
@@ -43,10 +44,12 @@ public class StationRouteService {
         return this.stationRouteRepo.getStationRouteByStation(sta, route);
     }
 
+    @Cacheable("stationRoutes")
     public List<StationRoute> getAllStationBehind(Station sta, Integer order) {
         return this.stationRouteRepo.getAllStationBehind(sta, order);
     }
 
+    @Cacheable("stationRoutes")
     public List<StationRoute> getAllStationBefore(Station sta, Integer order) {
         return this.stationRouteRepo.getAllStationBefore(sta, order);
     }
