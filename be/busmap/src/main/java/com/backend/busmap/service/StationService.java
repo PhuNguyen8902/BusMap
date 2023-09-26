@@ -262,7 +262,6 @@ public class StationService {
                 }
             }
         }
-
         return list;
     }
 
