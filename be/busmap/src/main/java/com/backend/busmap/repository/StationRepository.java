@@ -4,6 +4,7 @@
  */
 package com.backend.busmap.repository;
 
+import com.backend.busmap.models.Route;
 import com.backend.busmap.models.Station;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -21,6 +22,11 @@ public interface StationRepository extends JpaRepository<Station, Integer> {
             + "WHERE sr1.station_id = s.id AND sr1.route_id = ?1) AND EXISTS "
             + "(SELECT 1 FROM station_route sr2 WHERE sr2.station_id = s.id AND sr2.route_id = ?2)", nativeQuery = true)
     List<Station> findStationsOnRoutes(Integer routeId1, Integer routeId2);
+    
+//    @Query(value = "SELECT s FROM Station s WHERE s.isActive =1 AND EXISTS (SELECT 1 FROM stationRoute sr1 "
+//            + "WHERE sr1.stationId = s.id AND sr1.routeIid = ?1) AND EXISTS "
+//            + "(SELECT 1 FROM stationRoute sr2 WHERE sr2.stationId = s.id AND sr2.routeIid = ?2)")
+//    List<Station> findStationsOnRoutes2(Route routeId1, Route routeId2);
 
     @Query(value = "SELECT * from station where is_active =1 AND latitude BETWEEN ?1 - 0.063555 AND ?1 + 0.063555 and "
             + "longitude BETWEEN ?2 - 0.023073 AND ?2 + 0.023073", nativeQuery = true)
