@@ -1,27 +1,119 @@
 @import "../../variable";
 
+
 .map--wrap{
-    width: 100vw;
-    height: 90vh;
-}
-.sidebar--wrap{
-    width: 25% !important;
-    height: 100% !important;
-}
-.sidebar{
     width: 100% !important;
-    height: 100% !important;
-}
-.map{
-    height: 100% !important;
-    width: 75% !important;
-    &__searchfield{
-        padding: 30px !important;
-        background-color: white !important;
-        color: white;
-        outline: none !important;
+    height: 90% !important;
+
+    // Styling the sidebar
+    &__sidebar__container{
+        width: 25% !important;
+        height: 100% !important;
+        background-color: white;
+        &__content{
+            width: 100% !important;
+            height: 100% !important;
+            & .sidebar__first--tab{
+                width: 100%;
+                height: 100%;
+                &__search--route{
+                    width: 100%;
+                    height: 100%;
+                    &__content{
+                        width: 100%;
+                        height: 100%;
+                        &__search--field{
+                            background-color: rgba(0, 0, 0, 0.05);
+                            display: flex;
+                            align-items: center;
+                            padding: 0 5%;
+                            width: 100%;
+                            height: 6%;
+                            margin-bottom: 3%;
+                            border-radius: 10px;
+                            & input{
+                                background-color: transparent;
+                                width: 100%;
+                                height: 70%;
+                                border: none;
+                                &:focus{
+                                    outline: none;
+                                }
+                            }
+                        }
+                        &__routes{
+                            width: 100%;
+                            height: 85%;
+                        }
+                    }
+                    
+                    
+                }
+            }
+            & .sidebar__seconde--tab{
+                width: 100%;
+                height: 100%;
+                &__navigate{
+                    width: 100%;
+                    height: 100%;
+                    &__content{
+                        width: 100%;
+                        height: 100%;
+                        &__search--field{
+                            width: 100%;
+                            height: 20%;
+                            align-items: center;
+                            border: 1px solid black;
+                        }
+                        &__routes{
+                            height: 80%;
+                        }
+                    }
+
+                }
+            }
+        }
+        
+    }
+
+    // Styling the map
+    &__map{
+        height: 100% !important;
+        width: 75% !important;
+        &__search--field{
+            position: absolute !important;
+            background-color: White !important;
+            top: 2vh !important;
+            right: 1vw !important;
+            width: 50% !important;
+            height: 5% !important;
+            border: 1px solid lightgray !important;
+            border-radius: 10px !important;
+            z-index: 600 !important;
+    
+            &__content{
+                width: 100%;
+                height: 99%;
+                padding: 1% 2%;
+                & input{
+                    width: 95%;
+                    height: 100%;
+                    border: none;
+                    &:focus{
+                        outline: none;
+                    }
+                }
+                &__search--icon{
+                    width: 5%;
+                    height: 100%;
+                }
+            }
+        }
     }
 }
+
+
+
 .leaflet-control-geosearch {
     background-color: white;
     border: 1px solid #ccc;
