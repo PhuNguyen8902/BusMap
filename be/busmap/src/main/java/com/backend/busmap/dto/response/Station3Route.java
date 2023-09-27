@@ -20,5 +20,7 @@ public class Station3Route {
     StationDistance startStation;
     RouteMiddle midRoute;
     StationDistance endStation;
+    
+    Double distance;
 
 }
