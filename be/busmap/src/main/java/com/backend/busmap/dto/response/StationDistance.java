@@ -17,8 +17,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class StationDistance {
-//    private Station station;
-//    private List<Route> route;
+
     private StationRoute stationRoute;
     private double distance;
 }

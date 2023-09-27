@@ -36,6 +36,10 @@ public class StationRouteService {
         return this.stationRouteRepo.getRouteHave2Station(sta1, sta2);
     }
 
+//      @Cacheable("routeOf2Station")
+//    public List<StationRoute> getRouteOf2Station(List<StationRoute> sta1, List<StationRoute> sta2) {
+//        return this.stationRouteRepo.getRouteOf2Station(sta1, sta2);
+//    }
     public List<Station> getStationByRouteId(Route sta) {
 
         return this.stationRouteRepo.getStationByRouteId(sta);
@@ -46,18 +50,33 @@ public class StationRouteService {
     }
 
     @Cacheable("stationRoutes")
-    public List<StationRoute> getAllStationBehind(Station sta, Integer order) {
+    public List<StationRoute> getAllStationBehind(Route sta, Integer order) {
         return this.stationRouteRepo.getAllStationBehind(sta, order);
     }
 
+    @Cacheable("stationRoutess")
+    public List<Route> getAllRouteBeforeOfStation(Station sta, Integer order) {
+        return this.stationRouteRepo.getAllRouteBeforeOfStation(sta, order);
+    }
+
+    @Cacheable("stationRoutess")
+    public List<Route> getAllRouteBehindOfStation(Station sta, Integer order) {
+        return this.stationRouteRepo.getAllRouteBehindOfStation(sta, order);
+    }
+
     @Cacheable("stationRoutes")
-    public List<StationRoute> getAllStationBefore(Station sta, Integer order) {
+    public List<StationRoute> getAllStationBefore(Route sta, Integer order) {
         return this.stationRouteRepo.getAllStationBefore(sta, order);
     }
 
     @Cacheable("stationRoutesOfStationId")
     public List<StationRoute> findStationRouteByStationId(Station sta) {
-        return this.stationRouteRepo.findStationRouteByStationId(sta);
+        return this.stationRouteRepo.findStationRouteByStationIdAndOrderIsNotNull(sta);
+    }
+
+    @Cacheable("stationOf2StationRoute")
+    public List<Integer> getStationOf2StationRoute(Integer r1, Integer o1, Integer r2, Integer o2) {
+        return this.stationRouteRepo.getStationOf2StationRoute(r1, o1, r2, o2);
     }
 
 //     public Station getStationByOrder(Integer o , Route r){

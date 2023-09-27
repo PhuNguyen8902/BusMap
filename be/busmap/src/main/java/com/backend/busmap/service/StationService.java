@@ -11,11 +11,13 @@ import com.backend.busmap.dto.response.StationRouteMiddle;
 import com.backend.busmap.models.Route;
 import com.backend.busmap.models.Station;
 import com.backend.busmap.models.StationRoute;
+import com.backend.busmap.repository.RouteRepository;
 import com.backend.busmap.repository.StationRepository;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +36,9 @@ public class StationService {
 
     @Autowired
     private StationRouteService stationRouteService;
+
+    @Autowired
+    private RouteRepository routeRepo;
 
     public List<Station> getAllStation() {
         return this.stationRepository.findAll();
@@ -124,7 +129,7 @@ public class StationService {
 //            List<Route> routesToRemove = new ArrayList<>();
             double distance = calculateDistance(latitude, longitude, station.getLatitude(), station.getLongitude());
 //            stationDistances.add(new StationDistance(station, distance));
-            if (distance <= 2) {
+            if (distance <= 4) {
                 List<StationRoute> staList = stationRouteService.findStationRouteByStationId(station);
                 for (StationRoute s : staList) {
                     StationDistance stationDistance = new StationDistance();
@@ -156,54 +161,47 @@ public class StationService {
         return stationNotDuplicates;
     }
 
+//    @Cacheable("stationMid2Route")
 //    public List<StationRouteMiddle> stationMid(List<StationDistance> list1, List<StationDistance> list2) {
 //        List<StationRouteMiddle> list = new ArrayList<>();
 //
 //        for (StationDistance station1 : list1) {
 //            for (StationDistance station2 : list2) {
-//                Route route1 = station1.getStationRoute().getRouteId();
-//                Route route2 = station2.getStationRoute().getRouteId();
-//                if (route1 == route2) {
-//                    break;
-//                }
-//                List<Station> listSta = this.stationRepository.findStationsOnRoutes(route1.getId(),
-//                        route2.getId());
-//                if (!listSta.isEmpty()) {
-//                    Station s = listSta.get(0);
-//                    StationRoute stStart = this.stationRouteService.getStationRouteByStation(s, route1);
-//                    StationRoute stEnd = this.stationRouteService.getStationRouteByStation(s, route2);
-//                    Integer orderStart = station1.getStationRoute().getOrder();
-//                    Integer orderEnd = station2.getStationRoute().getOrder();
-//                    Integer order1 = stStart.getOrder();
-//                    Integer order2 = stEnd.getOrder();
-//                    if (orderStart != null && orderEnd != null && order1 != null && order2 != null) {
-//                        if (orderStart < order1 & orderEnd > order2) {
-//                            list.add(new StationRouteMiddle(station1, s, station2));
+//                if (station1.getStationRoute().getRouteId().getId().intValue() != station2.getStationRoute().getRouteId().getId().intValue()) {
+//                    List<Integer> stationList = stationRouteService.getStationOf2StationRoute(station1.getStationRoute().getRouteId().getId(), station1.getStationRoute().getOrder(),
+//                            station2.getStationRoute().getRouteId().getId(), station2.getStationRoute().getOrder());
+//                    if (!stationList.isEmpty()) {
+//                        for (Integer midSta : stationList) {
+//                            Station staa = stationRepository.findById(midSta).orElse(null);
+//                            StationRouteMiddle s = new StationRouteMiddle();
+//                            s.setStartStation(station1);
+//                            s.setEndStation(station2);
+//                            s.setMidStation(staa);
+//                            list.add(s);
 //                        }
 //                    }
 //                }
-//            }
-//        }
-//
-//        return list;
-//    }
-//    public List<StationRouteMiddle> resultFor1Route(List<StationDistance> list1, List<StationDistance> list2) {
-//        List<StationRouteMiddle> list = new ArrayList<>();
-//
-//        for (StationDistance station1 : list1) {
-//            for (StationDistance station2 : list2) {
-//                Route route1 = station1.getStationRoute().getRouteId();
-//                Route route2 = station2.getStationRoute().getRouteId();
-//                Integer order1 = station1.getStationRoute().getOrder();
-//                Integer order2 = station2.getStationRoute().getOrder();
-//
-//                if (route1 == route2 && order1 < order2) {
-//                    StationRouteMiddle s = new StationRouteMiddle();
-//                    s.setStartStation(station1);
-//                    s.setEndStation(station2);
-//                    list.add(s);
-//                }
-//
+////                Route route1 = station1.getStationRoute().getRouteId();
+////                Route route2 = station2.getStationRoute().getRouteId();
+////                if (route1 == route2) {
+////                    break;
+////                }
+////                List<Station> listSta = this.stationRepository.findStationsOnRoutes(route1.getId(),
+////                        route2.getId());
+////                if (!listSta.isEmpty()) {
+////                    Station s = listSta.get(0);
+////                    StationRoute stStart = this.stationRouteService.getStationRouteByStation(s, route1);
+////                    StationRoute stEnd = this.stationRouteService.getStationRouteByStation(s, route2);
+////                    Integer orderStart = station1.getStationRoute().getOrder();
+////                    Integer orderEnd = station2.getStationRoute().getOrder();
+////                    Integer order1 = stStart.getOrder();
+////                    Integer order2 = stEnd.getOrder();
+////                    if (orderStart != null && orderEnd != null && order1 != null && order2 != null) {
+////                        if (orderStart < order1 & orderEnd > order2) {
+////                            list.add(new StationRouteMiddle(station1, s, station2));
+////                        }
+////                    }
+////                }
 //            }
 //        }
 //
@@ -214,42 +212,94 @@ public class StationService {
         List<StationRouteMiddle> list = new ArrayList<>();
 
         for (StationDistance station1 : list1) {
-            List<StationRoute> stationRoute1 = stationRouteService.getAllStationBehind(station1.getStationRoute().getStationId(),
-                    station1.getStationRoute().getOrder());
-            for (StationRoute s : stationRoute1) {
-                for (StationDistance station2 : list2) {
-                    if (s == station2.getStationRoute()) {
-                        StationRouteMiddle stationRouteMiddle = new StationRouteMiddle();
-                        stationRouteMiddle.setStartStation(station1);
-                        stationRouteMiddle.setEndStation(station2);
-                        list.add(stationRouteMiddle);
-                    }
+            for (StationDistance station2 : list2) {
+                Integer route1Id = station1.getStationRoute().getRouteId().getId();
+                Integer route2Id = station2.getStationRoute().getRouteId().getId();
+                Integer order1 = station1.getStationRoute().getOrder();
+                Integer order2 = station2.getStationRoute().getOrder();
+
+                if (route1Id.intValue() == route2Id.intValue() && order1 < order2) {
+                    StationRouteMiddle s = new StationRouteMiddle();
+                    s.setStartStation(station1);
+                    s.setEndStation(station2);
+                    list.add(s);
                 }
+
             }
         }
 
         return list;
     }
+//    @Cacheable("resultFor1Route")
+//    public List<StationRouteMiddle> resultFor1Route(List<StationDistance> list1, List<StationDistance> list2) {
+//        List<StationRouteMiddle> list = new ArrayList<>();
+//
+//        List<StationRoute> stationRoute1 = new ArrayList<>();
+//        for (StationDistance stationRoute : list1) {
+//            StationRoute r = stationRoute.getStationRoute();
+//            stationRoute1.add(r);
+//        }
+//        List<StationRoute> stationRoute2 = new ArrayList<>();
+//        for (StationDistance stationRoute : list2) {
+//            StationRoute r = stationRoute.getStationRoute();
+//            stationRoute2.add(r);
+//        }
+//
+//        List<StationRoute> resultStationRoute = stationRouteService.getRouteOf2Station(stationRoute1, stationRoute2);
+//        
+////
+////        for (StationDistance station1 : list1) {
+//////            List<StationRoute> stationRoute1 = stationRouteService.getAllStationBehind(station1.getStationRoute().getStationId(),
+//////                    station1.getStationRoute().getOrder());
+//////            for (StationRoute s : stationRoute1) {
+////            for (StationDistance station2 : list2) {
+////                boolean shouldBreak = false;
+////
+//////                    if (s.getId().intValue() == station2.getStationRoute().getId().intValue()
+//////                            && s.getRouteId().getId().intValue() == station2.getStationRoute().getRouteId().getId().intValue()) {
+//////                        StationRouteMiddle stationRouteMiddle = new StationRouteMiddle();
+//////                        stationRouteMiddle.setStartStation(station1);
+//////                        stationRouteMiddle.setEndStation(station2);
+//////                        list.add(stationRouteMiddle);
+//////                    }
+//////                }
+////                List<Route> route = stationRouteService.getRouteHave2Station(station1.getStationRoute().getStationId(), station2.getStationRoute().getStationId());
+////                if (!route.isEmpty()) {
+////                    StationRouteMiddle stationRouteMiddle = new StationRouteMiddle();
+////                    stationRouteMiddle.setStartStation(station1);
+////                    stationRouteMiddle.setEndStation(station2);
+////                    list.add(stationRouteMiddle);
+////                    shouldBreak = true;
+////                    break;
+////                }
+////                if (shouldBreak) {
+////                    break;
+////                }
+////            }
+////        }
+//        return list;
+//    }
 
     @Cacheable("stationMid2Route")
     public List<StationRouteMiddle> stationMid(List<StationDistance> list1, List<StationDistance> list2) {
         List<StationRouteMiddle> list = new ArrayList<>();
 
         for (StationDistance station1 : list1) {
-            List<StationRoute> stationRoute1 = stationRouteService.getAllStationBehind(station1.getStationRoute().getStationId(),
+            List<StationRoute> stationRoute1 = stationRouteService.getAllStationBehind(station1.getStationRoute().getRouteId(),
                     station1.getStationRoute().getOrder());
 
             for (StationDistance station2 : list2) {
-                if (station1.getStationRoute().getRouteId() != station2.getStationRoute().getRouteId()) {
+                if (station1.getStationRoute().getRouteId().getId().intValue() != station2.getStationRoute().getRouteId().getId().intValue()) {
 
-                    List<StationRoute> stationRoute2 = stationRouteService.getAllStationBefore(station2.getStationRoute().getStationId(),
+                    List<StationRoute> stationRoute2 = stationRouteService.getAllStationBefore(station2.getStationRoute().getRouteId(),
                             station2.getStationRoute().getOrder());
                     boolean shouldBreak = false;
 
                     for (StationRoute s1 : stationRoute1) {
                         for (StationRoute s2 : stationRoute2) {
 
-                            if (s1.getStationId().equals(s2.getStationId())) {
+//                            if (s1.getStationId().equals(s2.getStationId())) {
+                            if (s1.getStationId().getId().intValue() == s2.getStationId().getId().intValue()) {
                                 StationRouteMiddle stationRouteMiddle = new StationRouteMiddle();
                                 stationRouteMiddle.setStartStation(station1);
                                 stationRouteMiddle.setMidStation(s1.getStationId());
@@ -327,117 +377,118 @@ public class StationService {
 
     @Cacheable("routeMidFor3Route")
     public List<Station3Route> resultFor3Route(List<StationDistance> list1, List<StationDistance> list2) {
-//        List<Station> startStationList = new ArrayList<>();
-//        List<Station> endStationList = new ArrayList<>();
-//
-//        for (StationDistance l : list1) {
-//            startStationList.add(l.getStationRoute().getStationId());
-//        }
-//        for (StationDistance l : list2) {
-//            endStationList.add(l.getStationRoute().getStationId());
-//        }
-//        List<Route> startRouteList = new ArrayList<>();
-//        List<Route> endRouteList = new ArrayList<>();
-//
-//        for (Station l : startStationList) {
-//            List<Route> route = stationRouteService.getRouteByStationId(l);
-//            startRouteList.addAll(route);
-//        }
-//        for (Station l : endStationList) {
-//            List<Route> route = stationRouteService.getRouteByStationId(l);
-//            endRouteList.addAll(route);
-//        }
-
         List<Station3Route> list = new ArrayList<>();
 
         for (StationDistance station1 : list1) {
             Route routeStart = station1.getStationRoute().getRouteId();
-            List<StationRoute> stationRoute1 = stationRouteService.getAllStationBehind(station1.getStationRoute().getStationId(),
-                    station1.getStationRoute().getOrder());
+            List<Route> stationRoute1 = stationRouteService.getAllRouteBehindOfStation(
+                    station1.getStationRoute().getStationId(),
+                    station1.getStationRoute().getOrder()
+            );
 
             for (StationDistance station2 : list2) {
-                if (station1.getStationRoute().getRouteId() != station2.getStationRoute().getRouteId()) {
-                    Route routeEnd = station2.getStationRoute().getRouteId();
+                Route routeEnd = station2.getStationRoute().getRouteId();
+                List<Route> stationRoute2 = stationRouteService.getAllRouteBeforeOfStation(
+                        station2.getStationRoute().getStationId(),
+                        station2.getStationRoute().getOrder()
+                );
 
-                    List<StationRoute> stationRoute2 = stationRouteService.getAllStationBefore(station2.getStationRoute().getStationId(),
-                            station2.getStationRoute().getOrder());
-                    boolean shouldBreak = false;
+                if (routeStart.getId().intValue() != routeEnd.getId().intValue()) {
+                    for (Route s1 : stationRoute1) {
+                        for (Route s2 : stationRoute2) {
+                            if (s1.getId().intValue() != routeStart.getId().intValue()
+                                    && s1.getId().intValue() != routeEnd.getId().intValue()
+                                    && s1.getId().intValue() == s2.getId().intValue()) {
+                           System.out.println("asdddddddddddd: " + station1.getStationRoute().getRouteId().getRouteNum() + " asdas: "
+                                            + station1.getStationRoute().getRouteId().getId());
 
-                    for (StationRoute sta1 : stationRoute1) {
-                        for (StationRoute sta2 : stationRoute2) {
-
-                            if (sta1.getStationId() != sta2.getStationId()) {
-                                List<Route> route = stationRouteService.getRouteHave2Station(sta1.getStationId(), sta2.getStationId());
-                                if (!route.isEmpty()) {
-                                    for (Route r1 : route) {
-                                        if (r1 != routeStart && r1 != routeEnd) {
-                                            Station3Route r = new Station3Route();
-                                            RouteMiddle rm = new RouteMiddle();
-                                            r.setStartStation(station1);
-                                            r.setEndStation(station2);
-                                            rm.setStartStation(sta1.getStationId());
-                                            rm.setEndStation(sta2.getStationId());
-                                            rm.setRoute(r1);
-                                            r.setMidRoute(rm);
-                                            list.add(r);
-                                        }
-                                    }
-                                }
-                                shouldBreak = true;
-                                break;
+                                    System.out.println("asdddddddddddd: " + s1.getRouteNum() + " asdas: "
+                                            + s1.getId());
+                                    System.out.println("asdddddddddddd: " + station2.getStationRoute().getRouteId().getRouteNum() + " asdas: "
+                                            + station2.getStationRoute().getRouteId().getId());
                             }
-                        }
-                        if (shouldBreak) {
-                            break;
                         }
                     }
                 }
             }
         }
         return list;
-
-//----------------------
-//        List<StationRoute> startList = new ArrayList<>();
-//        List<StationRoute> endList = new ArrayList<>();
-//
-//        for (StationDistance l1 : list1) {
-//            List<StationRoute> sta = stationRouteService.getAllStationBehind(l1.getStationRoute().getStationId(), l1.getStationRoute().getOrder());
-//            startList.addAll(sta);
-//        }
-//        for (StationDistance l1 : list2) {
-//            List<StationRoute> sta = stationRouteService.getAllStationBehind(l1.getStationRoute().getStationId(), l1.getStationRoute().getOrder());
-//            endList.addAll(sta);
-//        }
-//
-////        for (Route r : startRouteList) {
-////            List<Station> station = stationRouteService.getStationByRouteId(r);
-////            startMidStationList.addAll(station);
-////        }
-////        for (Route r : endRouteList) {
-////            List<Station> station = stationRouteService.getStationByRouteId(r);
-////            endMidStationList.addAll(station);
-////        }
-//        List<Station3Route> resultRouteList = new ArrayList<>();
-//
-//        for (StationRoute sta1 : startList) {
-//
-//            for (StationRoute sta2 : endList) {
-//
-//                List<Route> route = stationRouteService.getRouteHave2Station(sta1.getStationId(), sta2.getStationId());
-//
-//                if (!route.isEmpty()) {
-//                    System.out.println("checkcheckcheck" + sta1.getStationId().getName());
-//                    System.out.println("checkcheckcheck2" + sta2.getStationId().getName());
-//                    Station3Route r = new Station3Route();
-//                    r.setStartStation(sta1);
-//                    r.setEndStation(sta2);
-//                    resultRouteList.add(r);
-//                }
-//
-//            }
-//        }
-//
-//        return resultRouteList;
     }
 
+    private RouteMiddle getRouteMid2Route(List<StationRoute> stationRoute1, List<StationRoute> stationRoute2) {
+        for (StationRoute sta1 : stationRoute1) {
+            for (StationRoute sta2 : stationRoute2) {
+                if (sta1.getStationId().getId().intValue() != sta2.getStationId().getId().intValue()) {
+
+                    List<Route> route = stationRouteService.getRouteHave2Station(sta1.getStationId(), sta2.getStationId());
+                    if (!route.isEmpty()) {
+                        for (Route a : route) {
+                            RouteMiddle rs = new RouteMiddle();
+                            rs.setStartStation(sta1.getStationId());
+                            rs.setEndStation(sta2.getStationId());
+                            rs.setRoute(a);
+                            return rs;
+                        }
+                    }
+                }
+            }
+        }
+        return null;
+    }
+
+//    @Cacheable("routeMidFor3Route")
+//    public List<Station3Route> resultFor3Route(List<StationDistance> list1, List<StationDistance> list2) {
+//        List<Station3Route> list = new ArrayList<>();
+//
+//        for (StationDistance station1 : list1) {
+//            Route routeStart = station1.getStationRoute().getRouteId();
+//
+//            List<StationRoute> stationRoute1 = stationRouteService.getAllStationBehind(station1.getStationRoute().getRouteId(),
+//                    station1.getStationRoute().getOrder());
+//
+//            for (StationDistance station2 : list2) {
+//                if (station1.getStationRoute().getRouteId().getId().intValue() != station2.getStationRoute().getRouteId().getId().intValue()) {
+//                    Route routeEnd = station2.getStationRoute().getRouteId();
+//
+//                    List<StationRoute> stationRoute2 = stationRouteService.getAllStationBefore(station2.getStationRoute().getRouteId(),
+//                            station2.getStationRoute().getOrder());
+//                    RouteMiddle rs = getRouteMid2Route(stationRoute1, stationRoute2);
+//                    if (rs != null) {
+//                        if (rs.getRoute().getId().intValue() != routeStart.getId().intValue() && rs.getRoute().getId().intValue() != routeEnd.getId().intValue()) {
+//                            Station3Route r = new Station3Route();
+//                            r.setStartStation(station1);
+//                            r.setEndStation(station2);
+//                            r.setMidRoute(rs);
+//                            list.add(r);
+//                        }
+//                        break;
+//                    }
+//
+//                }
+//            }
+//        }
+//        return list;
+//
+//    }
+//
+//    private RouteMiddle getRouteMid2Route(List<StationRoute> stationRoute1, List<StationRoute> stationRoute2) {
+//        for (StationRoute sta1 : stationRoute1) {
+//            for (StationRoute sta2 : stationRoute2) {
+//                if (sta1.getStationId().getId().intValue() != sta2.getStationId().getId().intValue()) {
+//
+//                List<Route> route = stationRouteService.getRouteHave2Station(sta1.getStationId(), sta2.getStationId());
+//                if (!route.isEmpty()) {
+//                    for (Route a : route) {
+//                        RouteMiddle rs = new RouteMiddle();
+//                        rs.setStartStation(sta1.getStationId());
+//                        rs.setEndStation(sta2.getStationId());
+//                        rs.setRoute(a);
+//                        return rs;
+//                    }
+//                }
+//                }
+//            }
+//        }
+//        return null;
+//    }
 }
