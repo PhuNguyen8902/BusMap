@@ -27,41 +27,9 @@ public class StationRouteService {
         return this.stationRouteRepo.findAll();
     }
 
-    public List<Route> getRouteByStationId(Station sta) {
-        return this.stationRouteRepo.findByStationId(sta);
-    }
-
-    @Cacheable("routeHave2Station")
-    public List<Route> getRouteHave2Station(Station sta1, Station sta2) {
-        return this.stationRouteRepo.getRouteHave2Station(sta1, sta2);
-    }
-
-//      @Cacheable("routeOf2Station")
-//    public List<StationRoute> getRouteOf2Station(List<StationRoute> sta1, List<StationRoute> sta2) {
-//        return this.stationRouteRepo.getRouteOf2Station(sta1, sta2);
-//    }
-    public List<Station> getStationByRouteId(Route sta) {
-
-        return this.stationRouteRepo.getStationByRouteId(sta);
-    }
-
-    public StationRoute getStationRouteByStation(Station sta, Route route) {
-        return this.stationRouteRepo.getStationRouteByStation(sta, route);
-    }
-
     @Cacheable("stationRoutes")
     public List<StationRoute> getAllStationBehind(Route sta, Integer order) {
         return this.stationRouteRepo.getAllStationBehind(sta, order);
-    }
-
-    @Cacheable("stationRoutess")
-    public List<Route> getAllRouteBeforeOfStation(Station sta, Integer order) {
-        return this.stationRouteRepo.getAllRouteBeforeOfStation(sta, order);
-    }
-
-    @Cacheable("stationRoutess")
-    public List<Route> getAllRouteBehindOfStation(Station sta, Integer order) {
-        return this.stationRouteRepo.getAllRouteBehindOfStation(sta, order);
     }
 
     @Cacheable("stationRoutes")
@@ -74,12 +42,13 @@ public class StationRouteService {
         return this.stationRouteRepo.findStationRouteByStationIdAndOrderIsNotNull(sta);
     }
 
-    @Cacheable("stationOf2StationRoute")
-    public List<Integer> getStationOf2StationRoute(Integer r1, Integer o1, Integer r2, Integer o2) {
-        return this.stationRouteRepo.getStationOf2StationRoute(r1, o1, r2, o2);
+    @Cacheable("station")
+    public List<Station> getStationByRouteAndOrder (Route r,Integer o1,Integer o2){
+        return this.stationRouteRepo.getStationByRouteAndOrder(r, o1, o2);
     }
-
-//     public Station getStationByOrder(Integer o , Route r){
-//         return this.stationRouteRepo.getStationByOrder(o, r);
-//     }
+    
+    @Cacheable("stationRoute")
+    public StationRoute findByStationIdAndRouteId(Station s , Route r){
+        return this.stationRouteRepo.findByStationIdAndRouteId(s, r);
+    }
 }

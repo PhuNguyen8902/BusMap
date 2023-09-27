@@ -4,7 +4,6 @@
  */
 package com.backend.busmap.controller;
 
-import com.backend.busmap.dto.request.AddRoute;
 import com.backend.busmap.models.Station;
 import com.backend.busmap.service.StationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -77,6 +76,5 @@ public class StationController {
             @RequestParam Double latitude2, @RequestParam Double longitude2) {
         return ResponseEntity.ok(this.stationService.calculateDistance(latitude1, longitude1, latitude2, longitude2));
     }
-    
     
 }
