@@ -27,9 +27,18 @@ public class StationRouteService {
         return this.stationRouteRepo.findAll();
     }
 
-    @Cacheable("stationRoutes")
+     @Cacheable("stationRoutes")
     public List<StationRoute> getAllStationBehind(Route sta, Integer order) {
         return this.stationRouteRepo.getAllStationBehind(sta, order);
+    }
+     @Cacheable("stationRoutes")
+    public List<StationRoute> findByRouteIdAndGreaterThanOrder(Route sta, Integer order) {
+        return this.stationRouteRepo.findByRouteIdAndOrderGreaterThan(sta, order);
+    }
+    
+    @Cacheable("stationRoutes")
+    public List<StationRoute> findByRouteIdAndLessThanOrder(Route sta, Integer order) {
+        return this.stationRouteRepo.findByRouteIdAndOrderLessThan(sta, order);
     }
 
     @Cacheable("stationRoutes")
