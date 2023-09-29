@@ -33,6 +33,11 @@ public class RouteController {
         return ResponseEntity.ok(this.routeService.getAllRoute());
     }
 
+    @GetMapping("/oneWay")
+    public ResponseEntity<?> getAllOneWayRoute(){
+        return ResponseEntity.ok(this.routeService.getAllOneWayRoute());
+    }
+    
     @PostMapping("/add")
     public ResponseEntity<?> addNewRoute(@RequestBody AddRoute route) {
         return ResponseEntity.ok(this.routeService.addNewRoute(route));

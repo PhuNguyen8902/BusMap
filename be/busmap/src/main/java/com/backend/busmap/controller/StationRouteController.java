@@ -27,6 +27,11 @@ public class StationRouteController {
         return ResponseEntity.ok(this.stationRouteService.getAllStationRoutes());
     }
     
+    @GetMapping("/route/{id}")
+    public ResponseEntity<?> getStationRouteByRouteId(@PathVariable Integer id){
+        return ResponseEntity.ok(this.stationRouteService.getStationRouteByRouteId(id));
+    }
+    
 //    @GetMapping("/{id}")
 //    public ResponseEntity<?> getStationRouteById(@PathVariable Integer id) {
 //        return ResponseEntity.ok(this.stationRouteService.getStationRouteByStationId(id));

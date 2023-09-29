@@ -30,7 +30,11 @@ public class RouteService {
     public List<Route> getAllRoute() {
         return this.routeRepo.findAll();
     }
-
+    
+    public List<Route> getAllOneWayRoute(){
+        return this.routeRepo.findAllOneWayRoute();
+    }
+    
     public boolean addNewRoute(AddRoute addRoute) {
 
         List<Route> existingRoute = routeRepo.findRouteByRouteNum(addRoute.getRouteNum());

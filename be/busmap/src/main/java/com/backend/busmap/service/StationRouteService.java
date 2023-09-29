@@ -7,6 +7,7 @@ package com.backend.busmap.service;
 import com.backend.busmap.models.Route;
 import com.backend.busmap.models.Station;
 import com.backend.busmap.models.StationRoute;
+import com.backend.busmap.repository.RouteRepository;
 import com.backend.busmap.repository.StationRouteRepository;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,12 +23,22 @@ public class StationRouteService {
 
     @Autowired
     private StationRouteRepository stationRouteRepo;
+    
+    @Autowired
+    private RouteRepository routeRepo;
 
     public List<StationRoute> getAllStationRoutes() {
         return this.stationRouteRepo.findAll();
     }
+    
+    
+    public List<StationRoute> getStationRouteByRouteId(Integer routeId){
+        Route route = this.routeRepo.findById(routeId).orElse(null);
+        
+        return this.stationRouteRepo.findByRouteId(route);
+    }
 
-     @Cacheable("stationRoutes")
+    @Cacheable("stationRoutes")
     public List<StationRoute> getAllStationBehind(Route sta, Integer order) {
         return this.stationRouteRepo.getAllStationBehind(sta, order);
     }

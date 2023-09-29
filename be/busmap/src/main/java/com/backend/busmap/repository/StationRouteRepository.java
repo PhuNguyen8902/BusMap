@@ -20,7 +20,10 @@ import org.springframework.stereotype.Repository;
 public interface StationRouteRepository extends JpaRepository<StationRoute, Integer> {
 
     List<StationRoute> findStationRouteByStationIdAndOrderIsNotNull(Station sta);
-
+    
+    List<StationRoute> findByRouteId(Route routeId);
+    
+    
     StationRoute findByStationIdAndRouteId(Station sta, Route route);
 
     @Query("SELECT distinct sr FROM StationRoute sr "
@@ -28,7 +31,7 @@ public interface StationRouteRepository extends JpaRepository<StationRoute, Inte
             + "and sr.routeId != ?1 and sr.order is not null group by sr.routeId")
     List<StationRoute> getAllStationBehind(Route route, Integer order);
 
-     List<StationRoute> findByRouteIdAndOrderGreaterThan(Route route, Integer order);
+    List<StationRoute> findByRouteIdAndOrderGreaterThan(Route route, Integer order);
     List<StationRoute> findByRouteIdAndOrderLessThan(Route route, Integer order);
 
     @Query("SELECT distinct sr FROM StationRoute sr "

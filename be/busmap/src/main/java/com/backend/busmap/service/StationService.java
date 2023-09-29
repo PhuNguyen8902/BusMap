@@ -36,14 +36,16 @@ public class StationService {
 
     @Autowired
     private StationRouteService stationRouteService;
+    
 
     public List<Station> getAllStation() {
         return this.stationRepository.findAll();
     }
+    
 
-    public Optional<Station> getStationById(Integer id) {
-        return this.stationRepository.findById(id);
-    }
+//    public Optional<Station> getStationById(Integer id) {
+//        return this.stationRepository.findById(id);
+//    }
 
     public double calculateDistance(double lat1, double lon1, double lat2, double lon2) {
 
