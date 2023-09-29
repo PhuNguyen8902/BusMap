@@ -17,6 +17,7 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface StationRepository extends JpaRepository<Station, Integer> {
+    
 
     @Query(value = "SELECT * FROM station s WHERE s.is_active =1 AND EXISTS (SELECT 1 FROM station_route sr1 "
             + "WHERE sr1.station_id = s.id AND sr1.route_id = ?1) AND EXISTS "

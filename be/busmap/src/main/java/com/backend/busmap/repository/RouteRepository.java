@@ -8,6 +8,8 @@ import com.backend.busmap.models.Route;
 import java.util.List;
 import org.springframework.stereotype.Repository;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.web.PageableDefault;
 
 /**
  *
@@ -17,4 +19,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface RouteRepository extends JpaRepository<Route, Integer> {
 
     List<Route> findRouteByRouteNum (String routeNum);
+    
+    @Query(value = "select r from Route r group by r.routeNum")
+    List<Route> findAllOneWayRoute();
+    
 }
