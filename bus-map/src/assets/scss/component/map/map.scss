@@ -29,7 +29,7 @@
                             padding: 0 5%;
                             width: 100%;
                             height: 6%;
-                            margin-bottom: 3%;
+                            margin-bottom: 10%;
                             border-radius: 10px;
                             & input{
                                 background-color: transparent;
@@ -44,11 +44,45 @@
                         &__routes{
                             width: 100%;
                             height: 85%;
+                            overflow-y: scroll;
+                            &::-webkit-scrollbar{
+                                width: 0.3vw;
+                            }
+                            &:hover{
+                                &::-webkit-scrollbar{
+                                    width: 0.3vw;
+                                }
+                                &::-webkit-scrollbar-thumb{
+                                    background-color: #10af7e;
+                                }
+                                &::-webkit-scrollbar-track{
+                                    background-color: white;
+                                }
+                            }
+                            & ul{
+                                width: 100%;
+                                height: 100%;
+                                & li{
+                                    background-color: rgba(0, 0, 0, 0.05);
+                                    border-radius: 20px;
+                                    width: 96%;
+                                    height: 20%;
+                                    margin: 0 4% 5% 0;
+                                    cursor: pointer;
+                                    & .route-icon{
+                                        display: flex;
+                                        justify-content: center;
+                                        width: 25%;
+                                    }
+                                    & .route-content{
+                                        width: 70%;
+                                    }
+                                }
+                            }
                         }
                     }
-                    
-                    
                 }
+              
             }
             & .sidebar__seconde--tab{
                 width: 100%;
@@ -73,7 +107,39 @@
                 }
             }
         }
-        
+        & .route--detail{
+            width: 100%;
+            height: 100%;
+            &__return--btn{
+                margin: 4% 0;
+                height: 5;
+            }
+            &__container{
+                background-color: white;
+                height: 91%;
+                & .first--tab{
+                    height: 100%;
+                    &__stations{
+                        overflow-y: scroll;
+                        height: 100%;
+                        &::-webkit-scrollbar{
+                            width: 0.3vw;
+                        }
+                        &:hover{
+                            &::-webkit-scrollbar{
+                                width: 0.3vw;
+                            }
+                            &::-webkit-scrollbar-thumb{
+                                background-color: #10af7e;
+                            }
+                            &::-webkit-scrollbar-track{
+                                background-color: white;
+                            }
+                        }
+                    }
+                }
+            }
+        } 
     }
 
     // Styling the map

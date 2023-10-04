@@ -8,6 +8,7 @@ export default function Routers() {
     <Routes>
       <Route path="/demo" element={<MapDemoPage />} />
       <Route path="/map" element={<MapPage />} />
+      <Route path="/map/route/:routeId" element={<MapPage />} />
       <Route path="/learn" element={<LearnPage />} />
       <Route path="*" element={<h1>Page Not Found</h1>} />
     </Routes>

@@ -97,7 +97,7 @@ export default function MapDemo() {
   //     }).addTo(map);
   //   }
   // };
-  const [active, setActive] = useState(false);
+  const [active, setActive] = useState(false);  
   const [address, setAddress] = useState(["", ""]);
 
   const [strAddress, setStrAddress] = useState([[], []]);
