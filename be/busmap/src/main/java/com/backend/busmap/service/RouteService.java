@@ -29,7 +29,7 @@ public class RouteService {
     private TripService tripSer;
 
     public List<Route> getAllRoute() {
-        return this.routeRepo.findAll();
+        return this.routeRepo.findRouteByIsActive(1);
     }
     
     public List<Route> getAllOneWayRoute(String name){
