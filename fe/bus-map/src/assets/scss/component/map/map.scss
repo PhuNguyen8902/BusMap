@@ -1,28 +1,30 @@
 @import "../../variable";
 
 
-.map--wrap{
+.map--wrap {
     width: 100% !important;
     height: 90% !important;
 
     // Styling the sidebar
-    &__sidebar__container{
+    &__sidebar__container {
         width: 25% !important;
         height: 100% !important;
         background-color: white;
-        &__content{
+
+        &__content {
             width: 100% !important;
             height: 100% !important;
-            & .sidebar__first--tab{
+
+            & .sidebar__first--tab {
                 width: 100%;
                 height: 100%;
-                &__search--route{
+                &__search--route {
                     width: 100%;
                     height: 100%;
-                    &__content{
+                    &__content {
                         width: 100%;
                         height: 100%;
-                        &__search--field{
+                        &__search--field {
                             background-color: rgba(0, 0, 0, 0.05);
                             display: flex;
                             align-items: center;
@@ -31,50 +33,61 @@
                             height: 6%;
                             margin-bottom: 10%;
                             border-radius: 10px;
-                            & input{
+
+                            & input {
                                 background-color: transparent;
                                 width: 100%;
                                 height: 70%;
                                 border: none;
-                                &:focus{
+
+                                &:focus {
                                     outline: none;
                                 }
                             }
                         }
-                        &__routes{
+
+                        &__routes {
                             width: 100%;
                             height: 85%;
                             overflow-y: scroll;
-                            &::-webkit-scrollbar{
+
+                            &::-webkit-scrollbar {
                                 width: 0.3vw;
                             }
-                            &:hover{
-                                &::-webkit-scrollbar{
+
+                            &:hover {
+                                &::-webkit-scrollbar {
                                     width: 0.3vw;
                                 }
-                                &::-webkit-scrollbar-thumb{
+
+                                &::-webkit-scrollbar-thumb {
                                     background-color: #10af7e;
                                 }
-                                &::-webkit-scrollbar-track{
+
+                                &::-webkit-scrollbar-track {
                                     background-color: white;
                                 }
                             }
-                            & ul{
+
+                            & ul {
                                 width: 100%;
                                 height: 100%;
-                                & li{
+
+                                & li {
                                     background-color: rgba(0, 0, 0, 0.05);
                                     border-radius: 20px;
                                     width: 96%;
                                     height: 20%;
                                     margin: 0 4% 5% 0;
                                     cursor: pointer;
-                                    & .route-icon{
+
+                                    & .route-icon {
                                         display: flex;
                                         justify-content: center;
                                         width: 25%;
                                     }
-                                    & .route-content{
+
+                                    & .route-content {
                                         width: 70%;
                                     }
                                 }
@@ -82,24 +95,67 @@
                         }
                     }
                 }
-              
+
             }
-            & .sidebar__seconde--tab{
+
+            & .sidebar__seconde--tab {
                 width: 100%;
                 height: 100%;
-                &__navigate{
+                &__navigate {
                     width: 100%;
                     height: 100%;
-                    &__content{
+                    &__content {
                         width: 100%;
                         height: 100%;
-                        &__search--field{
+                        &__search--field {
                             width: 100%;
-                            height: 20%;
+                            height: 15%;
                             align-items: center;
-                            border: 1px solid black;
+
+                            & .search--start--location {
+                                background-color: rgba(0, 0, 0, 0.05);
+                                display: flex;
+                                align-items: center;
+                                padding: 0 5%;
+                                margin-bottom: 1%;
+                                width: 100%;
+                                height: 48%;
+                                border-radius: 10px;
+
+                                & input {
+                                    background-color: transparent;
+                                    width: 100%;
+                                    height: 70%;
+                                    border: none;
+                                    &:focus {
+                                        outline: none;
+                                    }
+                                }
+                            }
+
+                            & .search--destination--location {
+                                background-color: rgba(0, 0, 0, 0.05);
+                                display: flex;
+                                align-items: center;
+                                padding: 0 5%;
+                                margin-bottom: 5%;
+                                width: 100%;
+                                height: 48%;
+                                border-radius: 10px;
+                                & input {
+                                    background-color: transparent;
+                                    width: 100%;
+                                    height: 70%;
+                                    border: none;
+                                    &:focus {
+                                        outline: none;
+                                    }
+                                }
+
+                            }
                         }
-                        &__routes{
+
+                        &__routes {
                             height: 80%;
                         }
                     }
@@ -107,46 +163,56 @@
                 }
             }
         }
-        & .route--detail{
+
+        & .route--detail {
             width: 100%;
             height: 100%;
-            &__return--btn{
+
+            &__return--btn {
                 margin: 4% 0;
                 height: 5;
             }
-            &__container{
+
+            &__container {
                 background-color: white;
                 height: 91%;
-                & .first--tab{
+
+                & .first--tab {
                     height: 100%;
-                    &__stations{
+
+                    &__stations {
                         overflow-y: scroll;
                         height: 100%;
-                        &::-webkit-scrollbar{
+
+                        &::-webkit-scrollbar {
                             width: 0.3vw;
                         }
-                        &:hover{
-                            &::-webkit-scrollbar{
+
+                        &:hover {
+                            &::-webkit-scrollbar {
                                 width: 0.3vw;
                             }
-                            &::-webkit-scrollbar-thumb{
+
+                            &::-webkit-scrollbar-thumb {
                                 background-color: #10af7e;
                             }
-                            &::-webkit-scrollbar-track{
+
+                            &::-webkit-scrollbar-track {
                                 background-color: white;
                             }
                         }
                     }
                 }
             }
-        } 
+        }
     }
 
     // Styling the map
-    &__map{
+    &__map {
         height: 100% !important;
         width: 75% !important;
-        &__search--field{
+
+        &__search--field {
             position: absolute !important;
             background-color: White !important;
             top: 2vh !important;
@@ -156,20 +222,23 @@
             border: 1px solid lightgray !important;
             border-radius: 10px !important;
             z-index: 600 !important;
-    
-            &__content{
+
+            &__content {
                 width: 100%;
                 height: 99%;
                 padding: 1% 2%;
-                & input{
+
+                & input {
                     width: 95%;
                     height: 100%;
                     border: none;
-                    &:focus{
+
+                    &:focus {
                         outline: none;
                     }
                 }
-                &__search--icon{
+
+                &__search--icon {
                     width: 5%;
                     height: 100%;
                 }
@@ -188,23 +257,24 @@
     width: 40vw;
     height: 100%;
 
-    & input{
+    & input {
         border: none;
         width: 98%;
         height: 100%;
-        &:focus{
+
+        &:focus {
             outline: none;
         }
     }
-    & button{
+
+    & button {
         border: none;
         background-color: transparent;
         cursor: pointer;
     }
 
-    & a{
+    & a {
         width: 0 !important;
         height: 0 !important;
     }
-  }
-
+}

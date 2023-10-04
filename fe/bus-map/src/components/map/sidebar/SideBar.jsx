@@ -38,7 +38,7 @@ export default function SideBar() {
                     <TabPanel value="1" className="sidebar__first--tab">
                         <SearchRoute />
                     </TabPanel>
-                    <TabPanel value="2" className="sidebar__seacond--tab">
+                    <TabPanel value="2" className="sidebar__seconde--tab">
                         <SearchTwoLocationsForSpecifyingRoute />
                     </TabPanel>
                 </TabContext>
