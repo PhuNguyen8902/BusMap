@@ -5,6 +5,7 @@
 package com.backend.busmap.service;
 
 import com.backend.busmap.dto.request.AddRoute;
+import com.backend.busmap.dto.response.AllRoute;
 import com.backend.busmap.models.Route;
 import com.backend.busmap.models.Trip;
 import com.backend.busmap.repository.RouteRepository;
@@ -13,6 +14,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 /**
@@ -28,14 +32,36 @@ public class RouteService {
     @Autowired
     private TripService tripSer;
 
-    public List<Route> getAllRoute() {
-        return this.routeRepo.findRouteByIsActive(1);
+    public Page<?> getAllRoute(Map<String, String> params) {
+        Pageable pageable = null;
+        Page<Route> routes = null;
+//        Page<Route> r1 = null;
+
+        Route r = new Route();
+        if (params.get("limit") == null) {
+            params.put("limit", "5");
+        }
+
+        if (params.get("page") == null || Integer.parseInt(params.get("page")) < 1) {
+            params.put("page", "1");
+        }
+        try {
+            pageable = PageRequest.of(Integer.parseInt(params.get("page")) - 1, Integer.parseInt(params.get("limit")));
+            routes = routeRepo.findRouteByIsActive(1, pageable);
+//            int count = routeRepo.countByIsActive(1);
+//            routes.set
+        } catch (NumberFormatException exception) {
+            System.out.println(exception.getMessage());
+            return null;
+        }
+        return routes;
+//        return this.routeRepo.findRouteByIsActive(1);
     }
-    
-    public List<Route> getAllOneWayRoute(String name){
+
+    public List<Route> getAllOneWayRoute(String name) {
         return this.routeRepo.findAllOneWayRoute(name);
     }
-    
+
     public boolean addNewRoute(AddRoute addRoute) {
 
         List<Route> existingRoute = routeRepo.findRouteByRouteNum(addRoute.getRouteNum());
