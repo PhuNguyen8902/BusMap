@@ -10,6 +10,7 @@ import com.backend.busmap.models.Trip;
 import com.backend.busmap.repository.RouteRepository;
 import java.time.LocalTime;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,8 +32,8 @@ public class RouteService {
         return this.routeRepo.findAll();
     }
     
-    public List<Route> getAllOneWayRoute(){
-        return this.routeRepo.findAllOneWayRoute();
+    public List<Route> getAllOneWayRoute(String name){
+        return this.routeRepo.findAllOneWayRoute(name);
     }
     
     public boolean addNewRoute(AddRoute addRoute) {

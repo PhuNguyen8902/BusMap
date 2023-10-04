@@ -4,22 +4,29 @@ import Tab from '@mui/material/Tab';
 import TabContext from '@mui/lab/TabContext';
 import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
-import SearchRoute from './SeachRoute';
-import SearchTwoLocationsForSpecifyingRoute from './SearchTwoLocationsForSpecifyingRoute';
+import SearchRoute from './Tab1/SeachRoute';
+import SearchTwoLocationsForSpecifyingRoute from './Tab1/SearchTwoLocationsForSpecifyingRoute';
+import { useSelector } from 'react-redux';
+import RouteDetail from './Tab1/RouteDetail';
 
 export default function SideBar() {
 
-    // TabList 
+    // Tabs
     const [value, setValue] = React.useState('1');
 
     const handleChange = (event, newValue) => {
         setValue(newValue);
     };
 
+    //
+    const routeId = useSelector((state) => state.storeRoute.routeId);
+    // console.log("routeId in side bar: ", routeId);
+
     return (
         <Box className="map--wrap__sidebar__container" 
         sx={{ backgroundColor: "white" }}
         >
+        {routeId == null ? 
             <Box sx={{ width: '100%', typography: 'body1' }} className="map--wrap__sidebar__container__content">
                 <TabContext value={value}>
                     <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
@@ -36,6 +43,10 @@ export default function SideBar() {
                     </TabPanel>
                 </TabContext>
             </Box>
+            : 
+            <RouteDetail />
+        }
+            
         </Box>
     )
 }

@@ -6,6 +6,7 @@ package com.backend.busmap.controller;
 
 import com.backend.busmap.dto.request.AddRoute;
 import com.backend.busmap.service.RouteService;
+import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -34,8 +35,8 @@ public class RouteController {
     }
 
     @GetMapping("/oneWay")
-    public ResponseEntity<?> getAllOneWayRoute(){
-        return ResponseEntity.ok(this.routeService.getAllOneWayRoute());
+    public ResponseEntity<?> getAllOneWayRoute(@RequestParam(name = "name", required = false) String name){
+        return ResponseEntity.ok(this.routeService.getAllOneWayRoute(name));
     }
     
     @PostMapping("/add")
