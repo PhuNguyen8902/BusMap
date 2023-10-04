@@ -5,7 +5,7 @@ import TabContext from '@mui/lab/TabContext';
 import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
 import SearchRoute from './Tab1/SeachRoute';
-import SearchTwoLocationsForSpecifyingRoute from './Tab1/SearchTwoLocationsForSpecifyingRoute';
+import SearchTwoLocationsForSpecifyingRoute from './Tab2/SearchTwoLocationsForSpecifyingRoute';
 import { useSelector } from 'react-redux';
 import RouteDetail from './Tab1/RouteDetail';
 
