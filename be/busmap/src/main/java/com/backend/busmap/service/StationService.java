@@ -4,6 +4,7 @@
  */
 package com.backend.busmap.service;
 
+import com.backend.busmap.dto.request.EditStation;
 import com.backend.busmap.dto.response.RouteMiddle;
 import com.backend.busmap.dto.response.Station3Route;
 import com.backend.busmap.dto.response.StationDistance;
@@ -243,16 +244,17 @@ public class StationService {
 
     }
 
-    public boolean editStation(Station station) {
-        Station checkSta = stationRepository.findStationByCode(station.getCode());
-        if (checkSta != null) {
-            return false;
-        }
-        Station newStation = stationRepository.findById(station.getId()).orElseThrow(null);
-        newStation.setName(station.getName());
-        newStation.setCode(station.getCode());
+    public boolean editStation(EditStation s) {
+        Station station = new Station();
+        station.setId(Integer.valueOf(s.getId()));
+        station.setLatitude(Double.parseDouble(s.getLatitude()));
+        station.setLongitude(Double.parseDouble(s.getLongitude()));
+        station.setAddress(s.getAddress());
+        station.setName(s.getName());
+        station.setCode(s.getCode());
+        station.setIsActive(1);
 
-        stationRepository.save(newStation);
+        stationRepository.save(station);
         return true;
 
     }

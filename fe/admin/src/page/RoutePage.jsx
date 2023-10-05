@@ -47,10 +47,12 @@ export default function RoutePage() {
     fetchRouteData();
   }, [pagination.pageIndex, pagination.pageSize]);
   const handleSaveRow = async ({ exitEditingMode, row, values }) => {
+    const data = await routeService.editRoute(values);
+    alert(data.error);
+
     // tableData[row.index] = values;
     // setTableData([...tableData]);
     // exitEditingMode();
-    console.log(values);
   };
   const columns = useMemo(() => [
     {
@@ -61,6 +63,7 @@ export default function RoutePage() {
     {
       accessorKey: "name",
       header: "Name",
+      enableEditing: false,
     },
     {
       accessorKey: "distance",
@@ -86,6 +89,7 @@ export default function RoutePage() {
     {
       accessorKey: "direction",
       header: "Direction",
+      enableEditing: false,
     },
     {
       accessorKey: "tripSpacing",

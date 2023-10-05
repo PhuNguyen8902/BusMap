@@ -5,6 +5,7 @@
 package com.backend.busmap.service;
 
 import com.backend.busmap.dto.request.AddRoute;
+import com.backend.busmap.dto.request.EditRoute;
 import com.backend.busmap.dto.response.AllRoute;
 import com.backend.busmap.models.Route;
 import com.backend.busmap.models.Trip;
@@ -109,52 +110,52 @@ public class RouteService {
         return false;
     }
 
-    public boolean updateRoute(AddRoute addRoute) {
-        Route routeA = routeRepo.findById(addRoute.getIdA()).orElseThrow(null);
-        Route routeB = routeRepo.findById(addRoute.getIdB()).orElseThrow(null);
-
-        LocalTime startLocalTimeA = LocalTime.parse(addRoute.getStartTimeA());
-        LocalTime startLocalTimeB = LocalTime.parse(addRoute.getStartTimeB());
-
-        LocalTime endLocalTimeA = LocalTime.parse(addRoute.getEndTimeA());
-        LocalTime endLocalTimeB = LocalTime.parse(addRoute.getEndTimeB());
-
-        boolean rsCheckChangeTime = false;
-        if (!Objects.equals(routeA.getTripSpacing(), addRoute.getTripSpacing()) || routeA.getStartTime() != startLocalTimeA
-                || routeA.getEndTime() != endLocalTimeA || routeB.getStartTime() != startLocalTimeB
-                || routeB.getEndTime() != endLocalTimeB) {
-            rsCheckChangeTime = true;
-        }
-        routeA.setName(addRoute.getLocationA() + " - " + addRoute.getLocationB());
-        routeA.setDistance(addRoute.getDistance());
-        routeA.setDuration(addRoute.getDuration());
-        routeA.setStartTime(startLocalTimeA);
-        routeA.setEndTime(endLocalTimeA);
-        routeA.setRouteNum(addRoute.getRouteNum());
-        routeA.setDirection("Đi đến " + addRoute.getLocationA());
-        routeA.setTripSpacing(addRoute.getTripSpacing());
-
-        routeB.setName(addRoute.getLocationA() + " - " + addRoute.getLocationB());
-        routeB.setDistance(addRoute.getDistance());
-        routeB.setDuration(addRoute.getDuration());
-        routeB.setStartTime(startLocalTimeB);
-        routeB.setEndTime(endLocalTimeB);
-        routeB.setRouteNum(addRoute.getRouteNum());
-        routeB.setDirection("Đi đến " + addRoute.getLocationB());
-        routeB.setTripSpacing(addRoute.getTripSpacing());
-
-        Route newRouteA = routeRepo.save(routeA);
-        Route newRouteB = routeRepo.save(routeB);
-
-        if (newRouteA != null && newRouteB != null) {
-            if (rsCheckChangeTime) {
-                return updateRouteAboutTime(routeA, routeB);
-            } else {
-                return true;
-            }
-        }
-        return false;
-    }
+//    public boolean updateRoute(EditRoute addRoute) {
+//        Route routeA = routeRepo.findById(addRoute.getIdA()).orElseThrow(null);
+//        Route routeB = routeRepo.findById(addRoute.getIdB()).orElseThrow(null);
+//
+//        LocalTime startLocalTimeA = LocalTime.parse(addRoute.getStartTimeA());
+//        LocalTime startLocalTimeB = LocalTime.parse(addRoute.getStartTimeB());
+//
+//        LocalTime endLocalTimeA = LocalTime.parse(addRoute.getEndTimeA());
+//        LocalTime endLocalTimeB = LocalTime.parse(addRoute.getEndTimeB());
+//
+//        boolean rsCheckChangeTime = false;
+//        if (!Objects.equals(routeA.getTripSpacing(), addRoute.getTripSpacing()) || routeA.getStartTime() != startLocalTimeA
+//                || routeA.getEndTime() != endLocalTimeA || routeB.getStartTime() != startLocalTimeB
+//                || routeB.getEndTime() != endLocalTimeB) {
+//            rsCheckChangeTime = true;
+//        }
+//        routeA.setName(addRoute.getLocationA() + " - " + addRoute.getLocationB());
+//        routeA.setDistance(addRoute.getDistance());
+//        routeA.setDuration(addRoute.getDuration());
+//        routeA.setStartTime(startLocalTimeA);
+//        routeA.setEndTime(endLocalTimeA);
+//        routeA.setRouteNum(addRoute.getRouteNum());
+//        routeA.setDirection("Đi đến " + addRoute.getLocationA());
+//        routeA.setTripSpacing(addRoute.getTripSpacing());
+//
+//        routeB.setName(addRoute.getLocationA() + " - " + addRoute.getLocationB());
+//        routeB.setDistance(addRoute.getDistance());
+//        routeB.setDuration(addRoute.getDuration());
+//        routeB.setStartTime(startLocalTimeB);
+//        routeB.setEndTime(endLocalTimeB);
+//        routeB.setRouteNum(addRoute.getRouteNum());
+//        routeB.setDirection("Đi đến " + addRoute.getLocationB());
+//        routeB.setTripSpacing(addRoute.getTripSpacing());
+//
+//        Route newRouteA = routeRepo.save(routeA);
+//        Route newRouteB = routeRepo.save(routeB);
+//
+//        if (newRouteA != null && newRouteB != null) {
+//            if (rsCheckChangeTime) {
+//                return updateRouteAboutTime(routeA, routeB);
+//            } else {
+//                return true;
+//            }
+//        }
+//        return false;
+//    }
 
     private boolean updateRouteAboutTime(Route routeA, Route routeB) {
         List<Trip> tripsA = tripSer.getTripByRoute(routeA);

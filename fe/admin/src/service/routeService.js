@@ -1,4 +1,4 @@
-import { getData } from "../utils/fetchApi";
+import { getData, putData } from "../utils/fetchApi";
 
 const routeApi = "http://localhost:8080/api/route";
 const routeAdminApi = "http://localhost:8080/api/admin/route";
@@ -10,6 +10,10 @@ const routeService = {
     const oneWayRouteData = await getData(`${routeAdminApi}?${a}`);
     // console.log(oneWayRouteData);
     return oneWayRouteData;
+  },
+  async editRoute(a) {
+    const routeData = await putData(`${routeAdminApi}/edit`, a);
+    return routeData;
   },
 };
 

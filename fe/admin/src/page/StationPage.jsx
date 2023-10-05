@@ -34,8 +34,10 @@ export default function StationPage() {
   const handleSaveRow = async ({ exitEditingMode, row, values }) => {
     // tableData[row.index] = values;
     // setTableData([...tableData]);
-    // exitEditingMode();
-    console.log(values);
+    const data = await stationService.editStation(values);
+
+    alert(data);
+    exitEditingMode();
   };
   const columns = useMemo(() => [
     {
