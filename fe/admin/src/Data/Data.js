@@ -27,11 +27,12 @@ export const SidebarData = [
   {
     icon: UilClipboardAlt,
     heading: "Route",
-    url: "/route?page=1&limit=5",
+    url: "/route/",
   },
   {
     icon: UilUsersAlt,
-    heading: "Customers",
+    heading: "Station",
+    url: "/station/",
   },
   {
     icon: UilPackage,

@@ -20,7 +20,6 @@ import org.springframework.data.repository.query.Param;
 @Repository
 public interface RouteRepository extends JpaRepository<Route, Integer> {
     Page<Route> findRouteByIsActive(int active,Pageable a);
-    int countByIsActive(int isActive);
 
     List<Route> findRouteByRouteNum (String routeNum);
     
