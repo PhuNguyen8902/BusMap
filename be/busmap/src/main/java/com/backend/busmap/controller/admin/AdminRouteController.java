@@ -5,12 +5,18 @@
 package com.backend.busmap.controller.admin;
 
 import com.backend.busmap.dto.request.AddRoute;
+import com.backend.busmap.dto.request.EditRoute;
 import com.backend.busmap.models.Route;
 import com.backend.busmap.service.RouteService;
+import jakarta.validation.Valid;
+import java.util.HashMap;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -26,6 +32,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("/api/admin/route")
+@Validated
 public class AdminRouteController {
 
     @Autowired
@@ -46,8 +53,19 @@ public class AdminRouteController {
     }
 
     @PutMapping("/edit")
-    public ResponseEntity<?> editRoute(@RequestBody AddRoute route) {
-        return ResponseEntity.ok(this.routeService.updateRoute(route));
+    public ResponseEntity<?> editRoute(@Valid @RequestBody EditRoute route, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            Map<String, String> errors = new HashMap<>();
+
+            for (FieldError error : bindingResult.getFieldErrors()) {
+                errors.put(error.getField(), error.getDefaultMessage());
+            }
+
+            return ResponseEntity.badRequest().body(errors);
+        }
+                return ResponseEntity.ok("dung dinh dang");
+
+//        return ResponseEntity.ok(this.routeService.updateRoute(route));
     }
 
     @PutMapping("/delete/{id}")

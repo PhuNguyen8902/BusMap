@@ -41,3 +41,27 @@ export const postData = async (api, opitons = {}) => {
     throw err;
   }
 };
+export const putData = async (api, form, opitons = {}) => {
+  try {
+    const response = await fetch(api, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "Application/json",
+      },
+      body: JSON.stringify(form),
+
+      ...opitons,
+    });
+
+    if (!response.ok) {
+      // throw new Error(`Request failed with status ${response.status}`);
+      console.log(response);
+    }
+
+    const data = await response.json();
+    return data;
+  } catch (err) {
+    console.error("An error occurred: ", err);
+    throw err;
+  }
+};

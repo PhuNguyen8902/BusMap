@@ -4,7 +4,7 @@
  */
 package com.backend.busmap.controller.admin;
 
-import com.backend.busmap.models.Route;
+import com.backend.busmap.dto.request.EditStation;
 import com.backend.busmap.models.Station;
 import com.backend.busmap.service.StationService;
 import java.util.Map;
@@ -36,7 +36,7 @@ public class AdminStationController {
     }
 
     @PutMapping("/edit")
-    public ResponseEntity<?> editRoute(@RequestBody Station s) {
+    public ResponseEntity<?> editRoute(@RequestBody EditStation s) {
         return ResponseEntity.ok(this.stationService.editStation(s));
     }
     
