@@ -27,16 +27,6 @@ public class StationController {
     @Autowired
     private StationService stationService;
 
-    @PostMapping("/add")
-    public ResponseEntity<?> addNewRoute(@RequestBody Station s) {
-        return ResponseEntity.ok(this.stationService.addNewStation(s));
-    }
-
-    @PutMapping("/edit")
-    public ResponseEntity<?> editRoute(@RequestBody Station s) {
-        return ResponseEntity.ok(this.stationService.editStation(s));
-    }
-
     @GetMapping("/")
     public ResponseEntity<?> getAllStation() {
         return ResponseEntity.ok(this.stationService.getAllStation());

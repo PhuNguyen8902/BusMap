@@ -35,9 +35,7 @@ public class RouteService {
     public Page<?> getAllRoute(Map<String, String> params) {
         Pageable pageable = null;
         Page<Route> routes = null;
-//        Page<Route> r1 = null;
 
-        Route r = new Route();
         if (params.get("limit") == null) {
             params.put("limit", "5");
         }
@@ -48,14 +46,11 @@ public class RouteService {
         try {
             pageable = PageRequest.of(Integer.parseInt(params.get("page")) - 1, Integer.parseInt(params.get("limit")));
             routes = routeRepo.findRouteByIsActive(1, pageable);
-//            int count = routeRepo.countByIsActive(1);
-//            routes.set
         } catch (NumberFormatException exception) {
             System.out.println(exception.getMessage());
             return null;
         }
         return routes;
-//        return this.routeRepo.findRouteByIsActive(1);
     }
 
     public List<Route> getAllOneWayRoute(String name) {

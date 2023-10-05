@@ -11,17 +11,19 @@ import com.backend.busmap.dto.response.StationRouteMiddle;
 import com.backend.busmap.models.Route;
 import com.backend.busmap.models.Station;
 import com.backend.busmap.models.StationRoute;
-import com.backend.busmap.repository.RouteRepository;
 import com.backend.busmap.repository.StationRepository;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Optional;
+import java.util.Map;
 import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 /**
@@ -36,16 +38,31 @@ public class StationService {
 
     @Autowired
     private StationRouteService stationRouteService;
-    
 
     public List<Station> getAllStation() {
         return this.stationRepository.findAll();
     }
-    
 
-//    public Optional<Station> getStationById(Integer id) {
-//        return this.stationRepository.findById(id);
-//    }
+    public Page<?> getAllStationAdmin(Map<String, String> params) {
+        Pageable pageable = null;
+        Page<Station> stations = null;
+
+        if (params.get("limit") == null) {
+            params.put("limit", "5");
+        }
+
+        if (params.get("page") == null || Integer.parseInt(params.get("page")) < 1) {
+            params.put("page", "1");
+        }
+        try {
+            pageable = PageRequest.of(Integer.parseInt(params.get("page")) - 1, Integer.parseInt(params.get("limit")));
+            stations = stationRepository.findStationByIsActive(1, pageable);
+        } catch (NumberFormatException exception) {
+            System.out.println(exception.getMessage());
+            return null;
+        }
+        return stations;
+    }
 
     public double calculateDistance(double lat1, double lon1, double lat2, double lon2) {
 

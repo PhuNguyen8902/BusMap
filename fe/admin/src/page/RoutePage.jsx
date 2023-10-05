@@ -10,7 +10,7 @@ const formatTime = (hours, minutes) => {
   const formattedMinutes = String(minutes).padStart(2, "0");
   return `${formattedHours}:${formattedMinutes}`;
 };
-export default function () {
+export default function RoutePage() {
   const [pagination, setPagination] = useState({ pageIndex: 0, pageSize: 5 });
   const [routes, setRoutes] = useState([]);
   const navigate = useNavigate();
@@ -31,17 +31,11 @@ export default function () {
         totalPage: routeData.totalPages,
         totalElement: routeData.totalElements,
       }));
-      // console.log(formattedRoutes[0].totalElement);
       setRoutes(formattedRoutes);
     } else {
-      // Handle invalid data structure
       console.error("Invalid route data structure");
     }
   };
-
-  // useEffect(() => {
-  //   fetchRouteData();
-  // }, []);
 
   useEffect(() => {
     navigate(
@@ -52,58 +46,52 @@ export default function () {
     );
     fetchRouteData();
   }, [pagination.pageIndex, pagination.pageSize]);
-
-  const columns = useMemo(
-    () => [
-      {
-        accessorKey: "id",
-        header: "Id",
-        size: 50,
-      },
-      {
-        accessorKey: "name",
-        header: "Name",
-        size: 150,
-      },
-      {
-        accessorKey: "distance",
-        header: "Distance",
-        size: 100,
-      },
-      {
-        accessorKey: "duration",
-        header: "Duration",
-        size: 100,
-      },
-      {
-        accessorKey: "startTime",
-        header: "Start Time",
-        size: 100,
-      },
-      {
-        accessorKey: "endTime",
-        header: "End Time",
-        size: 100,
-      },
-      {
-        accessorKey: "routeNum",
-        header: "Route Num",
-        size: 100,
-      },
-      {
-        accessorKey: "direction",
-        header: "Direction",
-        size: 100,
-      },
-      {
-        accessorKey: "tripSpacing",
-        header: "Trip Spacing",
-        size: 100,
-      },
-    ],
-    []
-  );
-  console.log(routes);
+  const handleSaveRow = async ({ exitEditingMode, row, values }) => {
+    // tableData[row.index] = values;
+    // setTableData([...tableData]);
+    // exitEditingMode();
+    console.log(values);
+  };
+  const columns = useMemo(() => [
+    {
+      accessorKey: "id",
+      header: "Id",
+      enableEditing: false,
+    },
+    {
+      accessorKey: "name",
+      header: "Name",
+    },
+    {
+      accessorKey: "distance",
+      header: "Distance",
+    },
+    {
+      accessorKey: "duration",
+      header: "Duration",
+    },
+    {
+      accessorKey: "startTime",
+      header: "Start Time",
+    },
+    {
+      accessorKey: "endTime",
+      header: "End Time",
+    },
+    {
+      accessorKey: "routeNum",
+      header: "Route Num",
+      enableEditing: false,
+    },
+    {
+      accessorKey: "direction",
+      header: "Direction",
+    },
+    {
+      accessorKey: "tripSpacing",
+      header: "Trip Spacing",
+    },
+  ]);
   return (
     <Box className="table--container">
       <MaterialReactTable
@@ -111,9 +99,10 @@ export default function () {
         data={routes}
         onPaginationChange={setPagination}
         manualPagination
-        // enableEditing
+        enableEditing
         state={{ pagination }}
         rowCount={routes.length > 0 ? routes[0].totalElement : 5}
+        onEditingRowSave={handleSaveRow}
       />
     </Box>
   );
