@@ -52,8 +52,8 @@ const Sidebar = () => {
           {SidebarData.map((item, index) => {
             return (
               <div
-                className={selected === index ? "menuItem active" : "menuItem"}
                 key={index}
+                className={selected === index ? "menuItem active" : "menuItem"}
                 onClick={() => handLeSide(index, item.url)}
               >
                 <item.icon />

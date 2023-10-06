@@ -43,9 +43,9 @@ public class AdminStationController {
   @GetMapping("")
     public ResponseEntity<?> getAllStationAdmin(@RequestParam Map<String, String> params) {
         Page<Station> pages = (Page<Station>) stationService.getAllStationAdmin(params);
-        if (pages == null) {
-            return ResponseEntity.badRequest().body("Error");
-        }
+//        if (pages == null) {
+//            return ResponseEntity.badRequest().body("Error");
+//        }
         return ResponseEntity.ok(pages);
     }
 }

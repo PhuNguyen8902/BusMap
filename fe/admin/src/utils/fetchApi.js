@@ -20,18 +20,21 @@ export const getData = async (api, options = {}) => {
   }
 };
 
-export const postData = async (api, opitons = {}) => {
+export const postData = async (api, form, opitons = {}) => {
   try {
     const response = await fetch(api, {
       method: "POST",
       headers: {
         "Content-Type": "Application/json",
       },
+      body: JSON.stringify(form),
+
       ...opitons,
     });
 
     if (!response.ok) {
-      throw new Error(`Request failed with status ${response.status}`);
+      // throw new Error(`Request failed with status ${response.status}`);
+      console.log(response);
     }
 
     const data = await response.json();
