@@ -26,6 +26,10 @@ const routeService = {
     const routeData = await putData(`${routeAdminApi}/delete/${a}`);
     return routeData;
   },
+  async activeRoute(a) {
+    const routeData = await putData(`${routeAdminApi}/active/${a}`);
+    return routeData;
+  },
   async addRoute(a) {
     const routeData = await postData(`${routeAdminApi}/add`, a);
     return routeData;

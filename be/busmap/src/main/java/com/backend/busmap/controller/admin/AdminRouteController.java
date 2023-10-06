@@ -41,9 +41,6 @@ public class AdminRouteController {
     @GetMapping("")
     public ResponseEntity<?> getAllRoute(@RequestParam Map<String, String> params) {
         Page<Route> pages = (Page<Route>) routeService.getAllRoute(params);
-//        if (pages == null) {
-//            return ResponseEntity.badRequest().body("Error");
-//        }
         return ResponseEntity.ok(pages);
     }
       @GetMapping("/route-deleted")
@@ -68,5 +65,9 @@ public class AdminRouteController {
     @PutMapping("/delete/{id}")
     public ResponseEntity<?> deleteRoute(@PathVariable Integer id) {
         return ResponseEntity.ok(this.routeService.deleteRoute(id));
+    }
+     @PutMapping("/active/{id}")
+    public ResponseEntity<?> activeRoute(@PathVariable Integer id) {
+        return ResponseEntity.ok(this.routeService.activeRoute(id));
     }
 }
