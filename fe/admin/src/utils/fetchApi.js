@@ -68,3 +68,26 @@ export const putData = async (api, form, opitons = {}) => {
     throw err;
   }
 };
+
+export const deleteData = async (api, opitons = {}) => {
+  try {
+    const response = await fetch(api, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "Application/json",
+      },
+
+      ...opitons,
+    });
+
+    if (!response.ok) {
+      console.log(response);
+    }
+
+    const data = await response.json();
+    return data;
+  } catch (err) {
+    console.error("An error occurred: ", err);
+    throw err;
+  }
+};

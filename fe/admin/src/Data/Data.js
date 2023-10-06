@@ -31,11 +31,6 @@ export const SidebarData = [
   },
   {
     icon: UilClipboardAlt,
-    heading: "Route Need Update",
-    url: "/route-need-update/",
-  },
-  {
-    icon: UilClipboardAlt,
     heading: "Route Deleted",
     url: "/route-deleted/",
   },

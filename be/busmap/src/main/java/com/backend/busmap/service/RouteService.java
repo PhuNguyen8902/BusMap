@@ -252,4 +252,18 @@ public class RouteService {
         }
         return false;
     }
+     public boolean activeRoute(Integer id) {
+        Route route = routeRepo.findById(id).orElseThrow(null);
+        String routeNum = route.getRouteNum();
+        List<Route> routes = routeRepo.findRouteByRouteNum(routeNum);
+
+        if (!routes.isEmpty()) {
+            for (Route r : routes) {
+                r.setIsActive(1);
+                routeRepo.save(r);
+            }
+            return true;
+        }
+        return false;
+    }
 }

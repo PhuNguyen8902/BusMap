@@ -7,6 +7,8 @@ package com.backend.busmap.repository;
 import com.backend.busmap.models.Route;
 import com.backend.busmap.models.Trip;
 import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -16,6 +18,7 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface TripRepository extends JpaRepository<Trip, Integer> {
+    Page<Trip> findAllByRouteId(Route r, Pageable a);
 
     List<Trip> findAllByRouteId(Route r);
     

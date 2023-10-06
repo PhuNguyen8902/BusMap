@@ -78,9 +78,18 @@ export default function RouteDeletedPage() {
   const handleCloseActive = () => {
     setOpenActive(false);
   };
-  const handleActive = () => {
-    console.log(activeId);
-    setOpenActive(false);
+  const handleActive = async () => {
+    const data = await routeService.activeRoute(activeId);
+    if (data == true) {
+      alert("thanh cong roi");
+      setOpenActive(false);
+      fetchRouteData();
+    } else {
+      alert("bi loi roi");
+    }
+
+    // console.log(activeId);
+    // setOpenActive(false);
   };
   const columns = useMemo(() => [
     {

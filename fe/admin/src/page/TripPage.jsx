@@ -1,10 +1,9 @@
+import tripService from "../service/tripService";
+import { useNavigate } from "react-router-dom";
+import queryLocation from "../utils/queryLocation";
 import MaterialReactTable from "material-react-table";
 import { useEffect, useMemo, useState } from "react";
 import routeService from "../service/routeService";
-import { Link, useNavigate } from "react-router-dom";
-import queryLocation from "../utils/queryLocation";
-import DriveEtaIcon from "@mui/icons-material/DriveEta";
-import RouteIcon from "@mui/icons-material/Route";
 import {
   Box,
   Button,
@@ -14,7 +13,6 @@ import {
   DialogContentText,
   DialogTitle,
   IconButton,
-  MenuItem,
   Tooltip,
   Typography,
 } from "@mui/material";
@@ -26,40 +24,13 @@ const formatTime = (hours, minutes) => {
   const formattedMinutes = String(minutes).padStart(2, "0");
   return `${formattedHours}:${formattedMinutes}`;
 };
-export default function RoutePage() {
+export default function TripPage(props) {
   const [pagination, setPagination] = useState({ pageIndex: 0, pageSize: 5 });
-  const [routes, setRoutes] = useState([]);
+  const [trips, setTrips] = useState([]);
   const [openDelete, setOpenDelete] = useState(false);
   const [deleteId, setDeleteId] = useState(null);
   const [createModalOpen, setCreateModalOpen] = useState(false);
-
   const navigate = useNavigate();
-
-  const fetchRouteData = async () => {
-    const urlParams = new URLSearchParams(window.location.search);
-    const routeData = await routeService.getAllRoute(urlParams.toString());
-    // if (
-    //   Array.isArray(routeData.content) &&
-    //   routeData.content.every(
-    //     (route) => route && route.startTime && route.endTime
-    //   )
-    // ) {
-    if (routeData.totalElements > 0) {
-      const formattedRoutes = routeData.content.map((route) => ({
-        ...route,
-        startTime: formatTime(route.startTime[0], route.startTime[1]),
-        endTime: formatTime(route.endTime[0], route.endTime[1]),
-        totalPage: routeData.totalPages,
-        totalElement: routeData.totalElements,
-      }));
-      setRoutes(formattedRoutes);
-    } else {
-      alert("Null");
-    }
-    // } else {
-    //   console.error("Invalid route data structure");
-    // }
-  };
 
   useEffect(() => {
     navigate(
@@ -68,34 +39,56 @@ export default function RoutePage() {
         limit: pagination.pageSize,
       })}`
     );
-    fetchRouteData();
+    fetchTripData();
   }, [pagination.pageIndex, pagination.pageSize]);
+  const fetchTripData = async () => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const data = await tripService.getAllTripByRoute(
+      props.routeId,
+      urlParams.toString()
+    );
+    if (data.totalElements > 0) {
+      const formattedTrips = data.content.map((trip) => ({
+        ...trip,
+        startTimeNeed: formatTime(trip.startTime[0], trip.startTime[1]),
+        totalPage: data.totalPages,
+        totalElement: data.totalElements,
+      }));
+      console.log(formattedTrips);
+      setTrips(formattedTrips);
+    } else {
+      alert("You need to update the Trip Spacing for the Route");
+    }
+  };
   const handleSaveRow = async ({ exitEditingMode, row, values }) => {
-    const data = await routeService.editRoute(values);
+    let form = {
+      id: values.id,
+      routeId: values["routeId.id"],
+      startTime: values.startTimeNeed,
+    };
+
+    console.log(form);
+    const data = await tripService.editTrip(form);
     if (data == true) {
       alert("thanh cong");
-      fetchRouteData();
+      fetchTripData();
       exitEditingMode();
     } else {
       var errorMessages = [];
-
       data.errors.forEach(function (error) {
         var defaultMessage = error.defaultMessage;
         errorMessages.push(defaultMessage);
       });
-
       alert(errorMessages);
     }
-
-    // tableData[row.index] = values;
-    // setTableData([...tableData]);
   };
+
   const handleDeleteRow = async () => {
-    const data = await routeService.deleteRoute(deleteId);
+    const data = await tripService.deleteTrip(deleteId);
     if (data == true) {
       alert("thanh cong roi");
       setOpenDelete(false);
-      fetchRouteData();
+      fetchTripData();
     } else {
       alert("bi loi roi");
     }
@@ -105,7 +98,6 @@ export default function RoutePage() {
   };
   const handleClickOpenDelete = (row) => {
     // console.log(row._valuesCache);
-    console.log(row);
     setDeleteId(row._valuesCache.id);
 
     setOpenDelete(true);
@@ -115,22 +107,24 @@ export default function RoutePage() {
     setOpenDelete(false);
   };
   const handleCreateNewRow = async (values) => {
-    // tableData.push(values);
-    // setTableData([...tableData]);
+    let form = {
+      routeId: props.routeId,
+      startTime: values.startTime,
+    };
     let hasEmptyValue = false;
-    Object.keys(values).forEach((key) => {
-      if (values[key] === "") {
+    Object.keys(form).forEach((key) => {
+      if (form[key] === "") {
         hasEmptyValue = true;
         alert(key + " cannot be null");
       }
     });
 
     if (!hasEmptyValue) {
-      const data = await routeService.addRoute(values);
+      const data = await tripService.addTrip(form);
       if (data == true) {
         alert("thanh cong roi");
         // setCreateModalOpen(false);
-        fetchRouteData();
+        fetchTripData();
       } else {
         var errorMessages = [];
 
@@ -141,7 +135,6 @@ export default function RoutePage() {
 
         alert(errorMessages);
       }
-      console.log(values);
     }
   };
 
@@ -152,113 +145,41 @@ export default function RoutePage() {
       enableEditing: false,
     },
     {
-      accessorKey: "name",
-      header: "Name",
-      enableEditing: false,
-    },
-    {
-      accessorKey: "distance",
-      header: "Distance",
-    },
-    {
-      accessorKey: "duration",
-      header: "Duration",
-    },
-    {
-      accessorKey: "startTime",
+      accessorKey: "startTimeNeed",
       header: "Start Time",
     },
     {
-      accessorKey: "endTime",
-      header: "End Time",
+      accessorKey: "routeId.id",
+      header: "Route Id",
+      enableEditing: false,
     },
     {
-      accessorKey: "routeNum",
+      accessorKey: "routeId.routeNum",
       header: "Route Num",
       enableEditing: false,
-    },
-    {
-      accessorKey: "direction",
-      header: "Direction",
-      enableEditing: false,
-    },
-    {
-      accessorKey: "tripSpacing",
-      header: "Trip Spacing",
     },
   ]);
   const column2s = useMemo(() => [
     {
-      accessorKey: "distance",
-      header: "Distance (11.1)",
-    },
-    {
-      accessorKey: "duration",
-      header: "Duration (11)",
-    },
-    {
-      accessorKey: "startTimeA",
-      header: "Start Time For The Route (HH:MM)",
-    },
-    {
-      accessorKey: "endTimeA",
-      header: "End Time For The Route (HH:MM)",
-    },
-    {
-      accessorKey: "startTimeB",
-      header: "Start Time For Return Route (HH:MM)",
-    },
-    {
-      accessorKey: "endTimeB",
-      header: "End Time For Return Route (HH:MM)",
-    },
-    {
-      accessorKey: "routeNum",
-      header: "Route Num",
-      enableEditing: false,
-    },
-    {
-      accessorKey: "locationA",
-      header: "Location For The Route",
-      enableEditing: false,
-    },
-    {
-      accessorKey: "locationB",
-      header: "Location For Return Route",
-      enableEditing: false,
-    },
-    {
-      accessorKey: "tripSpacing",
-      header: "Trip Spacing (11)",
+      accessorKey: "startTime",
+      header: "Start Time (HH:MM)",
     },
   ]);
   return (
     <>
       <Box className="table--container">
-        <Typography variant="h3">Route</Typography>
+        <Typography variant="h3">Trip Of Route Id {props.routeId}</Typography>
         <MaterialReactTable
           columns={columns}
-          data={routes}
+          data={trips}
           onPaginationChange={setPagination}
           manualPagination
           enableEditing
           state={{ pagination }}
-          rowCount={routes.length > 0 ? routes[0].totalElement : 5}
+          rowCount={trips.length > 0 ? trips[0].totalElement : 5}
           onEditingRowSave={handleSaveRow}
           renderRowActions={({ row, table }) => (
             <Box sx={{ display: "flex", gap: "1rem" }}>
-              <Tooltip arrow placement="left" title="Trips">
-                <Link to={`/trip/route/${row.original.id}`}>
-                  <IconButton>
-                    <DriveEtaIcon />
-                  </IconButton>
-                </Link>
-              </Tooltip>
-              <Tooltip arrow placement="right" title="Station-Route">
-                <IconButton>
-                  <RouteIcon />
-                </IconButton>
-              </Tooltip>
               <Tooltip arrow placement="left" title="Edit">
                 <IconButton onClick={() => table.setEditingRow(row)}>
                   <Edit />
@@ -280,7 +201,7 @@ export default function RoutePage() {
               onClick={() => setCreateModalOpen(true)}
               variant="contained"
             >
-              Create New Route
+              Create New Trip
             </Button>
           )}
         />
@@ -300,7 +221,7 @@ export default function RoutePage() {
         <DialogTitle id="alert-dialog-title">{"Delete"}</DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
-            Are you sure you want to delete id {deleteId}?
+            If you delete it, you won't be able to restore it, are you sure?
           </DialogContentText>
         </DialogContent>
         <DialogActions>
