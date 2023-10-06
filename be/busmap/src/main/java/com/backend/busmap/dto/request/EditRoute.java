@@ -20,17 +20,17 @@ public class EditRoute {
 
     private String id;
     private String direction;
-    @Pattern(regexp = "^-?\\d+(\\.\\d+)?$", message = "Invalid formatting")
+    @Pattern(regexp = "^-?\\d+(\\.\\d+)?$", message = "Invalid formatting for Distance")
     private String distance;
-    @Pattern(regexp = "^[1-9][0-9]*$", message = "Invalid formatting")
+    @Pattern(regexp = "^[1-9][0-9]*$", message = "Invalid formatting for Duration")
     private String duration;
-    @Pattern(regexp = "^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$", message = "Invalid formatting")
+    @Pattern(regexp = "^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$", message = "Invalid formatting for EndTime")
     private String endTime;
-    @Pattern(regexp = "^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$", message = "Invalid formatting")
+    @Pattern(regexp = "^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$", message = "Invalid formatting for StartTime")
     private String startTime;
     private String name;
     private String routeNum;
-    @Pattern(regexp = "^[1-9][0-9]*$", message = "Invalid formatting")
+    @Pattern(regexp = "^[1-9][0-9]*$", message = "Invalid formatting for TripSpacing")
     private String tripSpacing;
 
 }

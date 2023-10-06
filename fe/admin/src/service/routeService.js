@@ -1,4 +1,4 @@
-import { getData, putData } from "../utils/fetchApi";
+import { getData, postData, putData } from "../utils/fetchApi";
 
 const routeApi = "http://localhost:8080/api/route";
 const routeAdminApi = "http://localhost:8080/api/admin/route";
@@ -11,8 +11,23 @@ const routeService = {
     // console.log(oneWayRouteData);
     return oneWayRouteData;
   },
+  async getAllRouteDeleted(a) {
+    const oneWayRouteData = await getData(
+      `${routeAdminApi}/route-deleted?${a}`
+    );
+    // console.log(oneWayRouteData);
+    return oneWayRouteData;
+  },
   async editRoute(a) {
     const routeData = await putData(`${routeAdminApi}/edit`, a);
+    return routeData;
+  },
+  async deleteRoute(a) {
+    const routeData = await putData(`${routeAdminApi}/delete/${a}`);
+    return routeData;
+  },
+  async addRoute(a) {
+    const routeData = await postData(`${routeAdminApi}/add`, a);
     return routeData;
   },
 };

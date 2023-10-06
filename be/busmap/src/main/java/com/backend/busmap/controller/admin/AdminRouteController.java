@@ -41,31 +41,28 @@ public class AdminRouteController {
     @GetMapping("")
     public ResponseEntity<?> getAllRoute(@RequestParam Map<String, String> params) {
         Page<Route> pages = (Page<Route>) routeService.getAllRoute(params);
-        if (pages == null) {
-            return ResponseEntity.badRequest().body("Error");
-        }
+//        if (pages == null) {
+//            return ResponseEntity.badRequest().body("Error");
+//        }
+        return ResponseEntity.ok(pages);
+    }
+      @GetMapping("/route-deleted")
+    public ResponseEntity<?> getAllRouteDeleted(@RequestParam Map<String, String> params) {
+        Page<Route> pages = (Page<Route>) routeService.getAllRouteDeleted(params);
+//        if (pages == null) {
+//            return ResponseEntity.badRequest().body("Error");
+//        }
         return ResponseEntity.ok(pages);
     }
 
     @PostMapping("/add")
-    public ResponseEntity<?> addNewRoute(@RequestBody AddRoute route) {
+    public ResponseEntity<?> addNewRoute(@Valid @RequestBody AddRoute route) {
         return ResponseEntity.ok(this.routeService.addNewRoute(route));
     }
 
     @PutMapping("/edit")
-    public ResponseEntity<?> editRoute(@Valid @RequestBody EditRoute route, BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) {
-            Map<String, String> errors = new HashMap<>();
-
-            for (FieldError error : bindingResult.getFieldErrors()) {
-                errors.put(error.getField(), error.getDefaultMessage());
-            }
-
-            return ResponseEntity.badRequest().body(errors);
-        }
-                return ResponseEntity.ok("dung dinh dang");
-
-//        return ResponseEntity.ok(this.routeService.updateRoute(route));
+    public ResponseEntity<?> editRoute(@Valid @RequestBody EditRoute route) {
+        return ResponseEntity.ok(this.routeService.updateRoute(route));
     }
 
     @PutMapping("/delete/{id}")

@@ -19,12 +19,15 @@ import org.springframework.data.repository.query.Param;
  */
 @Repository
 public interface RouteRepository extends JpaRepository<Route, Integer> {
-    Page<Route> findRouteByIsActive(int active,Pageable a);
 
-    List<Route> findRouteByRouteNum (String routeNum);
-    
-    
+    Page<Route> findRouteByIsActive(int active, Pageable a);
+
+    List<Route> findRouteByRouteNum(String routeNum);
+
     @Query(value = "SELECT r FROM Route r WHERE (:name IS NULL OR r.name LIKE %:name%) group by r.routeNum")
     List<Route> findAllOneWayRoute(@Param("name") String name);
-    
+
+    @Query("select r from Route r where r.routeNum = ?1 and r.id != ?2")
+    Route getRemainingRoute(String routeNum, Integer id);
+
 }
