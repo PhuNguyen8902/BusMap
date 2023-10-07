@@ -30,11 +30,6 @@ export const SidebarData = [
     url: "/route/",
   },
   {
-    icon: UilClipboardAlt,
-    heading: "Route Deleted",
-    url: "/route-deleted/",
-  },
-  {
     icon: UilUsersAlt,
     heading: "Station",
     url: "/station/",

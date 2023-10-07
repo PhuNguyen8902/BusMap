@@ -6,7 +6,7 @@ package com.backend.busmap.service;
 
 import com.backend.busmap.dto.request.AddRoute;
 import com.backend.busmap.dto.request.EditRoute;
-import com.backend.busmap.dto.response.AllRoute;
+//import com.backend.busmap.dto.response.AllRoute;
 import com.backend.busmap.models.Route;
 import com.backend.busmap.models.Trip;
 import com.backend.busmap.repository.RouteRepository;
@@ -55,32 +55,12 @@ public class RouteService {
         }
         return routes;
     }
-     public Page<?> getAllRouteDeleted(Map<String, String> params) {
-        Pageable pageable = null;
-        Page<Route> routes = null;
-
-        if (params.get("limit") == null) {
-            params.put("limit", "5");
-        }
-
-        if (params.get("page") == null || Integer.parseInt(params.get("page")) < 1) {
-            params.put("page", "1");
-        }
-        try {
-            pageable = PageRequest.of(Integer.parseInt(params.get("page")) - 1, Integer.parseInt(params.get("limit")));
-            routes = routeRepo.findRouteByIsActive(0, pageable);
-        } catch (NumberFormatException exception) {
-            System.out.println(exception.getMessage());
-            return null;
-        }
-        return routes;
-    }
 
     public List<Route> getAllOneWayRoute(String name) {
         return this.routeRepo.findAllOneWayRoute(name);
     }
 
-    public boolean addNewRoute(AddRoute addRoute) {
+    public String addNewRoute(AddRoute addRoute) {
 
         List<Route> existingRoute = routeRepo.findRouteByRouteNum(addRoute.getRouteNum());
 
@@ -88,7 +68,7 @@ public class RouteService {
 
         if (!existingRoute.isEmpty()) {
             if (existingRoute.get(0).getIsActive() == 1) {
-                return false;
+                return "The route already exists and is operational";
             } else {
                 checkNotActive = true;
             }
@@ -110,7 +90,7 @@ public class RouteService {
         routeA.setEndTime(endLocalTimeA);
         routeA.setIsActive(1);
         routeA.setRouteNum(addRoute.getRouteNum());
-        routeA.setDirection("Đi đến " + addRoute.getLocationA());
+        routeA.setDirection("Đi đến " + addRoute.getLocationB());
         routeA.setTripSpacing(Integer.valueOf(addRoute.getTripSpacing()));
 
         routeB.setName(addRoute.getLocationA() + " - " + addRoute.getLocationB());
@@ -120,7 +100,7 @@ public class RouteService {
         routeB.setEndTime(endLocalTimeB);
         routeB.setIsActive(1);
         routeB.setRouteNum(addRoute.getRouteNum());
-        routeB.setDirection("Đi đến " + addRoute.getLocationB());
+        routeB.setDirection("Đi đến " + addRoute.getLocationA());
         routeB.setTripSpacing(Integer.valueOf(addRoute.getTripSpacing()));
 
         if (checkNotActive) {
@@ -129,9 +109,16 @@ public class RouteService {
             Route newRouteA = routeRepo.save(routeA);
             Route newRouteB = routeRepo.save(routeB);
             if (newRouteA != null && newRouteB != null) {
-                return updateRouteAboutTime(routeA, routeB);
+                boolean rs = updateRouteAboutTime(routeA, routeB);
+                if (rs) {
+                    return "Add Successfully";
+                }
+                return "Add UnSuccessfully";
+            } else {
+                routeRepo.delete(routeA);
+                routeRepo.delete(routeB);
+                return "Add UnSuccessfully";
             }
-            return true;
         } else {
             Route newRouteA = routeRepo.save(routeA);
             Route newRouteB = routeRepo.save(routeB);
@@ -143,16 +130,19 @@ public class RouteService {
                 if (rsA == false || rsB == false) {
                     routeRepo.delete(routeA);
                     routeRepo.delete(routeB);
-                    return false;
+                    return "Add UnSuccessfully";
+
                 }
-                return true;
+                return "Add Successfully";
+
             }
-            return false;
+            return "Add UnSuccessfully";
+
         }
 //        return false;
     }
 
-    public boolean updateRoute(EditRoute route) {
+    public String updateRoute(EditRoute route) {
 
         Integer id1 = Integer.valueOf(route.getId());
         Double distance = Double.valueOf(route.getDistance());
@@ -189,9 +179,14 @@ public class RouteService {
             Route newRouteA = routeRepo.save(route1);
             Route newRouteB = routeRepo.save(route2);
             if (newRouteA != null && newRouteB != null) {
-                return updateRouteAboutTime(route1, route2);
+                boolean rs = updateRouteAboutTime(route1, route2);
+                if (rs) {
+                    return "Update Successfully";
+                }
+                return "Update UnSuccessfully";
             } else {
-                return false;
+                return "Update UnSuccessfully";
+
             }
         } else if (startTimeLong != startTimeRoute1Long || endTimeLong != endTimeRoute1Long) {
             route1.setDistance(distance);
@@ -202,12 +197,17 @@ public class RouteService {
 
             Route newRouteA = routeRepo.save(route1);
             if (newRouteA != null) {
-                return updateRouteAboutTime(route1, null);
+                boolean rs = updateRouteAboutTime(route1, null);
+                if (rs) {
+                    return "Update Successfully";
+                }
+                return "Update UnSuccessfully";
             } else {
-                return false;
+                return "Update UnSuccessfully";
+
             }
         }
-        return true;
+        return "Update Successfully";
     }
 
     public Route getRemainingRoute(String routeNum, Integer id) {
@@ -238,7 +238,7 @@ public class RouteService {
         return rsA && rsB;
     }
 
-    public boolean deleteRoute(Integer id) {
+    public String deleteRoute(Integer id) {
         Route route = routeRepo.findById(id).orElseThrow(null);
         String routeNum = route.getRouteNum();
         List<Route> routes = routeRepo.findRouteByRouteNum(routeNum);
@@ -248,22 +248,10 @@ public class RouteService {
                 r.setIsActive(0);
                 routeRepo.save(r);
             }
-            return true;
+            return "Delete Successfully";
         }
-        return false;
-    }
-     public boolean activeRoute(Integer id) {
-        Route route = routeRepo.findById(id).orElseThrow(null);
-        String routeNum = route.getRouteNum();
-        List<Route> routes = routeRepo.findRouteByRouteNum(routeNum);
+                 return "Delete UnSuccessfully";
 
-        if (!routes.isEmpty()) {
-            for (Route r : routes) {
-                r.setIsActive(1);
-                routeRepo.save(r);
-            }
-            return true;
-        }
-        return false;
     }
+
 }

@@ -5,9 +5,11 @@
 package com.backend.busmap.controller.admin;
 
 import com.backend.busmap.dto.request.AddTrip;
+import com.backend.busmap.dto.request.EditStationRoute;
 import com.backend.busmap.dto.response.Message;
-import com.backend.busmap.models.Route;
-import com.backend.busmap.service.TripService;
+import com.backend.busmap.models.Station;
+import com.backend.busmap.models.StationRoute;
+import com.backend.busmap.service.StationRouteService;
 import jakarta.validation.Valid;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,34 +31,45 @@ import org.springframework.web.bind.annotation.RestController;
  * @author ADMIN
  */
 @RestController
-@RequestMapping("/api/admin/trip")
-@Validated
-public class AdminTripController {
+@RequestMapping("/api/admin/station-route")
+public class AdminStationRouteController {
 
     @Autowired
-    private TripService tripSer;
+    private StationRouteService stationRouteSer;
 
-     @GetMapping("/route/{id}")
-    public ResponseEntity<?> getAllTripOfRoute(@PathVariable Integer id,@RequestParam Map<String, String> params) {
-        Page<Route> pages = (Page<Route>) tripSer.getTripByRouteId(id,params);
+    @GetMapping("/route/{id}")
+    public ResponseEntity<?> getAllStationAdmin(@PathVariable Integer id, @RequestParam Map<String, String> params) {
+        Page<StationRoute> pages = (Page<StationRoute>) stationRouteSer.getAllStationRouteAdmin(id, params);
         return ResponseEntity.ok(pages);
     }
-    
-    @PostMapping("/add")
-    public ResponseEntity<?> addNewTrip(@RequestBody AddTrip trip) {
-         String rs = tripSer.addNewTrip(trip);
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<?> deleteStationRoute(@PathVariable Integer id) {
+        boolean rs = stationRouteSer.deleteStationRoute(id);
+        if (rs) {
+            return ResponseEntity.ok(Message.builder().mess("Delete Successfully").build());
+        }
+        return ResponseEntity.ok(Message.builder().mess("Delete UnSuccessfully").build());
+
+    }
+
+    @GetMapping("/")
+    public ResponseEntity<?> findByPriorityAndRouteId(@RequestParam Map<String, String> params) {
+        String rs = stationRouteSer.findByPriorityAndRouteId(params);
         return ResponseEntity.ok(Message.builder().mess(rs).build());
     }
 
     @PutMapping("/edit")
-    public ResponseEntity<?> editTrip(@Valid @RequestBody AddTrip trip) {
-         String rs = tripSer.editTrip(trip);
+    public ResponseEntity<?> editStationRoute(@RequestBody EditStationRoute s) {
+        String rs = stationRouteSer.editStationRoute(s);
         return ResponseEntity.ok(Message.builder().mess(rs).build());
+
     }
 
-    @DeleteMapping("/delete/{id}")
-    public ResponseEntity<?> deleteTrip(@PathVariable Integer id) {
-          String rs = tripSer.deleteTrip(id);
+    @PostMapping("/add")
+    public ResponseEntity<?> addStationRoute(@RequestBody EditStationRoute s) {
+        String rs = stationRouteSer.addStationRoute(s);
         return ResponseEntity.ok(Message.builder().mess(rs).build());
+
     }
 }

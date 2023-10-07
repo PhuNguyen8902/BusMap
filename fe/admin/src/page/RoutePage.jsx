@@ -14,7 +14,6 @@ import {
   DialogContentText,
   DialogTitle,
   IconButton,
-  MenuItem,
   Tooltip,
   Typography,
 } from "@mui/material";
@@ -38,12 +37,7 @@ export default function RoutePage() {
   const fetchRouteData = async () => {
     const urlParams = new URLSearchParams(window.location.search);
     const routeData = await routeService.getAllRoute(urlParams.toString());
-    // if (
-    //   Array.isArray(routeData.content) &&
-    //   routeData.content.every(
-    //     (route) => route && route.startTime && route.endTime
-    //   )
-    // ) {
+
     if (routeData.totalElements > 0) {
       const formattedRoutes = routeData.content.map((route) => ({
         ...route,
@@ -56,9 +50,6 @@ export default function RoutePage() {
     } else {
       alert("Null");
     }
-    // } else {
-    //   console.error("Invalid route data structure");
-    // }
   };
 
   useEffect(() => {
@@ -72,40 +63,38 @@ export default function RoutePage() {
   }, [pagination.pageIndex, pagination.pageSize]);
   const handleSaveRow = async ({ exitEditingMode, row, values }) => {
     const data = await routeService.editRoute(values);
-    if (data == true) {
-      alert("thanh cong");
-      fetchRouteData();
-      exitEditingMode();
-    } else {
-      var errorMessages = [];
+    alert(data.mess);
+    fetchRouteData();
+    exitEditingMode();
+    // if (data == true) {
+    //   alert("thanh cong");
+    //   fetchRouteData();
+    //   exitEditingMode();
+    // } else {
+    //   var errorMessages = [];
 
-      data.errors.forEach(function (error) {
-        var defaultMessage = error.defaultMessage;
-        errorMessages.push(defaultMessage);
-      });
+    //   data.errors.forEach(function (error) {
+    //     var defaultMessage = error.defaultMessage;
+    //     errorMessages.push(defaultMessage);
+    //   });
 
-      alert(errorMessages);
-    }
-
-    // tableData[row.index] = values;
-    // setTableData([...tableData]);
+    //   alert(errorMessages);
+    // }
   };
   const handleDeleteRow = async () => {
     const data = await routeService.deleteRoute(deleteId);
-    if (data == true) {
-      alert("thanh cong roi");
-      setOpenDelete(false);
-      fetchRouteData();
-    } else {
-      alert("bi loi roi");
-    }
-
-    // tableData.splice(row.index, 1);
-    // setTableData([...tableData]);
+    // if (data == true) {
+    alert(data.mess);
+    fetchRouteData();
+    setOpenDelete(false);
+    // exitEditingMode();
+    // alert("thanh cong roi");
+    // fetchRouteData();
+    // } else {
+    //   alert("bi loi roi");
+    // }
   };
   const handleClickOpenDelete = (row) => {
-    // console.log(row._valuesCache);
-    console.log(row);
     setDeleteId(row._valuesCache.id);
 
     setOpenDelete(true);
@@ -115,8 +104,6 @@ export default function RoutePage() {
     setOpenDelete(false);
   };
   const handleCreateNewRow = async (values) => {
-    // tableData.push(values);
-    // setTableData([...tableData]);
     let hasEmptyValue = false;
     Object.keys(values).forEach((key) => {
       if (values[key] === "") {
@@ -127,21 +114,24 @@ export default function RoutePage() {
 
     if (!hasEmptyValue) {
       const data = await routeService.addRoute(values);
-      if (data == true) {
-        alert("thanh cong roi");
-        // setCreateModalOpen(false);
-        fetchRouteData();
-      } else {
-        var errorMessages = [];
+      console.log(data);
+      alert(data.mess);
+      fetchRouteData();
+      // if (data == true) {
+      //   alert("thanh cong roi");
+      //   // setCreateModalOpen(false);
+      //   fetchRouteData();
+      // } else {
+      //   var errorMessages = [];
 
-        data.errors.forEach(function (error) {
-          var defaultMessage = error.defaultMessage;
-          errorMessages.push(defaultMessage);
-        });
+      //   data.errors.forEach(function (error) {
+      //     var defaultMessage = error.defaultMessage;
+      //     errorMessages.push(defaultMessage);
+      //   });
 
-        alert(errorMessages);
-      }
-      console.log(values);
+      //   alert(errorMessages);
+      // }
+      // console.log(values);
     }
   };
 
@@ -255,9 +245,11 @@ export default function RoutePage() {
                 </Link>
               </Tooltip>
               <Tooltip arrow placement="right" title="Station-Route">
-                <IconButton>
-                  <RouteIcon />
-                </IconButton>
+                <Link to={`/station-route/route/${row.original.id}`}>
+                  <IconButton>
+                    <RouteIcon />
+                  </IconButton>
+                </Link>
               </Tooltip>
               <Tooltip arrow placement="left" title="Edit">
                 <IconButton onClick={() => table.setEditingRow(row)}>

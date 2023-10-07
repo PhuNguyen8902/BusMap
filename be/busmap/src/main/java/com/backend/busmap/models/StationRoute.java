@@ -27,7 +27,7 @@ public class StationRoute {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private Integer order;
+    private Integer priority;
     @JoinColumn(name = "route_id", referencedColumnName = "id")
     @ManyToOne
     private Route routeId;

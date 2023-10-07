@@ -1,4 +1,3 @@
-import tripService from "../service/tripService";
 import { useNavigate } from "react-router-dom";
 import queryLocation from "../utils/queryLocation";
 import MaterialReactTable from "material-react-table";
@@ -17,15 +16,11 @@ import {
 } from "@mui/material";
 import { Delete, Edit } from "@mui/icons-material";
 import { CreateNewAccountModal } from "../components/form/CreateNewAccountModal";
+import stationRouteService from "../service/stationRouteService";
 
-const formatTime = (hours, minutes) => {
-  const formattedHours = String(hours).padStart(2, "0");
-  const formattedMinutes = String(minutes).padStart(2, "0");
-  return `${formattedHours}:${formattedMinutes}`;
-};
-export default function TripPage(props) {
+export default function StationRoutePage(props) {
   const [pagination, setPagination] = useState({ pageIndex: 0, pageSize: 5 });
-  const [trips, setTrips] = useState([]);
+  const [stationRoutes, setStationRoutes] = useState([]);
   const [openDelete, setOpenDelete] = useState(false);
   const [deleteId, setDeleteId] = useState(null);
   const [createModalOpen, setCreateModalOpen] = useState(false);
@@ -38,65 +33,33 @@ export default function TripPage(props) {
         limit: pagination.pageSize,
       })}`
     );
-    fetchTripData();
+    fetchData();
   }, [pagination.pageIndex, pagination.pageSize]);
-  const fetchTripData = async () => {
+  const fetchData = async () => {
     const urlParams = new URLSearchParams(window.location.search);
-    const data = await tripService.getAllTripByRoute(
+    const data = await stationRouteService.getAllStationRoute(
       props.routeId,
       urlParams.toString()
     );
     if (data.totalElements > 0) {
-      const formattedTrips = data.content.map((trip) => ({
-        ...trip,
-        startTimeNeed: formatTime(trip.startTime[0], trip.startTime[1]),
+      const formatted = data.content.map((s) => ({
+        ...s,
         totalPage: data.totalPages,
         totalElement: data.totalElements,
       }));
-      setTrips(formattedTrips);
+      setStationRoutes(formatted);
     } else {
-      alert("You need to update the Trip Spacing for the Route");
+      alert("You need to update the Station Route for the Route");
+      setStationRoutes(data.content);
     }
-  };
-  const handleSaveRow = async ({ exitEditingMode, row, values }) => {
-    let form = {
-      id: values.id,
-      routeId: values["routeId.id"],
-      startTime: values.startTimeNeed,
-    };
-
-    const data = await tripService.editTrip(form);
-    alert(data.mess);
-    fetchTripData();
-    exitEditingMode();
-
-    // if (data == true) {
-    //   alert("thanh cong");
-    //   fetchTripData();
-    //   exitEditingMode();
-    // } else {
-    //   var errorMessages = [];
-    //   data.errors.forEach(function (error) {
-    //     var defaultMessage = error.defaultMessage;
-    //     errorMessages.push(defaultMessage);
-    //   });
-    //   alert(errorMessages);
-    // }
   };
 
   const handleDeleteRow = async () => {
-    const data = await tripService.deleteTrip(deleteId);
-    alert(data.mess);
-    fetchTripData();
-    setOpenDelete(false);
+    const data = await stationRouteService.deleteStationRoute(deleteId);
 
-    // if (data == true) {
-    //   alert("thanh cong roi");
-    //   setOpenDelete(false);
-    //   fetchTripData();
-    // } else {
-    //   alert("bi loi roi");
-    // }
+    alert(data.mess);
+    fetchData();
+    setOpenDelete(false);
   };
   const handleClickOpenDelete = (row) => {
     setDeleteId(row._valuesCache.id);
@@ -107,39 +70,6 @@ export default function TripPage(props) {
   const handleCloseDelete = () => {
     setOpenDelete(false);
   };
-  const handleCreateNewRow = async (values) => {
-    let form = {
-      routeId: props.routeId,
-      startTime: values.startTime,
-    };
-    let hasEmptyValue = false;
-    Object.keys(form).forEach((key) => {
-      if (form[key] === "") {
-        hasEmptyValue = true;
-        alert(key + " cannot be null");
-      }
-    });
-
-    if (!hasEmptyValue) {
-      const data = await tripService.addTrip(form);
-      alert(data.mess);
-      fetchTripData();
-      //   if (data == true) {
-      //     alert("thanh cong roi");
-      //     // setCreateModalOpen(false);
-      //     fetchTripData();
-      //   } else {
-      //     var errorMessages = [];
-
-      //     data.errors.forEach(function (error) {
-      //       var defaultMessage = error.defaultMessage;
-      //       errorMessages.push(defaultMessage);
-      //     });
-
-      //     alert(errorMessages);
-      //   }
-    }
-  };
 
   const columns = useMemo(() => [
     {
@@ -148,8 +78,8 @@ export default function TripPage(props) {
       enableEditing: false,
     },
     {
-      accessorKey: "startTimeNeed",
-      header: "Start Time",
+      accessorKey: "priority",
+      header: "Priority",
     },
     {
       accessorKey: "routeId.id",
@@ -161,25 +91,95 @@ export default function TripPage(props) {
       header: "Route Num",
       enableEditing: false,
     },
+    {
+      accessorKey: "stationId.id",
+      header: "Station Id",
+      enableEditing: false,
+    },
+    {
+      accessorKey: "stationId.code",
+      header: "Station Code",
+      enableEditing: false,
+    },
   ]);
   const column2s = useMemo(() => [
     {
-      accessorKey: "startTime",
-      header: "Start Time (HH:MM)",
+      accessorKey: "priority",
+      header: "Priority",
+    },
+    {
+      accessorKey: "stationId.code",
+      header: "Station Code",
+      enableEditing: false,
     },
   ]);
+
+  const checkPriority = async (priority, stationId) => {
+    const data = await stationRouteService.findByPriority(
+      priority,
+      props.routeId,
+      stationId
+    );
+
+    if (data.mess == "Valid Priority") {
+      return true;
+    }
+    alert(data.mess);
+    return false;
+  };
+
+  const handleSaveRow = async ({ exitEditingMode, row, values }) => {
+    var rs = await checkPriority(values.priority, values["stationId.id"]);
+    if (rs == true) {
+      let form = {
+        id: values.id,
+        priority: values.priority,
+      };
+      const data = await stationRouteService.editStationRoute(form);
+
+      alert(data.mess);
+      fetchData();
+      exitEditingMode();
+    }
+  };
+
+  const handleCreateNewRow = async (values) => {
+    let form = {
+      routeId: props.routeId,
+      code: values["stationId.code"],
+      priority: values.priority,
+    };
+    let hasEmptyValue = false;
+    Object.keys(form).forEach((key) => {
+      if (form[key] === "") {
+        hasEmptyValue = true;
+        alert(key + " cannot be null");
+      }
+    });
+
+    if (!hasEmptyValue) {
+      const data = await stationRouteService.addStationRoute(form);
+      alert(data.mess);
+      fetchData();
+    }
+  };
+
   return (
     <>
       <Box className="table--container">
-        <Typography variant="h3">Trip Of Route Id {props.routeId}</Typography>
+        <Typography variant="h3">
+          Station-Route Of Route Id {props.routeId}
+        </Typography>
         <MaterialReactTable
           columns={columns}
-          data={trips}
+          data={stationRoutes}
           onPaginationChange={setPagination}
           manualPagination
           enableEditing
           state={{ pagination }}
-          rowCount={trips.length > 0 ? trips[0].totalElement : 5}
+          rowCount={
+            stationRoutes.length > 0 ? stationRoutes[0].totalElement : 5
+          }
           onEditingRowSave={handleSaveRow}
           renderRowActions={({ row, table }) => (
             <Box sx={{ display: "flex", gap: "1rem" }}>
@@ -204,7 +204,7 @@ export default function TripPage(props) {
               onClick={() => setCreateModalOpen(true)}
               variant="contained"
             >
-              Create New Trip
+              Create New
             </Button>
           )}
         />

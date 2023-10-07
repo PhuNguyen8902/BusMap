@@ -31,4 +31,6 @@ public interface StationRepository extends JpaRepository<Station, Integer> {
     List<Station> getStationNearAdd(double la, double lo);
 
     Station findStationByCode(String code);
+    
+    Station findStationById(Integer id);
 }

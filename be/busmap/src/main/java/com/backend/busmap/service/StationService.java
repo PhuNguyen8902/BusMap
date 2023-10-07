@@ -44,6 +44,13 @@ public class StationService {
         return this.stationRepository.findAll();
     }
 
+    public Station findById(Integer id){
+        return stationRepository.findStationById(id);
+    }
+      public Station findStationByCode(String code){
+        return stationRepository.findStationByCode(code);
+    }
+    
     public Page<?> getAllStationAdmin(Map<String, String> params) {
         Pageable pageable = null;
         Page<Station> stations = null;
@@ -129,14 +136,14 @@ public class StationService {
             for (StationDistance station2 : list2) {
                 Integer route1Id = station1.getStationRoute().getRouteId().getId();
                 Integer route2Id = station2.getStationRoute().getRouteId().getId();
-                Integer order1 = station1.getStationRoute().getOrder();
-                Integer order2 = station2.getStationRoute().getOrder();
+                Integer priority1 = station1.getStationRoute().getPriority();
+                Integer priority2 = station2.getStationRoute().getPriority();
 
-                if (route1Id.intValue() == route2Id.intValue() && order1 < order2) {
+                if (route1Id.intValue() == route2Id.intValue() && priority1 < priority2) {
                     StationRouteMiddle s = new StationRouteMiddle();
                     Double dis = station1.getDistance() + station2.getDistance();
-                    Double d = distanceOfRoute(station1.getStationRoute().getRouteId(), station1.getStationRoute().getOrder(),
-                            station2.getStationRoute().getOrder());
+                    Double d = distanceOfRoute(station1.getStationRoute().getRouteId(), station1.getStationRoute().getPriority(),
+                            station2.getStationRoute().getPriority());
                     s.setDistance(dis + d);
                     s.setStartStation(station1);
                     s.setEndStation(station2);
@@ -160,14 +167,14 @@ public class StationService {
         List<StationRouteMiddle> list = new ArrayList<>();
 
         for (StationDistance station1 : list1) {
-            List<StationRoute> stationRoute1 = stationRouteService.findByRouteIdAndGreaterThanOrder(station1.getStationRoute().getRouteId(),
-                    station1.getStationRoute().getOrder());
+            List<StationRoute> stationRoute1 = stationRouteService.findByRouteIdAndPriorityGreaterThan(station1.getStationRoute().getRouteId(),
+                    station1.getStationRoute().getPriority());
 
             for (StationDistance station2 : list2) {
                 if (station1.getStationRoute().getRouteId().getId().intValue() != station2.getStationRoute().getRouteId().getId().intValue()) {
 
-                    List<StationRoute> stationRoute2 = stationRouteService.findByRouteIdAndLessThanOrder(station2.getStationRoute().getRouteId(),
-                            station2.getStationRoute().getOrder());
+                    List<StationRoute> stationRoute2 = stationRouteService.findByRouteIdAndPriorityLessThan(station2.getStationRoute().getRouteId(),
+                            station2.getStationRoute().getPriority());
                     boolean shouldBreak = false;
 
                     for (StationRoute s1 : stationRoute1) {
@@ -183,8 +190,8 @@ public class StationService {
                                 stationRouteMiddle.setEndStation(station2);
 
                                 Double dis = station1.getDistance() + station2.getDistance();
-                                Double d1 = distanceOfRoute(station1.getStationRoute().getRouteId(), station1.getStationRoute().getOrder(), s1.getOrder());
-                                Double d2 = distanceOfRoute(station2.getStationRoute().getRouteId(), s2.getOrder(), station2.getStationRoute().getOrder());
+                                Double d1 = distanceOfRoute(station1.getStationRoute().getRouteId(), station1.getStationRoute().getPriority(), s1.getPriority());
+                                Double d2 = distanceOfRoute(station2.getStationRoute().getRouteId(), s2.getPriority(), station2.getStationRoute().getPriority());
 
                                 stationRouteMiddle.setDistance(dis + d1 + d2);
                                 list.add(stationRouteMiddle);
@@ -274,14 +281,14 @@ public class StationService {
             Route routeStart = station1.getStationRoute().getRouteId();
             List<StationRoute> stationRoute1 = stationRouteService.getAllStationBehind(
                     station1.getStationRoute().getRouteId(),
-                    station1.getStationRoute().getOrder()
+                    station1.getStationRoute().getPriority()
             );
 
             for (StationDistance station2 : list2) {
                 Route routeEnd = station2.getStationRoute().getRouteId();
                 List<StationRoute> stationRoute2 = stationRouteService.getAllStationBefore(
                         station2.getStationRoute().getRouteId(),
-                        station2.getStationRoute().getOrder()
+                        station2.getStationRoute().getPriority()
                 );
 
                 if (routeStart.getId().intValue() != routeEnd.getId().intValue()) {
@@ -300,9 +307,9 @@ public class StationService {
                                 routeMid.setRoute(s1.getRouteId());
 
                                 Double dis = station1.getDistance() + station2.getDistance();
-                                Double dStart = distanceOfRoute(station1.getStationRoute().getRouteId(), station1.getStationRoute().getOrder(), sRouteStart.getOrder());
-                                Double dEnd = distanceOfRoute(station2.getStationRoute().getRouteId(), sRouteEnd.getOrder(), station2.getStationRoute().getOrder());
-                                Double dMid = distanceOfRoute(s1.getRouteId(), s1.getOrder(), s2.getOrder());
+                                Double dStart = distanceOfRoute(station1.getStationRoute().getRouteId(), station1.getStationRoute().getPriority(), sRouteStart.getPriority());
+                                Double dEnd = distanceOfRoute(station2.getStationRoute().getRouteId(), sRouteEnd.getPriority(), station2.getStationRoute().getPriority());
+                                Double dMid = distanceOfRoute(s1.getRouteId(), s1.getPriority(), s2.getPriority());
 
                                 r.setDistance(dis + dStart + dMid + dEnd);
                                 r.setStartStation(station1);
@@ -326,7 +333,7 @@ public class StationService {
     }
 
     public Double distanceOfRoute(Route r, Integer o1, Integer o2) {
-        List<Station> staList = stationRouteService.getStationByRouteAndOrder(r, o1, o2);
+        List<Station> staList = stationRouteService.getStationByRouteAndPriority(r, o1, o2);
         Double sum = 0.0;
         for (int i = 0; i < staList.size() - 1; i++) {
             Station currentStation = staList.get(i);
