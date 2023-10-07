@@ -20,16 +20,18 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface StationRouteRepository extends JpaRepository<StationRoute, Integer> {
-    
+
     List<StationRoute> findStationRouteByStationIdAndPriorityIsNotNull(Station sta);
-    
-    StationRoute findByPriorityAndRouteId(Integer o,Route r);
-    
+
+    StationRoute findByPriorityAndRouteId(Integer o, Route r);
+
     List<StationRoute> findByRouteId(Route routeId);
-    
+
     Page<StationRoute> findStationRouteByRouteId(Route routeId, Pageable a);
-    
-    
+
+     @Query("SELECT sr FROM StationRoute sr join Station s on sr.stationId = s WHERE sr.routeId = :routeId and s.code like %:kw%")
+    Page<StationRoute> getStationRouteByRouteId(String kw, Route routeId, Pageable a);
+
     StationRoute findByStationIdAndRouteId(Station sta, Route route);
 
     @Query("SELECT distinct sr FROM StationRoute sr "
@@ -38,6 +40,7 @@ public interface StationRouteRepository extends JpaRepository<StationRoute, Inte
     List<StationRoute> getAllStationBehind(Route route, Integer priority);
 
     List<StationRoute> findByRouteIdAndPriorityGreaterThan(Route route, Integer priority);
+
     List<StationRoute> findByRouteIdAndPriorityLessThan(Route route, Integer priority);
 
     @Query("SELECT distinct sr FROM StationRoute sr "

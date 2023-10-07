@@ -19,6 +19,7 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 /**
@@ -46,8 +47,8 @@ public class StationRouteService {
 
         return this.stationRouteRepo.findByRouteId(route);
     }
-    
-     public void deleteAllStationRouteByRoute(Route r) {
+
+    public void deleteAllStationRouteByRoute(Route r) {
         List<StationRoute> list = stationRouteRepo.findByRouteId(r);
         for (StationRoute t : list) {
             stationRouteRepo.deleteById(t.getId());
@@ -102,10 +103,22 @@ public class StationRouteService {
             params.put("page", "1");
         }
         try {
-            pageable = PageRequest.of(Integer.parseInt(params.get("page")) - 1, Integer.parseInt(params.get("limit")));
+
+            Sort.Order o = new Sort.Order(Sort.Direction.ASC, "priority"); 
+            Sort sort = Sort.by(o);
+
+            pageable = PageRequest.of(Integer.parseInt(params.get("page")) - 1, Integer.parseInt(params.get("limit")),sort);
             Route route = routeRepo.findById(id).orElse(null);
 
-            stationRoutes = stationRouteRepo.findStationRouteByRouteId(route, pageable);
+//            stationRoutes = stationRouteRepo.findStationRouteByRouteId(route, pageable);
+            
+             if (params.get("kw") == "" ) {
+                stationRoutes = stationRouteRepo.findStationRouteByRouteId(route, pageable);
+
+            } else {
+               stationRoutes = stationRouteRepo.getStationRouteByRouteId(params.get("kw"),route, pageable);
+            }
+            
         } catch (NumberFormatException exception) {
             System.out.println(exception.getMessage());
             return null;

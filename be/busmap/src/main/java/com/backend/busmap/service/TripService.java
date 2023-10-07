@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 /**
@@ -73,7 +74,11 @@ public class TripService {
             params.put("page", "1");
         }
         try {
-            pageable = PageRequest.of(Integer.parseInt(params.get("page")) - 1, Integer.parseInt(params.get("limit")));
+            
+              Sort.Order o = new Sort.Order(Sort.Direction.ASC, "startTime"); 
+            Sort sort = Sort.by(o);
+            
+            pageable = PageRequest.of(Integer.parseInt(params.get("page")) - 1, Integer.parseInt(params.get("limit")),sort);
             Route r = routeRepo.findById(id).orElse(null);
 
             trips = tripRepo.findAllByRouteId(r, pageable);

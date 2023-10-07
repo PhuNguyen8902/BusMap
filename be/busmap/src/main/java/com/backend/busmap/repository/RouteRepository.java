@@ -20,7 +20,11 @@ import org.springframework.data.repository.query.Param;
 @Repository
 public interface RouteRepository extends JpaRepository<Route, Integer> {
 
-    Page<Route> findRouteByIsActive(int active, Pageable a);
+     @Query("SELECT r FROM Route r WHERE r.isActive = 1 and (r.name LIKE %:kw% or r.routeNum LIKE %:kw%)")
+    Page<Route> findRouteByIsActive(String kw, Pageable a);
+    
+     @Query("SELECT r FROM Route r WHERE r.isActive = 1")
+    Page<Route> findRouteByIsActive( Pageable a);
 
     List<Route> findRouteByRouteNum(String routeNum);
 

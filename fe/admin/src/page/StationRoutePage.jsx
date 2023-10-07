@@ -20,6 +20,7 @@ import stationRouteService from "../service/stationRouteService";
 
 export default function StationRoutePage(props) {
   const [pagination, setPagination] = useState({ pageIndex: 0, pageSize: 5 });
+  const [globalFilter, setGlobalFilter] = useState("");
   const [stationRoutes, setStationRoutes] = useState([]);
   const [openDelete, setOpenDelete] = useState(false);
   const [deleteId, setDeleteId] = useState(null);
@@ -27,14 +28,18 @@ export default function StationRoutePage(props) {
   const navigate = useNavigate();
 
   useEffect(() => {
+    if (globalFilter == undefined) {
+      setGlobalFilter("");
+    }
     navigate(
       `?${queryLocation.toString({
         page: pagination.pageIndex + 1,
         limit: pagination.pageSize,
+        kw: globalFilter,
       })}`
     );
     fetchData();
-  }, [pagination.pageIndex, pagination.pageSize]);
+  }, [pagination.pageIndex, pagination.pageSize, globalFilter]);
   const fetchData = async () => {
     const urlParams = new URLSearchParams(window.location.search);
     const data = await stationRouteService.getAllStationRoute(
@@ -177,6 +182,7 @@ export default function StationRoutePage(props) {
           manualPagination
           enableEditing
           state={{ pagination }}
+          onGlobalFilterChange={setGlobalFilter}
           rowCount={
             stationRoutes.length > 0 ? stationRoutes[0].totalElement : 5
           }

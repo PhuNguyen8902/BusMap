@@ -34,7 +34,7 @@ public class RouteService {
 
     @Autowired
     private TripService tripSer;
-    
+
     @Autowired
     private StationRouteService stationRouteSer;
 
@@ -51,7 +51,13 @@ public class RouteService {
         }
         try {
             pageable = PageRequest.of(Integer.parseInt(params.get("page")) - 1, Integer.parseInt(params.get("limit")));
-            routes = routeRepo.findRouteByIsActive(1, pageable);
+
+            if (params.get("kw") == "" ) {
+                routes = routeRepo.findRouteByIsActive(pageable);
+
+            } else {
+                routes = routeRepo.findRouteByIsActive(params.get("kw"), pageable);
+            }
         } catch (NumberFormatException exception) {
             System.out.println(exception.getMessage());
             return null;
