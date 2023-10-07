@@ -59,10 +59,10 @@ public class TripService {
     public List<Trip> getTripByRoute(Route r) {
         return tripRepo.findAllByRouteId(r);
     }
-    
- public Page<?> getTripByRouteId(Integer id,Map<String, String> params) {
-     
-     Pageable pageable = null;
+
+    public Page<?> getTripByRouteId(Integer id, Map<String, String> params) {
+
+        Pageable pageable = null;
         Page<Trip> trips = null;
 
         if (params.get("limit") == null) {
@@ -74,9 +74,9 @@ public class TripService {
         }
         try {
             pageable = PageRequest.of(Integer.parseInt(params.get("page")) - 1, Integer.parseInt(params.get("limit")));
-                 Route r = routeRepo.findById(id).orElse(null);
+            Route r = routeRepo.findById(id).orElse(null);
 
-            trips = tripRepo.findAllByRouteId(r,pageable);
+            trips = tripRepo.findAllByRouteId(r, pageable);
         } catch (NumberFormatException exception) {
             System.out.println(exception.getMessage());
             return null;
@@ -85,7 +85,7 @@ public class TripService {
 //     
 //     Route r = routeRepo.findById(id).orElse(null);
 //        return tripRepo.findAllByRouteId(r);
-    }    
+    }
 
     public void deleteAllTripByRoute(Route r) {
         List<Trip> trips = getTripByRoute(r);
@@ -98,7 +98,7 @@ public class TripService {
         LocalTime startTime = LocalTime.parse(addTrip.getStartTime());
 
         Integer routeId = Integer.valueOf(addTrip.getRouteId());
-        
+
         Trip trip = new Trip();
         Route route = routeRepo.findById(routeId).orElseThrow(null);
         trip.setStartTime(startTime);
@@ -117,13 +117,13 @@ public class TripService {
         trip.setStartTime(startTime);
         trip.setRouteId(route);
         tripRepo.save(trip);
-                return "Update Successfully";
+        return "Update Successfully";
 
     }
 
     public String deleteTrip(Integer id) {
         tripRepo.deleteById(id);
-                        return "Delete Successfully";
+        return "Delete Successfully";
 
     }
 }

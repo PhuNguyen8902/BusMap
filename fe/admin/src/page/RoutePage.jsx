@@ -114,7 +114,6 @@ export default function RoutePage() {
 
     if (!hasEmptyValue) {
       const data = await routeService.addRoute(values);
-      console.log(data);
       alert(data.mess);
       fetchRouteData();
       // if (data == true) {

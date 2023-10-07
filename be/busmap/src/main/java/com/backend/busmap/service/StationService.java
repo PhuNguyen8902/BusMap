@@ -294,7 +294,7 @@ public class StationService {
                 if (routeStart.getId().intValue() != routeEnd.getId().intValue()) {
                     for (StationRoute s1 : stationRoute1) {
                         for (StationRoute s2 : stationRoute2) {
-                            if (s1.getRouteId().getId().intValue() == s2.getRouteId().getId().intValue()) {
+                            if ((s1.getRouteId().getId().intValue() == s2.getRouteId().getId().intValue()) &&(s1.getPriority()<s2.getPriority())) {
                                 StationRoute sRouteStart = stationRouteService.findByStationIdAndRouteId(s1.getStationId(), station1.getStationRoute().getRouteId());
                                 StationRoute sRouteEnd = stationRouteService.findByStationIdAndRouteId(s2.getStationId(), station2.getStationRoute().getRouteId());
 //                                StationRoute sRoute1 = stationRouteService.findByStationIdAndRouteId(s1.getStationId(), s1.getRouteId());
