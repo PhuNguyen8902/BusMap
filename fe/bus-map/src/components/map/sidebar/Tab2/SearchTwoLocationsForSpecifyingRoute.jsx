@@ -8,12 +8,24 @@ import TabPanel from '@mui/lab/TabPanel';
 import RouteWithOnetrip from "./RouteWithOneTrip";
 import RouteWithTwotrip from "./RouteWithTwoTrip";
 import RouteWithThreetrip from "./RouteWithThreeTrip";
+import { useNavigate, useParams } from "react-router";
 
 export default function SearchTwoLocationsForSpecifyingRoute() {
 
+    const navigate = useNavigate()
     const [startLocation, setStartLocation] = useState("");
     const [destinationLocation, setDestinationLocation] = useState("");
     const [isEnter, setIsEnter] = useState(false);
+    // console.log("check enter location: ", isEnter);
+
+    //valuables pass to props
+    const [lat1, setLat1] = useState("")
+    // const [lon1, setLon1] = useState("")
+    // const [lat2, setLat2] = useState("")
+    // const [lon2, setLon2] = useState("")
+
+    const{location} = useParams();
+    
 
     const startLocationHandle = (event) => {
         setStartLocation(event.target.value);
@@ -55,23 +67,42 @@ export default function SearchTwoLocationsForSpecifyingRoute() {
                     const latitude2 = addressInfo2[0].lat;
                     const longitude2 = addressInfo2[0].lon;
 
-                    // get route with one trip
-                    const routeWithOnetripData = await stationService.getRouteWithOneTripData(latitude1, longitude1, latitude2, longitude2)
-                    console.log("route with one trip: ", routeWithOnetripData);
+                    setLat1(latitude1)
+                    // setLon1(longitude1)
+                    // setLat2(latitude2)
+                    // setLon2(longitude2)
 
-                    // get route with t2o trip
-                    const routeWithTwotripData = await stationService.getRouteWithTwoTripData(latitude1, longitude1, latitude2, longitude2)
-                    console.log("route with two trips: ", routeWithTwotripData);
+                    navigate(`/map/routes/${latitude1}_${longitude1}_${latitude2}_${longitude2}`);
 
-                    // get route with three trip
-                    const routeWithThreetripData = await stationService.getRouteWithTwoTripData(latitude1, longitude1, latitude2, longitude2)
-                    console.log("route with three trips: ", routeWithThreetripData);
+                    // // get route with one trip
+                    // const routeWithOnetripData = await stationService.getRouteWithOneTripData(latitude1, longitude1, latitude2, longitude2)
+                    // // console.log("route with one trip: ", routeWithOnetripData);
+                    // setRouteWithOneTrip(routeWithOnetripData);
+
+                    // // get route with t2o trip
+                    // const routeWithTwotripData = await stationService.getRouteWithTwoTripData(latitude1, longitude1, latitude2, longitude2)
+                    // // console.log("route with two trips: ", routeWithTwotripData);
+                    // setRouteWithTwoTrip(routeWithTwotripData);
+
+                    // // get route with three trip
+                    // const routeWithThreetripData = await stationService.getRouteWithThreeTripData(latitude1, longitude1, latitude2, longitude2)
+                    // // console.log("route with three trips: ", routeWithThreetripData);
+                    // setRouteWithThreeTrip(routeWithThreetripData);
 
                 } catch (error) {
                     //check err
                     console.error("Error fetching data:", error);
                 }
 
+            }else if(location != undefined){
+                try {
+                    
+                    navigate(`/map/routes/${location}`);
+
+                } catch (error) {
+                    //check err
+                    console.error("Error fetching data:", error);
+                }
             }
         }
         fetchRouteWithOnetrip()
@@ -108,10 +139,10 @@ export default function SearchTwoLocationsForSpecifyingRoute() {
                     </Box>
                 </Stack>
                 <Box className="sidebar__seconde--tab__navigate__content__routes">
-                    <Box sx={{ width: '100%', typography: 'body1' }}>
+                    <Box sx={{ width: '100%', height: "100%", typography: 'body1' }}>
                         <TabContext value={value}>
-                            <Box sx={{ borderBottom: 1, borderColor: 'divider' }} className="123">
-                                <TabList onChange={handleChange} aria-label="lab API tabs example" className="1236" variant='fullWidth'
+                            <Box sx={{ borderBottom: 1, borderColor: 'divider'}}>
+                                <TabList onChange={handleChange} aria-label="lab API tabs example" variant='fullWidth'
                                 sx={{
                                     display: "flex",
                                     justifyContent: "center",
@@ -124,16 +155,31 @@ export default function SearchTwoLocationsForSpecifyingRoute() {
                                     <Tab label="Three Trip" value="3" />
                                 </TabList>
                             </Box>
-                            {startLocation != "" && destinationLocation != "" && isEnter == true ?
+                            {lat1 != "" || location != undefined ?
                                 <>
-                                    <TabPanel value="1">
-                                        <RouteWithOnetrip />
+                                    <TabPanel value="1" className="tab">
+                                        <RouteWithOnetrip
+                                        // lat1 = {lat1}
+                                        // lon1 = {lon1}
+                                        // lat2 = {lat2}
+                                        // lon2 = {lon2}
+                                        />
                                     </TabPanel>
-                                    <TabPanel value="2">
-                                        <RouteWithTwotrip />
+                                    <TabPanel value="2" className="tab">
+                                        <RouteWithTwotrip 
+                                        // lat1 = {lat1}
+                                        // lon1 = {lon1}
+                                        // lat2 = {lat2}
+                                        // lon2 = {lon2}
+                                        />
                                     </TabPanel>
-                                    <TabPanel value="3">
-                                        <RouteWithThreetrip />
+                                    <TabPanel value="3" className="tab">
+                                        <RouteWithThreetrip 
+                                        // lat1 = {lat1}
+                                        // lon1 = {lon1}
+                                        // lat2 = {lat2}
+                                        // lon2 = {lon2}
+                                        />
                                     </TabPanel>
                                 </>
                                 : null
