@@ -94,7 +94,7 @@ public class TripService {
         }
     }
 
-    public boolean addNewTrip(AddTrip addTrip) {
+    public String addNewTrip(AddTrip addTrip) {
         LocalTime startTime = LocalTime.parse(addTrip.getStartTime());
 
         Integer routeId = Integer.valueOf(addTrip.getRouteId());
@@ -104,10 +104,10 @@ public class TripService {
         trip.setStartTime(startTime);
         trip.setRouteId(route);
         tripRepo.save(trip);
-        return true;
+        return "Add Successfully";
     }
 
-    public boolean editTrip(AddTrip addTrip) {
+    public String editTrip(AddTrip addTrip) {
         LocalTime startTime = LocalTime.parse(addTrip.getStartTime());
         Integer routeId = Integer.valueOf(addTrip.getRouteId());
 
@@ -117,11 +117,13 @@ public class TripService {
         trip.setStartTime(startTime);
         trip.setRouteId(route);
         tripRepo.save(trip);
-        return true;
+                return "Update Successfully";
+
     }
 
-    public boolean deleteTrip(Integer id) {
+    public String deleteTrip(Integer id) {
         tripRepo.deleteById(id);
-        return true;
+                        return "Delete Successfully";
+
     }
 }

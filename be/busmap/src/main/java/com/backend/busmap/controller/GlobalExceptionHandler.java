@@ -3,9 +3,8 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package com.backend.busmap.controller;
-import com.backend.busmap.dto.response.ErrorMess;
+import com.backend.busmap.dto.response.Message;
 import jakarta.validation.ConstraintViolationException;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -15,7 +14,9 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(ConstraintViolationException.class)
     public ResponseEntity<?> handleConstraintViolationException(ConstraintViolationException e) {
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body( ErrorMess.builder().error(e.getMessage()).build());
+//        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Message.builder().mess(e.getMessage()).build());
+                return ResponseEntity.ok(Message.builder().mess(e.getMessage()).build());
+
     }
 }
 

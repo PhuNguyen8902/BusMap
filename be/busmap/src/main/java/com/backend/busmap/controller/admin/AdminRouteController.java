@@ -6,6 +6,7 @@ package com.backend.busmap.controller.admin;
 
 import com.backend.busmap.dto.request.AddRoute;
 import com.backend.busmap.dto.request.EditRoute;
+import com.backend.busmap.dto.response.Message;
 import com.backend.busmap.models.Route;
 import com.backend.busmap.service.RouteService;
 import jakarta.validation.Valid;
@@ -43,31 +44,23 @@ public class AdminRouteController {
         Page<Route> pages = (Page<Route>) routeService.getAllRoute(params);
         return ResponseEntity.ok(pages);
     }
-      @GetMapping("/route-deleted")
-    public ResponseEntity<?> getAllRouteDeleted(@RequestParam Map<String, String> params) {
-        Page<Route> pages = (Page<Route>) routeService.getAllRouteDeleted(params);
-//        if (pages == null) {
-//            return ResponseEntity.badRequest().body("Error");
-//        }
-        return ResponseEntity.ok(pages);
-    }
 
     @PostMapping("/add")
     public ResponseEntity<?> addNewRoute(@Valid @RequestBody AddRoute route) {
-        return ResponseEntity.ok(this.routeService.addNewRoute(route));
+        String rs = routeService.addNewRoute(route);
+        return ResponseEntity.ok(Message.builder().mess(rs).build());
     }
 
     @PutMapping("/edit")
     public ResponseEntity<?> editRoute(@Valid @RequestBody EditRoute route) {
-        return ResponseEntity.ok(this.routeService.updateRoute(route));
+        String rs = routeService.updateRoute(route);
+        return ResponseEntity.ok(Message.builder().mess(rs).build());
     }
 
     @PutMapping("/delete/{id}")
     public ResponseEntity<?> deleteRoute(@PathVariable Integer id) {
-        return ResponseEntity.ok(this.routeService.deleteRoute(id));
+         String rs = routeService.deleteRoute(id);
+        return ResponseEntity.ok(Message.builder().mess(rs).build());
     }
-     @PutMapping("/active/{id}")
-    public ResponseEntity<?> activeRoute(@PathVariable Integer id) {
-        return ResponseEntity.ok(this.routeService.activeRoute(id));
-    }
+
 }
