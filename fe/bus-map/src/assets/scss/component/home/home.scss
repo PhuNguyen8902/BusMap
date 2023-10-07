@@ -1,0 +1,70 @@
+@import "../../variable";
+
+//Home 
+
+//Home banner
+.home--banner{
+    height: 110%;
+    width: 100%;
+    border-radius: 0 0 100px 100px;
+    background-color: $baseColor;
+    &__right--container{
+        height: 70%;
+        width: 40%;
+        padding: 5%;
+        border-radius: 40px;
+        background-color: white;
+    }
+    &__left--container{
+        height: 70%;
+        width: 40%;
+        border-radius: 40px;
+        background-color: white;
+        & img{
+            height: 100%;
+            width: 100%;
+            border-radius: 40px;
+        }
+    }
+}
+
+// section 1
+
+.section--one{
+    width: 100%;
+    height: 110%;
+    margin-top: -10%;
+    &__content{
+        width: 80%;
+        height: 100%;
+        border-radius: 50px;
+        padding: 10% 5%;
+        background-color: rgb(252, 249, 249);
+        &__right--content{
+            width: 65%;
+            height: 100%; 
+            &__sub{
+                width: 100%;
+                height: 100%;
+                & .text{
+                    width: 50%;
+                }
+                & img{
+                    width: 100%;
+                    box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
+                }
+            }
+        }
+        &__left--content{
+            width: 25%;
+            height: 80%; 
+            & img{
+                width: 120%;
+                height: 150%;
+                margin-top: -20%;
+                // border: 5px solid #10af7e; 
+                box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
+            }
+        }
+    }
+}

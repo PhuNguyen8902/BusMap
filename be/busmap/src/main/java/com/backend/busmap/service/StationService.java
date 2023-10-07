@@ -348,4 +348,28 @@ public class StationService {
         }
         return sum;
     }
+
+    public List<?> findWithManyRoute(Map<String, String> params) {
+        Integer type = Integer.valueOf(params.get("withManyTrip"));
+        Double la1 = Double.parseDouble(params.get("la1"));
+        Double la2 = Double.parseDouble(params.get("la2"));
+        Double lo1 = Double.parseDouble(params.get("lo1"));
+        Double lo2 = Double.parseDouble(params.get("lo2"));
+
+        List<StationDistance> list1 = findNearestStations(la1, lo1);
+        List<StationDistance> list2 = findNearestStations(la2, lo2);
+        switch (type) {
+            case 1:
+                  List<StationRouteMiddle> l = resultFor1Route(list1, list2);
+                  return l;
+            case 2:
+                 List<StationRouteMiddle> l2 = stationMid(list1, list2);
+                 return l2;
+            case 3:
+                    List<Station3Route> l3 = resultFor3Route(list1, list2);
+                    return l3;
+            
+        }
+        return null;
+    }
 }

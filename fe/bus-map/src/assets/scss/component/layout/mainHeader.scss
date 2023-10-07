@@ -1,0 +1,17 @@
+@import "../../variable";
+
+.main--header{
+    background-color: $baseColor;
+    color: white;
+    align-items: center;
+    height: 15%;
+    width: 100%;
+    &__logo{
+        font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+        align-items: center;
+        cursor: pointer;
+    }
+    &__link{
+        
+    }
+}
