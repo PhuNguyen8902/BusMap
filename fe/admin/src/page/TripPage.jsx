@@ -178,6 +178,7 @@ export default function TripPage(props) {
           onPaginationChange={setPagination}
           manualPagination
           enableEditing
+          enableGlobalFilter={false}
           state={{ pagination }}
           rowCount={trips.length > 0 ? trips[0].totalElement : 5}
           onEditingRowSave={handleSaveRow}

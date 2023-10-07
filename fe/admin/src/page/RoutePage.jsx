@@ -27,6 +27,7 @@ const formatTime = (hours, minutes) => {
 };
 export default function RoutePage() {
   const [pagination, setPagination] = useState({ pageIndex: 0, pageSize: 5 });
+  const [globalFilter, setGlobalFilter] = useState("");
   const [routes, setRoutes] = useState([]);
   const [openDelete, setOpenDelete] = useState(false);
   const [deleteId, setDeleteId] = useState(null);
@@ -53,14 +54,18 @@ export default function RoutePage() {
   };
 
   useEffect(() => {
+    if (globalFilter == undefined) {
+      setGlobalFilter("");
+    }
     navigate(
       `?${queryLocation.toString({
         page: pagination.pageIndex + 1,
         limit: pagination.pageSize,
+        kw: globalFilter,
       })}`
     );
     fetchRouteData();
-  }, [pagination.pageIndex, pagination.pageSize]);
+  }, [pagination.pageIndex, pagination.pageSize, globalFilter]);
   const handleSaveRow = async ({ exitEditingMode, row, values }) => {
     const data = await routeService.editRoute(values);
     alert(data.mess);
@@ -133,7 +138,6 @@ export default function RoutePage() {
       // console.log(values);
     }
   };
-
   const columns = useMemo(() => [
     {
       accessorKey: "id",
@@ -229,6 +233,7 @@ export default function RoutePage() {
           columns={columns}
           data={routes}
           onPaginationChange={setPagination}
+          // manualFiltering
           manualPagination
           enableEditing
           state={{ pagination }}
@@ -274,6 +279,7 @@ export default function RoutePage() {
               Create New Route
             </Button>
           )}
+          onGlobalFilterChange={setGlobalFilter}
         />
       </Box>
       <CreateNewAccountModal
