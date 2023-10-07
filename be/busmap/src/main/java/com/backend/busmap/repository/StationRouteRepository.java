@@ -20,7 +20,7 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface StationRouteRepository extends JpaRepository<StationRoute, Integer> {
-
+    
     List<StationRoute> findStationRouteByStationIdAndPriorityIsNotNull(Station sta);
     
     StationRoute findByPriorityAndRouteId(Integer o,Route r);

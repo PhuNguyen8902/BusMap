@@ -34,6 +34,9 @@ public class RouteService {
 
     @Autowired
     private TripService tripSer;
+    
+    @Autowired
+    private StationRouteService stationRouteSer;
 
     public Page<?> getAllRoute(Map<String, String> params) {
         Pageable pageable = null;
@@ -247,11 +250,12 @@ public class RouteService {
             for (Route r : routes) {
                 r.setIsActive(0);
                 routeRepo.save(r);
+                tripSer.deleteAllTripByRoute(r);
+                stationRouteSer.deleteAllStationRouteByRoute(r);
             }
             return "Delete Successfully";
         }
-                 return "Delete UnSuccessfully";
-
+        return "Delete UnSuccessfully";
     }
 
 }

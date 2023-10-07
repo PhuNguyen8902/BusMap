@@ -46,6 +46,13 @@ public class StationRouteService {
 
         return this.stationRouteRepo.findByRouteId(route);
     }
+    
+     public void deleteAllStationRouteByRoute(Route r) {
+        List<StationRoute> list = stationRouteRepo.findByRouteId(r);
+        for (StationRoute t : list) {
+            stationRouteRepo.deleteById(t.getId());
+        }
+    }
 
     @Cacheable("stationRoutes")
     public List<StationRoute> getAllStationBehind(Route sta, Integer priority) {
