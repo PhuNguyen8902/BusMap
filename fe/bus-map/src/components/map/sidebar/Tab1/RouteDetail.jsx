@@ -51,11 +51,16 @@ export default function RouteDetail() {
             <Stack className="route--detail__return--btn" direction={"row"}>
                 <Button onClick={clickReturnHandle}
                     sx={{
-                        color: "black"
+                        color: "black",
+                        width: "30%"
                     }}>
-                    <UndoIcon />
+                    <UndoIcon 
+                    sx={{
+                        margin: "0 3%"
+                    }}
+                    />
+                    <Typography variant='h6'>Go back</Typography>
                 </Button>
-                <Typography variant='h6'></Typography>
             </Stack>
             <Box className="route--detail__container"
             >

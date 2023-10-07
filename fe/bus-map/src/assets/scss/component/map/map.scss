@@ -1,9 +1,13 @@
 @import "../../variable";
 
+// Home
 
+
+// map
 .map--wrap {
     width: 100% !important;
     height: 90% !important;
+    overflow: hidden;
 
     // Styling the sidebar
     &__sidebar__container {

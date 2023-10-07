@@ -6,6 +6,7 @@ package com.backend.busmap.controller;
 
 import com.backend.busmap.models.Station;
 import com.backend.busmap.service.StationService;
+import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -54,12 +55,18 @@ public class StationController {
             @RequestParam Double latitude2, @RequestParam Double longitude2) {
         return ResponseEntity.ok(this.stationService.getNearestStationsFor1Route(latitude1, longitude1, latitude2, longitude2));
     }
+    
+//      @GetMapping("/find")
+//    public ResponseEntity<?> getNearestStationsFor1Route(@RequestParam Map<String, String> params) {
+//        return ResponseEntity.ok(this.stationService.findWithManyRoute(params));
+//    }
+    
 
-    @GetMapping("/find")
-    public ResponseEntity<?> findStationsOnRoutes(@RequestParam Integer route1, @RequestParam Integer route2) {
-
-        return ResponseEntity.ok(this.stationService.findStationsOnRoutes(route1, route2));
-    }
+//    @GetMapping("/find")
+//    public ResponseEntity<?> findStationsOnRoutes(@RequestParam Integer route1, @RequestParam Integer route2) {
+//
+//        return ResponseEntity.ok(this.stationService.findStationsOnRoutes(route1, route2));
+//    }
 
     @GetMapping("/cal")
     public ResponseEntity<?> calculateDistance(@RequestParam Double latitude1, @RequestParam Double longitude1,
