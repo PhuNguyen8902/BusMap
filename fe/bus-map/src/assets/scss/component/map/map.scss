@@ -18,12 +18,15 @@
             & .sidebar__first--tab {
                 width: 100%;
                 height: 100%;
+
                 &__search--route {
                     width: 100%;
                     height: 100%;
+
                     &__content {
                         width: 100%;
                         height: 100%;
+
                         &__search--field {
                             background-color: rgba(0, 0, 0, 0.05);
                             display: flex;
@@ -101,12 +104,15 @@
             & .sidebar__seconde--tab {
                 width: 100%;
                 height: 100%;
+
                 &__navigate {
                     width: 100%;
                     height: 100%;
+
                     &__content {
                         width: 100%;
                         height: 100%;
+
                         &__search--field {
                             width: 100%;
                             height: 15%;
@@ -127,6 +133,7 @@
                                     width: 100%;
                                     height: 70%;
                                     border: none;
+
                                     &:focus {
                                         outline: none;
                                     }
@@ -142,11 +149,13 @@
                                 width: 100%;
                                 height: 48%;
                                 border-radius: 10px;
+
                                 & input {
                                     background-color: transparent;
                                     width: 100%;
                                     height: 70%;
                                     border: none;
+
                                     &:focus {
                                         outline: none;
                                     }
@@ -156,13 +165,72 @@
                         }
 
                         &__routes {
+                            width: 100%;
                             height: 80%;
+
+                            & .tab {
+                                width: 100%;
+                                height: 100%;
+                                overflow-y: scroll;
+
+                                &::-webkit-scrollbar {
+                                    width: 0.3vw;
+                                }
+
+                                &:hover {
+                                    &::-webkit-scrollbar {
+                                        width: 0.3vw;
+                                    }
+
+                                    &::-webkit-scrollbar-thumb {
+                                        background-color: #10af7e;
+                                    }
+
+                                    &::-webkit-scrollbar-track {
+                                        background-color: white;
+                                    }
+                                }
+
+                                &__avaiable--routes {
+                                    width: 100%;
+                                    height: 25%;
+                                    background-color: rgba(0, 0, 0, 0.05);
+                                    margin: 0 0 5% 0;
+                                    padding: 5%;
+
+                                }
+                            }
                         }
                     }
 
                 }
             }
+
+            & .route--with--trip--detail {
+                width: 100%;
+                height: 85%;
+                overflow-y: scroll;
+
+                &::-webkit-scrollbar {
+                    width: 0.3vw;
+                }
+
+                &:hover {
+                    &::-webkit-scrollbar {
+                        width: 0.3vw;
+                    }
+
+                    &::-webkit-scrollbar-thumb {
+                        background-color: #10af7e;
+                    }
+
+                    &::-webkit-scrollbar-track {
+                        background-color: white;
+                    }
+                }
+            }
         }
+
 
         & .route--detail {
             width: 100%;

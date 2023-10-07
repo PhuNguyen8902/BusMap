@@ -15,6 +15,7 @@ export const getData = async (api, options = {}) =>{
         }
 
         const data = await response.json();
+        // console.log("The fetch data: ", data);
         return data;
 
     }catch(err){

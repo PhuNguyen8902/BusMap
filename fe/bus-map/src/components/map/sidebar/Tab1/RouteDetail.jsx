@@ -66,7 +66,7 @@ export default function RouteDetail() {
                                 display: "flex",
                                 justifyContent: "center",
                             }}>
-                            <Tabs onChange={handleChange} aria-label="lab API tabs example" variant='fullWidth'
+                            <TabList onChange={handleChange} aria-label="lab API tabs example" variant='fullWidth'
                                 sx={{
                                     display: "flex",
                                     backgroundColor: "rgba(0, 0, 0, 0.05)",
@@ -75,7 +75,7 @@ export default function RouteDetail() {
                                 }}>
                                 <Tab label="Station" value="1" />
                                 <Tab label="Information" value="2" />
-                            </Tabs>
+                            </TabList>
                         </Box>
                         <TabPanel value="1" className="first--tab">
                             {routeDetail != "" ?
