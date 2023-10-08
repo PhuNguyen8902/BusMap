@@ -74,11 +74,11 @@ public class TripService {
             params.put("page", "1");
         }
         try {
-            
-              Sort.Order o = new Sort.Order(Sort.Direction.ASC, "startTime"); 
+
+            Sort.Order o = new Sort.Order(Sort.Direction.ASC, "startTime");
             Sort sort = Sort.by(o);
-            
-            pageable = PageRequest.of(Integer.parseInt(params.get("page")) - 1, Integer.parseInt(params.get("limit")),sort);
+
+            pageable = PageRequest.of(Integer.parseInt(params.get("page")) - 1, Integer.parseInt(params.get("limit")), sort);
             Route r = routeRepo.findById(id).orElse(null);
 
             trips = tripRepo.findAllByRouteId(r, pageable);
@@ -104,8 +104,19 @@ public class TripService {
 
         Integer routeId = Integer.valueOf(addTrip.getRouteId());
 
-        Trip trip = new Trip();
         Route route = routeRepo.findById(routeId).orElseThrow(null);
+
+        if (route.getStartTime().isAfter(startTime) || route.getEndTime().isBefore(startTime)) {
+            return "Invalid Time";
+        }
+   List<Trip> list = tripRepo.findAllByRouteId(route);
+        for (Trip r : list) {
+            if (r.getStartTime() == startTime) {
+                return "Unique Time";
+            }
+        }
+        Trip trip = new Trip();
+
         trip.setStartTime(startTime);
         trip.setRouteId(route);
         tripRepo.save(trip);
@@ -116,8 +127,20 @@ public class TripService {
         LocalTime startTime = LocalTime.parse(addTrip.getStartTime());
         Integer routeId = Integer.valueOf(addTrip.getRouteId());
 
-        Trip trip = new Trip();
         Route route = routeRepo.findById(routeId).orElseThrow(null);
+
+        if (route.getStartTime().isAfter(startTime) || route.getEndTime().isBefore(startTime)) {
+            return "Invalid Time";
+        }
+        List<Trip> list = tripRepo.findAllByRouteId(route);
+        for (Trip r : list) {
+            if (r.getStartTime()== startTime) {
+                return "Unique Time";
+            }
+        }
+
+        Trip trip = new Trip();
+
         trip.setId(Integer.valueOf(addTrip.getId()));
         trip.setStartTime(startTime);
         trip.setRouteId(route);
