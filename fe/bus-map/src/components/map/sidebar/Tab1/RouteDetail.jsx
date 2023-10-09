@@ -19,16 +19,21 @@ import { setStations } from '../../../../store/features/storeRoute/storeMakersSl
 
 
 export default function RouteDetail() {
-    const [value, setValue] = useState('1');
+    const [value1, setValue1] = useState('1');
     const [routeDetail, setRouteDetail] = useState("");
+    const [value, setValue] = React.useState('1');
+
+    const handleChange = (event, newValue) => {
+        setValue(newValue);
+    }
 
     const navigate = useNavigate();
 
     const routeId = useSelector((state) => state.storeRoute.routeId);
     const dispatch = useDispatch();
 
-    const handleChange = (event, newValue) => {
-        setValue(newValue);
+    const handleChange1 = (event, newValue) => {
+        setValue1(newValue);
     };
 
     const clickReturnHandle = () => {
@@ -54,24 +59,47 @@ export default function RouteDetail() {
                         color: "black",
                         width: "30%"
                     }}>
-                    <UndoIcon 
-                    sx={{
-                        margin: "0 3%"
-                    }}
+                    <UndoIcon
+                        sx={{
+                            margin: "0 3%"
+                        }}
                     />
-                    <Typography variant='h6'>Go back</Typography>
+                    <Typography variant='h6'>back</Typography>
                 </Button>
             </Stack>
-            <Box className="route--detail__container"
-            >
-                <Box sx={{ width: '100%', height: "100%", typography: 'body1' }} className="route--detail__container">
+            <Box className="route--detail__container">
+                <Box
+                    sx={{
+                        width: '100%',
+                        typography: 'body1'
+                    }}>
                     <TabContext value={value}>
+                        <Box >
+                            <TabList 
+                                onChange={handleChange} 
+                                aria-label="lab API tabs example" 
+                                variant='fullWidth'
+                            >
+                                <Tab label="Forward" value="1" />
+                                <Tab label="Backward" value="2" />
+                            </TabList>
+                        </Box>
+                        <TabPanel value="1">
+                            
+                        </TabPanel>
+                        <TabPanel value="2">
+
+                        </TabPanel>
+                    </TabContext>
+                </Box>
+                <Box sx={{ width: '100%', height: "100%", typography: 'body1' }} className="route--detail__container">
+                    <TabContext value={value1}>
                         <Box className="box"
                             sx={{
                                 display: "flex",
                                 justifyContent: "center",
                             }}>
-                            <TabList onChange={handleChange} aria-label="lab API tabs example" variant='fullWidth'
+                            <TabList onChange={handleChange1} aria-label="lab API tabs example" variant='fullWidth'
                                 sx={{
                                     display: "flex",
                                     backgroundColor: "rgba(0, 0, 0, 0.05)",
@@ -108,7 +136,7 @@ export default function RouteDetail() {
                                     <Typography><strong>Route: </strong>{routeDetail[0].routeId.routeNum}</Typography>
                                     <Typography><strong>Route Name: </strong>{routeDetail[0].routeId.name}</Typography>
                                     <Typography><strong>Route Distance: </strong>{routeDetail[0].routeId.distance} km</Typography>
-                                    <Typography> 
+                                    <Typography>
                                         <strong>Time: </strong>
                                         {routeDetail[0].routeId.startTime[0]}:{routeDetail[0].routeId.startTime[1]}
                                         {routeDetail[0].routeId.startTime[1].toString().length < 2 ?
