@@ -22,11 +22,21 @@ function MainHeader(props) {
 
     const navigate = useNavigate()
     return (
-        <Stack className="main--header" direction={"row"} justifyContent={"space-evenly"}>
-            <Stack className="main--header__logo" 
-                direction={"row"} 
+        <Stack
+            className="main--header"
+            direction={"row"}
+            justifyContent={"space-evenly"}
+            sx={{
+                ...(props.changeTheme === "white" && {
+                    backgroundColor: "white",
+                    color: "#10af7e",
+                  })
+            }}
+        >
+            <Stack className="main--header__logo"
+                direction={"row"}
                 spacing={1}
-                onClick={() => {navigate("/home")}}>
+                onClick={() => { navigate("/home") }}>
                 <DirectionsBusIcon
                     sx={{
                         fontSize: "2.5vw",
