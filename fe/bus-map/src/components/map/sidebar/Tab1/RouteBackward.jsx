@@ -20,6 +20,9 @@ import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt';
 
 export default function RouteBackward(props) {
 
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  
   const [value, setValue] = React.useState('1');
   const [routeDetail, setRouteDetail] = useState("");
 
@@ -46,7 +49,8 @@ export default function RouteBackward(props) {
       // console.log("Route detail data: ", routeDetailData);
 
       setRouteDetail(routeDetailData)
-
+      navigate(`../map/route/${RouteBackwardId}`)
+      dispatch(setStations(RouteBackwardId))
     }
 
     featchBackWardRoute();

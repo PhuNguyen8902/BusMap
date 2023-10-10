@@ -31,7 +31,7 @@ export default function SearchRoute() {
     useEffect(() => {
         const fetchRouteData = async () => {
             const routeData = await routeService.getOneWayRoute(searchRoute);
-            // console.log("route data in search route: ", routeData);
+            console.log("route data in search route: ", routeData);
             setRoutes(routeData)
         }
         fetchRouteData()

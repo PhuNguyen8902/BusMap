@@ -20,8 +20,14 @@ import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt';
 
 export default function RouteForward(props) {
 
+  const navigate = useNavigate();
+  
   const routeDetail = props.routeDetail
   console.log("routeDetail in route forward: ", routeDetail)
+
+  useEffect(() =>{
+      navigate(`../map/route/${routeDetail[0].routeId.id}`)
+  },[])
 
   const [value, setValue] = React.useState('1');
 

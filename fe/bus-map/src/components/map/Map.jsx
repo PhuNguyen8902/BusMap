@@ -19,7 +19,7 @@ import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import { Autocomplete, IconButton, Input, InputBase, Paper, TextField } from "@mui/material";
 import SearchIcon from '@mui/icons-material/Search';
-import { Form } from "react-router-dom";
+import { Form, useParams } from "react-router-dom";
 import { TextFields } from "@mui/icons-material";
 import { UpdateMapView } from "./UpdateMapView";
 import { useDispatch, useSelector } from "react-redux";
@@ -51,8 +51,8 @@ export default function Map() {
   });
 
   const dispatch = useDispatch()
-  const routeId = useSelector((state) => state.storeRoute.routeId);
-  // console.log("routeId in Map: ", routeId)
+  const {routeId} = useParams();
+  // console.log("routeId in Map: ", routeId)  
   const stations = useSelector((state) => state.storeMarkers)
   // console.log("all stations: ", stations)
   // get stations in select route
