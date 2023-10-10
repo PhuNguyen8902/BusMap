@@ -22,7 +22,7 @@ export default function RouteWithOnetrip() {
         }
         // get route with one trip
         fetchRouteWithOneTrip()
-    }, [])
+    }, [location])
 
     return (
         <>
