@@ -16,6 +16,8 @@ import { getData } from '../../../../util/fetchApi';
 import routeService from '../../../../service/routeService';
 import { useState } from 'react';
 import { setStations } from '../../../../store/features/storeRoute/storeMakersSlice';
+import RouteForward from './RouteForward';
+import RouteBackward from './RouteBackward';
 
 
 export default function RouteDetail() {
@@ -71,28 +73,51 @@ export default function RouteDetail() {
                 <Box
                     sx={{
                         width: '100%',
+                        height: "100%",
                         typography: 'body1'
                     }}>
                     <TabContext value={value}>
-                        <Box >
-                            <TabList 
-                                onChange={handleChange} 
-                                aria-label="lab API tabs example" 
+                        <Stack 
+                        direction={"row"}
+                        justifyContent={"center"}
+                        sx={{
+                            width: '100%',
+                            height: "5%",
+                        }}>
+                            <TabList
+                                onChange={handleChange}
+                                aria-label="lab API tabs example"
                                 variant='fullWidth'
+                                sx={{
+                                    backgroundColor: "rgba(0, 0, 0, 0.05)",
+                                    width: "80%",
+                                    height: "80%",
+                                    borderRadius: "10px"
+                                }}
                             >
                                 <Tab label="Forward" value="1" />
                                 <Tab label="Backward" value="2" />
                             </TabList>
-                        </Box>
+                        </Stack>
                         <TabPanel value="1">
-                            
+                            {routeDetail != "" ?
+                                <RouteForward
+                                    routeDetail={routeDetail}
+                                />
+                                : null
+                            }
                         </TabPanel>
                         <TabPanel value="2">
-
+                            {routeDetail != "" ?
+                                <RouteBackward
+                                    routeDetail={routeDetail}
+                                />
+                                : null
+                            }
                         </TabPanel>
                     </TabContext>
                 </Box>
-                <Box sx={{ width: '100%', height: "100%", typography: 'body1' }} className="route--detail__container">
+                {/* <Box sx={{ width: '100%', height: "100%", typography: 'body1' }} className="route--detail__container">
                     <TabContext value={value1}>
                         <Box className="box"
                             sx={{
@@ -154,7 +179,7 @@ export default function RouteDetail() {
                                 : null}
                         </TabPanel>
                     </TabContext>
-                </Box>
+                </Box> */}
             </Box>
         </Box>
     )
