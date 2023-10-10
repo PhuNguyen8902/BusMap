@@ -16,11 +16,12 @@ import { getData } from '../../../../util/fetchApi';
 import routeService from '../../../../service/routeService';
 import { useState } from 'react';
 import { setStations } from '../../../../store/features/storeRoute/storeMakersSlice';
+import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt';
 
 export default function RouteForward(props) {
 
   const routeDetail = props.routeDetail
-  // console.log("routeDetail in route forward: ", routeDetail)
+  console.log("routeDetail in route forward: ", routeDetail)
 
   const [value, setValue] = React.useState('1');
 
@@ -36,15 +37,15 @@ export default function RouteForward(props) {
           direction={"row"}
           justifyContent={"center"}
           sx={{
-            display: "flex",
-            justifyContent: "center",
+            width: "100%",
+            height: "5%"
           }}>
           <TabList onChange={handleChange} aria-label="lab API tabs example" variant='fullWidth'
             sx={{
               display: "flex",
               backgroundColor: "rgba(0, 0, 0, 0.05)",
               borderRadius: "10px",
-              width: "100%",
+              width: "90%",
             }}>
             <Tab label="Station" value="1" />
             <Tab label="Information" value="2" />
@@ -62,7 +63,7 @@ export default function RouteForward(props) {
                     sx={{
                       fontSize: "0.8vw",
                       color: "#10af7e",
-                      margin: "2%"
+                      margin: "1%"
                     }} />
                   <Typography>{station.stationId.name}</Typography>
                 </Stack>
@@ -70,30 +71,93 @@ export default function RouteForward(props) {
             </Stack>
             : null}
         </TabPanel>
-        <TabPanel value="2" className="seacond--tab">
+        <TabPanel value="2" className="seconde--tab">
           {routeDetail != "" ?
-            <Stack className="first--tab__information" spacing={2}>
-              <Typography><strong>Route: </strong>{routeDetail[0].routeId.routeNum}</Typography>
-              <Typography><strong>Route Name: </strong>{routeDetail[0].routeId.name}</Typography>
-              <Typography><strong>Route Distance: </strong>{routeDetail[0].routeId.distance} km</Typography>
-              <Typography>
-                <strong>Time: </strong>
-                {routeDetail[0].routeId.startTime[0]}:{routeDetail[0].routeId.startTime[1]}
-                {routeDetail[0].routeId.startTime[1].toString().length < 2 ?
-                  0
-                  : null}
-                -
-                {routeDetail[0].routeId.endTime[0]}:{routeDetail[0].routeId.endTime[1]}
-                {routeDetail[0].routeId.endTime[1].toString().length < 2 ?
-                  0
-                  : null}
-              </Typography>
-              <Typography><strong>Route Duration: </strong>{routeDetail[0].routeId.duration} min</Typography>
-
+            <Stack className="seconde--tab__information" spacing={2}>
+              <Stack direction={"row"}>
+                <FiberManualRecordIcon
+                  sx={{
+                    fontSize: "0.8vw",
+                    color: "#10af7e",
+                    margin: "1%"
+                  }}
+                />
+                <Typography><strong>Route: </strong>{routeDetail[0].routeId.routeNum}</Typography>
+              </Stack>
+              <Stack direction={"row"}>
+                <FiberManualRecordIcon
+                  sx={{
+                    fontSize: "0.8vw",
+                    color: "#10af7e",
+                    margin: "1%"
+                  }}
+                />
+                <Typography><strong>Route Name: </strong>{routeDetail[0].routeId.name}</Typography>
+              </Stack>
+              <Stack direction={"row"}>
+                <FiberManualRecordIcon
+                  sx={{
+                    fontSize: "0.8vw",
+                    color: "#10af7e",
+                    margin: "1%"
+                  }}
+                />
+                <Typography><strong>Route Distance: </strong>{routeDetail[0].routeId.distance} km</Typography>
+              </Stack>
+              <Stack direction={"row"}>
+                <FiberManualRecordIcon
+                  sx={{
+                    fontSize: "0.8vw",
+                    color: "#10af7e",
+                    margin: "1%"
+                  }}
+                />
+                <Typography>
+                  <strong>Time: </strong>
+                  {routeDetail[0].routeId.startTime[0]}:{routeDetail[0].routeId.startTime[1]}
+                  {routeDetail[0].routeId.startTime[1].toString().length < 2 ?
+                    0
+                    : null}
+                  -
+                  {routeDetail[0].routeId.endTime[0]}:{routeDetail[0].routeId.endTime[1]}
+                  {routeDetail[0].routeId.endTime[1].toString().length < 2 ?
+                    0
+                    : null}
+                </Typography>
+              </Stack>
+              <Stack direction={"row"}>
+                <FiberManualRecordIcon
+                  sx={{
+                    fontSize: "0.8vw",
+                    color: "#10af7e",
+                    margin: "1%"
+                  }}
+                />
+                <Typography><strong>Route Duration: </strong>{routeDetail[0].routeId.duration} min</Typography>
+              </Stack>
+              <Stack direction={"row"}>
+                <FiberManualRecordIcon
+                  sx={{
+                    fontSize: "0.8vw",
+                    color: "#10af7e",
+                    margin: "1%"
+                  }}
+                />
+                <Typography><strong>Route Backward:  </strong>
+                  {routeDetail.map((station, index) => {
+                    return <span key={index}>
+                      <span>{station.stationId.name}</span>
+                      {index !== routeDetail.length - 1 && (
+                        <ArrowRightAltIcon sx={{ margin: "0% 2%", fontSize: "0.8vw" }} />
+                      )}
+                    </span>
+                  })}
+                </Typography>
+              </Stack>
             </Stack>
             : null}
         </TabPanel>
       </TabContext>
     </Box>
   )
-}
+} 
