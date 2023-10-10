@@ -98,8 +98,12 @@ export default function RouteDetail() {
                                 <Tab label="Forward" value="1" />
                                 <Tab label="Backward" value="2" />
                             </TabList>
-                        </Stack>
-                        <TabPanel value="1">
+                        </Stack> 
+                        <TabPanel value="1" 
+                            sx={{
+                                width: "100%",
+                                height: "95%",
+                            }}> 
                             {routeDetail != "" ?
                                 <RouteForward
                                     routeDetail={routeDetail}
@@ -107,7 +111,12 @@ export default function RouteDetail() {
                                 : null
                             }
                         </TabPanel>
-                        <TabPanel value="2">
+                        <TabPanel value="2"
+                            sx={{
+                                width: "100%",
+                                height: "95%",
+                            }}
+                        >
                             {routeDetail != "" ?
                                 <RouteBackward
                                     routeDetail={routeDetail}
