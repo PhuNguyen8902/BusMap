@@ -68,6 +68,14 @@ public class RouteService {
     public List<Route> getAllOneWayRoute(String name) {
         return this.routeRepo.findAllOneWayRoute(name);
     }
+    
+    public List<Route> getRouteByRouteNum(String routeNum){
+        return this.routeRepo.findRouteByRouteNum(routeNum);
+    }
+    
+    public Route getRouteById(Integer routeId){
+        return this.routeRepo.findRouteById(routeId);
+    }
 
     public String addNewRoute(AddRoute addRoute) {
 

@@ -41,6 +41,7 @@ export default function SecTionTwo() {
                     items.map((item, index) => {
                         return (
                             <Stack 
+                            key={index}
                             className = "section--two__carousel__item"
                             direction={"row"}
                             sx={{

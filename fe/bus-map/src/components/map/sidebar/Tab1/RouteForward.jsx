@@ -5,7 +5,7 @@ import TabContext from '@mui/lab/TabContext';
 import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
 import { Button, Stack, Tabs, Typography } from '@mui/material';
-import { Routes, useNavigate } from 'react-router';
+import { useNavigate } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
 import { storeRouteId } from '../../../../store/features/storeRoute/storeRouteSlice';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
@@ -17,39 +17,16 @@ import routeService from '../../../../service/routeService';
 import { useState } from 'react';
 import { setStations } from '../../../../store/features/storeRoute/storeMakersSlice';
 
-export default function RouteBackward(props) {
+export default function RouteForward(props) {
+
+  const routeDetail = props.routeDetail
+  // console.log("routeDetail in route forward: ", routeDetail)
 
   const [value, setValue] = React.useState('1');
-  const [routeDetail, setRouteDetail] = useState("");
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   }
-
-  useEffect(() => {
-
-    const featchBackWardRoute = async () => {
-
-      const routeDetail = props.routeDetail;
-      // console.log("routeDetail in route backward: ", routeDetail)
-
-      const routeNum = routeDetail[0].routeId.routeNum;
-      // console.log("routeNum in route backward: ", routeNum);
-
-      const RouteByRouteNumData = await routeService.getRoutesByRouteNum(routeNum);
-
-      const RouteBackwardId = RouteByRouteNumData[1].id;
-      // console.log("Route backward id: ", RouteBackwardId);
-
-      const routeDetailData = await routeService.getRouteDetail(RouteBackwardId);
-      // console.log("Route detail data: ", routeDetailData);
-
-      setRouteDetail(routeDetailData)
-
-    }
-
-    featchBackWardRoute();
-  }, [])
 
   return (
     <Box sx={{ width: '100%', height: "100%", typography: 'body1' }} className="route--detail__container__content">
@@ -59,15 +36,15 @@ export default function RouteBackward(props) {
           direction={"row"}
           justifyContent={"center"}
           sx={{
-            width: '100%',
-                            height: "5%",
+            display: "flex",
+            justifyContent: "center",
           }}>
           <TabList onChange={handleChange} aria-label="lab API tabs example" variant='fullWidth'
             sx={{
+              display: "flex",
               backgroundColor: "rgba(0, 0, 0, 0.05)",
               borderRadius: "10px",
               width: "100%",
-              height: "100%"
             }}>
             <Tab label="Station" value="1" />
             <Tab label="Information" value="2" />

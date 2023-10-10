@@ -26,6 +26,8 @@ public interface RouteRepository extends JpaRepository<Route, Integer> {
      @Query("SELECT r FROM Route r WHERE r.isActive = 1")
     Page<Route> findRouteByIsActive( Pageable a);
 
+    Route findRouteById(Integer id);
+            
     List<Route> findRouteByRouteNum(String routeNum);
 
     @Query(value = "SELECT r FROM Route r WHERE (:name IS NULL OR r.name LIKE %:name%) group by r.routeNum")
