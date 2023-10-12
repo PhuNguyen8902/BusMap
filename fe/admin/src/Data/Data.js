@@ -34,14 +34,6 @@ export const SidebarData = [
     heading: "Station",
     url: "/station/",
   },
-  {
-    icon: UilPackage,
-    heading: "Products",
-  },
-  {
-    icon: UilChart,
-    heading: "Analytics",
-  },
 ];
 
 // Analytics Cards Data
