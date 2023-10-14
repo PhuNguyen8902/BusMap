@@ -19,15 +19,15 @@ import img3 from "../imgs/img3.png";
 
 // Sidebar Data
 export const SidebarData = [
-  {
-    icon: UilEstate,
-    heading: "Dashboard",
-    url: "/",
-  },
+  // {
+  //   icon: UilEstate,
+  //   heading: "Dashboard",
+  //   url: "/",
+  // },
   {
     icon: UilClipboardAlt,
     heading: "Route",
-    url: "/route/",
+    url: "/",
   },
   {
     icon: UilUsersAlt,

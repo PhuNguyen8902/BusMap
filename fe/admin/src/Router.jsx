@@ -7,8 +7,8 @@ import StationRoutePage from "./page/StationRoutePage";
 export default function Routers() {
   return (
     <Routes>
-      <Route path="/" element={<MainDash />} />
-      <Route path="/route/" element={<RoutePage />} />
+      {/* <Route path="/" element={<MainDash />} /> */}
+      <Route path="/" element={<RoutePage />} />
       <Route path="/station/" element={<StationPage />} />
       <Route path="/trip/route/:id" element={<TripWithRouteId />} />
       <Route
