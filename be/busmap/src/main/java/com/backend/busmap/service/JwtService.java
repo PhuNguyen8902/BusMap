@@ -65,7 +65,7 @@ private static final String SECRET_KEY = "hp2JdTQsAmOTxHvxh9CosgVhvMbqiHIDum7e87
                 .setClaims(extractClaims)
                 .setSubject(userDetails.getUsername())
                 .setIssuedAt(new Date())
-                .setExpiration(new Date(System.currentTimeMillis() + 60000 * 60 )) //60000 la 1 phut
+                .setExpiration(new Date(System.currentTimeMillis() + 30000 )) //60000 la 1 phut
                 .signWith(Keys.hmacShaKeyFor(getSignInKey()), SignatureAlgorithm.HS256)
                 .compact();
     }
