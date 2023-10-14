@@ -1,6 +1,5 @@
 import { Route, Routes, useParams } from "react-router";
-import MainDash from "./components/MainDash/MainDash";
-import { RouteDeletedPage, RoutePage, StationPage } from "./page";
+import { LoginPage, RoutePage, StationPage } from "./page";
 import TripPage from "./page/TripPage";
 import StationRoutePage from "./page/StationRoutePage";
 
@@ -8,6 +7,7 @@ export default function Routers() {
   return (
     <Routes>
       {/* <Route path="/" element={<MainDash />} /> */}
+      <Route path="/login/" element={<LoginPage />} />
       <Route path="/" element={<RoutePage />} />
       <Route path="/station/" element={<StationPage />} />
       <Route path="/trip/route/:id" element={<TripWithRouteId />} />

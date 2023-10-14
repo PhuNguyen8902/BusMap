@@ -1,3 +1,4 @@
 import RoutePage from "./RoutePage";
 import StationPage from "./StationPage";
-export { RoutePage, StationPage };
+import LoginPage from "./LoginPage";
+export { RoutePage, StationPage, LoginPage };
