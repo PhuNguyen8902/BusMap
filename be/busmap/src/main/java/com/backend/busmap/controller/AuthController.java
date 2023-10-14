@@ -65,8 +65,12 @@ public class AuthController {
         return null;
     }
 
-    @GetMapping("/accessToken")
+    @GetMapping("/access-token")
     public ResponseEntity<?> getUserByToken(HttpServletRequest request) {
+
+        if(SecurityContextHolder.getContext().getAuthentication().getPrincipal() == "anonymousUser"){
+            return ResponseEntity.status(401).body("UNAUTHORIZED");
+        }
         return ResponseEntity.ok(SecurityContextHolder.getContext().getAuthentication().getPrincipal());
     }
 

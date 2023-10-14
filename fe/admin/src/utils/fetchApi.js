@@ -1,3 +1,5 @@
+import authService from "../service/authService";
+
 export const getData = async (api, options = {}) => {
   try {
     const response = await fetch(api, {
@@ -91,3 +93,68 @@ export const deleteData = async (api, opitons = {}) => {
     throw err;
   }
 };
+
+//Token
+export const getDataToken = async (api, options = {}) => {
+  const token = JSON.parse(localStorage.getItem("token"));
+
+  // return 403 if dont have token
+  if (!token)
+    return {
+      status: 403,
+      error: "Forbiden",
+    };
+
+  let response = await fetch(api, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token.accessToken}`,
+    },
+    ...options,
+  });
+
+  if (response.status != 200) {
+    response = await authService.refreshToken({
+      token: token.refreshToken,
+    });
+    if (!response.mess) {
+      token.accessToken = response.accessToken;
+      localStorage.setItem("token", JSON.stringify(token));
+      return response;
+    }
+  }
+
+  return response.json();
+};
+
+// export const callWithToken = async (api, options = {}) => {
+//   const token = JSON.parse(localStorage.getItem("token"));
+//   if (!token)
+//     return {
+//       status: 403,
+//       error: "Forbiden",
+//     };
+
+//   options = {
+//     method: options.method ? options.method : "GET",
+//     headers: {
+//       Authorization: `Bearer ${token.accessToken}`,
+//       ...options.headers,
+//     },
+//     body: options.body ? options.body : null,
+//   };
+//   let response = await fetch(api, options);
+//   if (response.status != 200) {
+//     response = await authService.refreshToken({
+//       token: token.refreshToken,
+//     });
+//     if (!response.error) {
+//       options.headers.Authorization = `Bearer ${response.accessToken}`
+//       localStorage.setItem("token", JSON.stringify(response));
+//       response = await fetch(api, options);
+//     }
+//   }
+
+//   return response.json();
+// };
