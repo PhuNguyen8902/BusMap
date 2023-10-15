@@ -38,8 +38,13 @@ public class AdminStationRouteController {
     private StationRouteService stationRouteSer;
 
     @GetMapping("/route/{id}")
-    public ResponseEntity<?> getAllStationAdmin(@PathVariable Integer id, @RequestParam Map<String, String> params) {
-        Page<StationRoute> pages = (Page<StationRoute>) stationRouteSer.getAllStationRouteAdmin(id, params);
+    public ResponseEntity<?> getAllStationAdminByRouteId(@PathVariable Integer id, @RequestParam Map<String, String> params) {
+        Page<StationRoute> pages = (Page<StationRoute>) stationRouteSer.getAllStationAdminByRouteId(id, params);
+        return ResponseEntity.ok(pages);
+    }
+      @GetMapping("/station/{id}")
+    public ResponseEntity<?> getAllStationAdminByStaionId(@PathVariable Integer id, @RequestParam Map<String, String> params) {
+        Page<StationRoute> pages = (Page<StationRoute>) stationRouteSer.getAllStationAdminByStationId(id, params);
         return ResponseEntity.ok(pages);
     }
 

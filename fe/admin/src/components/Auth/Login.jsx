@@ -5,6 +5,7 @@ import { useDispatch } from "react-redux";
 import { ErrorMessage } from "@hookform/error-message";
 import authService from "../../service/authService";
 import { signIn } from "../../store/slices/authSlice";
+import { Navigate } from "react-router-dom";
 
 const initialForms = {
   field: {
@@ -28,6 +29,7 @@ const Login = () => {
     if (!response.error) {
       dispatch(signIn(response));
       dispatch({ type: "FETCH_INFO" });
+      window.location.href = "/route";
     } else {
       setError("userName", { message: response.error });
     }

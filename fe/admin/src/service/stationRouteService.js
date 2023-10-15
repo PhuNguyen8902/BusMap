@@ -9,6 +9,12 @@ const stationRouteService = {
     );
     return stationRouteData;
   },
+  async getAllStationRouteByStation(id, a) {
+    const stationRouteData = await getData(
+      `${routeStationAdminApi}/station/${id}?${a}`
+    );
+    return stationRouteData;
+  },
   async deleteStationRoute(a) {
     const stationRouteData = await deleteData(
       `${routeStationAdminApi}/delete/${a}`
