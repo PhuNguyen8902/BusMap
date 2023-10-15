@@ -6,6 +6,8 @@ import { SidebarData } from "../Data/Data";
 import { UilBars } from "@iconscout/react-unicons";
 import { motion } from "framer-motion";
 import { Link, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { signOut } from "../store/slices/authSlice";
 
 const Sidebar = () => {
   const [selected, setSelected] = useState(0);
@@ -13,6 +15,8 @@ const Sidebar = () => {
   const [expanded, setExpaned] = useState(true);
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
   const sidebarVariants = {
     true: {
       left: "0",
@@ -21,10 +25,12 @@ const Sidebar = () => {
       left: "-60%",
     },
   };
-  console.log(window.innerWidth);
   const handLeSide = (index, url) => {
     navigate(url);
     setSelected(index);
+  };
+  const handleSigOut = () => {
+    dispatch(signOut());
   };
   return (
     <>
@@ -43,9 +49,7 @@ const Sidebar = () => {
         {/* logo */}
         <div className="logo">
           <img src={Logo} alt="logo" />
-          <span>
-            Sh<span>o</span>ps
-          </span>
+          <span>BusAdmin</span>
         </div>
 
         <div className="menu">
@@ -62,7 +66,7 @@ const Sidebar = () => {
             );
           })}
           {/* signoutIcon */}
-          <div className="menuItem">
+          <div className="menuItem" onClick={() => handleSigOut()}>
             <UilSignOutAlt />
           </div>
         </div>

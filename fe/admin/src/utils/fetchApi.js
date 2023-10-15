@@ -121,7 +121,7 @@ export const getDataToken = async (api, options = {}) => {
     if (!response.mess) {
       token.accessToken = response.accessToken;
       localStorage.setItem("token", JSON.stringify(token));
-      return response;
+      return getDataToken(`http://localhost:8080/api/auth/access-token`);
     }
   }
 
