@@ -44,11 +44,11 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<?> loginAdmin(@RequestBody Login request) {
+    public ResponseEntity<?> login(@RequestBody Login request) {
         AuthenticationResponse response = authenticationService.signIn(request);
         Message errorResponse = checkError(response);
         if (errorResponse != null) {
-            return ResponseEntity.ok(Message.builder().mess(errorResponse.toString()).build());
+            return ResponseEntity.status(401).body(Message.builder().mess(errorResponse.toString()).build());
 
         }
 

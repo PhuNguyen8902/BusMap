@@ -1,5 +1,5 @@
 import { call, delay, put, takeLatest } from "redux-saga/effects";
-import { setInfo } from "../slices/authSlice";
+import { setInfo, signOut } from "../slices/authSlice";
 import { closeLoading, openLoading } from "../slices/pageSlice";
 import userService from "../../service/userService";
 // get user info
@@ -8,7 +8,12 @@ function* fetchInfo() {
     yield put(openLoading());
     const response = yield call(userService.getInfo);
     if (!response.error) {
-      yield put(setInfo(response));
+      if (response.role == "ROLE_ADMIN") {
+        yield put(setInfo(response));
+      } else {
+        alert("You need admin rights to log in");
+        yield put(signOut());
+      }
     } else {
       alert(response.error);
     }

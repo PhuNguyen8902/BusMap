@@ -1,22 +1,44 @@
-import { Button, Grid, Paper, TextField } from "@mui/material";
+import { Button, Grid, Paper, TextField, Typography } from "@mui/material";
 import React from "react";
+import { useForm } from "react-hook-form";
+import { useDispatch } from "react-redux";
+import { ErrorMessage } from "@hookform/error-message";
+import authService from "../../service/authService";
+import { signIn } from "../../store/slices/authSlice";
 
+const initialForms = {
+  field: {
+    userName: "",
+    password: "",
+  },
+};
 const Login = () => {
-  const paperStyle = {
-    padding: 20,
-    height: "40vh",
-    width: 280,
+  const dispatch = useDispatch();
+
+  const {
+    register,
+    handleSubmit,
+    setError,
+    formState: { errors },
+  } = useForm({
+    defaultValues: initialForms.field,
+  });
+  const onSubmit = async (form) => {
+    const response = await authService.signIn(form);
+    if (!response.error) {
+      dispatch(signIn(response));
+      dispatch({ type: "FETCH_INFO" });
+    } else {
+      setError("userName", { message: response.error });
+    }
   };
-  const boxStyle = {
-    position: "absolute",
-    top: "50%",
-    left: "50%",
-    transform: "translate(-50%,-50%)",
-  };
-  const btnstyle = { margin: "8px 0" };
   return (
-    <Grid style={boxStyle}>
-      <Paper elevation={10} style={paperStyle}>
+    <Grid
+      className="login--grid"
+      component={"form"}
+      onSubmit={handleSubmit(onSubmit)}
+    >
+      <Paper elevation={10} className="login--paper">
         <Grid align="center">
           <h2>Sign In</h2>
         </Grid>
@@ -26,7 +48,17 @@ const Login = () => {
           variant="outlined"
           fullWidth
           required
+          {...register("userName")}
         />
+
+        <ErrorMessage
+          errors={errors}
+          name={"userName"}
+          render={({ message }) => (
+            <Typography color="red">{message}</Typography>
+          )}
+        />
+
         <TextField
           label="Password"
           placeholder="Enter password"
@@ -35,13 +67,20 @@ const Login = () => {
           fullWidth
           required
           sx={{ marginTop: "1em" }}
+          {...register("password")}
         />
-
+        <ErrorMessage
+          errors={errors}
+          name={"password"}
+          render={({ message }) => (
+            <Typography color="red">{message}</Typography>
+          )}
+        />
         <Button
           type="submit"
           color="primary"
           variant="contained"
-          style={btnstyle}
+          className="login--btn"
           fullWidth
         >
           Sign in
