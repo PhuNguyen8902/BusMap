@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import { LoginPage, RoutePage, StationPage } from "./page";
 import TripPage from "./page/TripPage";
 import StationRoutePage from "./page/StationRoutePage";
+import StationRoutePageByStation from "./page/StationRoutePageByStation";
 
 export default function Routers() {
   const auth = useSelector((state) => state.auth.isLogin);
@@ -22,6 +23,10 @@ export default function Routers() {
         path="/station-route/route/:id"
         element={<StationRouteWithRouteId />}
       />
+      <Route
+        path="/station-route/station/:id"
+        element={<StationRouteWithStationId />}
+      />
     </Routes>
   );
 }
@@ -34,4 +39,9 @@ function TripWithRouteId() {
 function StationRouteWithRouteId() {
   const { id } = useParams();
   return <StationRoutePage routeId={id} />;
+}
+
+function StationRouteWithStationId() {
+  const { id } = useParams();
+  return <StationRoutePageByStation stationId={id} />;
 }

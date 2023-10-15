@@ -91,7 +91,7 @@ public class StationRouteService {
         return this.stationRouteRepo.findByStationIdAndRouteId(s, r);
     }
 
-    public Page<?> getAllStationRouteAdmin(Integer id, Map<String, String> params) {
+    public Page<?> getAllStationAdminByRouteId(Integer id, Map<String, String> params) {
         Pageable pageable = null;
         Page<StationRoute> stationRoutes = null;
 
@@ -117,6 +117,41 @@ public class StationRouteService {
 
             } else {
                stationRoutes = stationRouteRepo.getStationRouteByRouteId(params.get("kw"),route, pageable);
+            }
+            
+        } catch (NumberFormatException exception) {
+            System.out.println(exception.getMessage());
+            return null;
+        }
+        return stationRoutes;
+    }
+    
+       public Page<?> getAllStationAdminByStationId(Integer id, Map<String, String> params) {
+        Pageable pageable = null;
+        Page<StationRoute> stationRoutes = null;
+
+        if (params.get("limit") == null) {
+            params.put("limit", "5");
+        }
+
+        if (params.get("page") == null || Integer.parseInt(params.get("page")) < 1) {
+            params.put("page", "1");
+        }
+        try {
+
+            Sort.Order o = new Sort.Order(Sort.Direction.ASC, "priority"); 
+            Sort sort = Sort.by(o);
+
+            pageable = PageRequest.of(Integer.parseInt(params.get("page")) - 1, Integer.parseInt(params.get("limit")),sort);
+            Station station = stationSer.findById(id);
+
+//            stationRoutes = stationRouteRepo.findStationRouteByRouteId(route, pageable);
+            
+             if (params.get("kw") == "" ) {
+                stationRoutes = stationRouteRepo.findStationRouteByStationId(station, pageable);
+
+            } else {
+               stationRoutes = stationRouteRepo.getStationRouteByStationId(params.get("kw"),station, pageable);
             }
             
         } catch (NumberFormatException exception) {
