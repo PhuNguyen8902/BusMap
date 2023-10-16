@@ -2,7 +2,7 @@ import MaterialReactTable from "material-react-table";
 import { useEffect, useMemo, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import queryLocation from "../../utils/queryLocation";
-import { Box, Button, IconButton, Tooltip } from "@mui/material";
+import { Box, Button, IconButton, Tooltip, Typography } from "@mui/material";
 import stationService from "../../service/stationService";
 import { CreateNewAccountModal } from "../form/CreateNewAccountModal";
 import { Delete, Edit } from "@mui/icons-material";
@@ -106,6 +106,7 @@ export default function StationTable() {
   return (
     <>
       <Box className="table--container">
+        <Typography variant="h3">Station</Typography>
         <MaterialReactTable
           columns={columns}
           data={data}
@@ -121,7 +122,7 @@ export default function StationTable() {
               onClick={() => setCreateModalOpen(true)}
               variant="contained"
             >
-              Create New Route
+              Create New Station
             </Button>
           )}
           renderRowActions={({ row, table }) => (
