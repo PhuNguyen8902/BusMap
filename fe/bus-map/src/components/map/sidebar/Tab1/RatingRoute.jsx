@@ -1,23 +1,22 @@
-import { Box, Button, Rating, Stack, Typography } from '@mui/material'
-import React, { useEffect, useState } from 'react'
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
-import MessageIcon from '@mui/icons-material/Message';
-import PersonIcon from '@mui/icons-material/Person';
-import WriteRating from './WriteRating';
-
+import { Box, Button, Rating, Stack, Typography } from "@mui/material";
+import React, { useEffect, useState } from "react";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
+import MessageIcon from "@mui/icons-material/Message";
+import PersonIcon from "@mui/icons-material/Person";
+import WriteRating from "./WriteRating";
 
 export default function RatingRoute() {
-
   const data = [
     {
       name: "Hoang Phan",
       rating: 4,
       date: "14-10-2023",
-      comment: "The route is fine, I love it so much, pls keep improving. I can't wait until that",
+      comment:
+        "The route is fine, I love it so much, pls keep improving. I can't wait until that",
     },
     {
       name: "Luc An",
@@ -66,7 +65,8 @@ export default function RatingRoute() {
       rating: 4,
       date: "10:54pm 15-10-2023",
       comment: "",
-    }, {
+    },
+    {
       name: "Ma Dam",
       rating: 2,
       date: "10:54pm 15-10-2023",
@@ -83,105 +83,116 @@ export default function RatingRoute() {
       rating: 5,
       date: "10:54pm 15-10-2023",
       comment: "",
-    }, {
+    },
+    {
       name: "Ma Dam",
       rating: 5,
       date: "10:54pm 15-10-2023",
       comment: "",
-    }, {
+    },
+    {
       name: "Ma Dam",
       rating: 5,
       date: "10:54pm 15-10-2023",
       comment: "",
-    }, {
+    },
+    {
       name: "Ma Dam",
       rating: 5,
       date: "10:54pm 15-10-2023",
       comment: "",
-    }, {
+    },
+    {
       name: "Ma Dam",
       rating: 5,
       date: "10:54pm 15-10-2023",
       comment: "",
-    }, {
+    },
+    {
       name: "Ma Dam",
       rating: 5,
       date: "10:54pm 15-10-2023",
       comment: "",
-    }, {
+    },
+    {
       name: "Ma Dam",
       rating: 5,
       date: "10:54pm 15-10-2023",
       comment: "",
-    }, {
+    },
+    {
       name: "Ma Dam",
       rating: 4,
       date: "10:54pm 15-10-2023",
       comment: "",
-    }, {
+    },
+    {
       name: "Ma Dam",
       rating: 5,
       date: "10:54pm 15-10-2023",
       comment: "",
-    }
-    , {
+    },
+    {
       name: "Ma Dam",
       rating: 5,
       date: "10:54pm 15-10-2023",
       comment: "",
-    }
-    , {
+    },
+    {
       name: "Ma Dam",
       rating: 5,
       date: "10:54pm 15-10-2023",
       comment: "",
-    }
-    , {
+    },
+    {
       name: "Ma Dam",
       rating: 5,
       date: "10:54pm 15-10-2023",
       comment: "",
-    }
-    , {
+    },
+    {
       name: "Ma Dam",
       rating: 5,
       date: "10:54pm 15-10-2023",
       comment: "",
-    }
-    , {
+    },
+    {
       name: "Ma Dam",
       rating: 5,
       date: "10:54pm 15-10-2023",
       comment: "",
-    }
-    , {
+    },
+    {
       name: "Ma Dam",
       rating: 5,
       date: "10:54pm 15-10-2023",
       comment: "",
-    }
-    , {
+    },
+    {
       name: "Ma Dam",
       rating: 5,
       date: "10:54pm 15-10-2023",
       comment: "",
-    }, {
+    },
+    {
       name: "Ma Dam",
       rating: 5,
       date: "10:54pm 15-10-2023",
       comment: "",
-    }, {
+    },
+    {
       name: "Ma Dam",
       rating: 5,
       date: "10:54pm 15-10-2023",
       comment: "",
-    }, {
+    },
+    {
       name: "Ma Dam",
       rating: 5,
       date: "10:54pm 15-10-2023",
       comment: "",
-    }
-  ]
+    },
+  ];
 
   const [rate, setRate] = useState({
     rating: 0,
@@ -193,13 +204,11 @@ export default function RatingRoute() {
     fiveStart: null,
   });
 
-
   // console.log(rate.fiveStart)
 
   useEffect(() => {
     const fetchOverallReview = () => {
-
-      let totalRating = null
+      let totalRating = null;
       const totalCustomer = data.length;
       let start = {
         one: null,
@@ -207,9 +216,9 @@ export default function RatingRoute() {
         three: null,
         four: null,
         five: null,
-      }
+      };
 
-      data.forEach(item => {
+      data.forEach((item) => {
         totalRating += item.rating;
         switch (item.rating) {
           case 1:
@@ -230,7 +239,7 @@ export default function RatingRoute() {
           default:
             break;
         }
-      })
+      });
 
       // console.log(totalCustomer)
       const averageRating = totalRating / totalCustomer;
@@ -257,16 +266,14 @@ export default function RatingRoute() {
         fourStart: percentages.four,
         fiveStart: percentages.five,
         numberCustomer: totalCustomer,
-      })
-    }
+      });
+    };
 
     fetchOverallReview();
-  }, [])
-
-
+  }, []);
 
   const [open, setOpen] = useState(false);
-  
+
   const handleClickOpen = () => {
     // console.log(open)
     setOpen(true);
@@ -276,17 +283,17 @@ export default function RatingRoute() {
     setOpen(false);
   };
 
-
   return (
-    <Stack className='third--tab__rating'>
-      <Stack className='rate'
+    <Stack className="third--tab__rating">
+      <Stack
+        className="rate"
         justifyContent={"center"}
         alignContent={"center"}
         direction={"row"}
       >
         <Button
           onClick={handleClickOpen}
-          variant='contained'
+          variant="contained"
           sx={{
             width: "60%",
             color: "black",
@@ -295,163 +302,175 @@ export default function RatingRoute() {
             "&:hover": {
               backgroundColor: "#10af7e",
               color: "white !important",
-            }
-          }}>
+            },
+          }}
+        >
           <MessageIcon
             sx={{
               margin: "0 3% 0 0",
-            }} />
+            }}
+          />
           <Typography>Write your rating</Typography>
         </Button>
-        <WriteRating 
-        open={open}
-        onClose={handleClose}
-        />
+        <WriteRating open={open} onClose={handleClose} />
       </Stack>
-      <Stack className='total--rating'>
-        <Typography variant='h5' sx={{ marginBottom: "4%" }}>Overall Review:</Typography>
-        <Stack className='total--rating__content' direction={"row"} spacing={4}>
-          <Stack className='total--rating__content__right'
+      <Stack className="total--rating">
+        <Box sx={{ height: "20%" }}>
+          <Typography sx={{ marginBottom: "4%" }}>Overall Review:</Typography>
+        </Box>
+        <Stack className="total--rating__content" direction={"row"} spacing={4}>
+          <Stack
+            className="total--rating__content__right"
             direction={"column"}
             alignItems={"center"}
             spacing={0.5}
           >
-            <Typography sx={{ fontSize: "200%" }}>{rate.rating}</Typography>
+            <Typography sx={{ fontSize: "150%" }}>{rate.rating}</Typography>
             <Rating
               name="simple-controlled"
               value={rate.rating}
               disabled
               sx={{
-                fontSize: "200%"
+                fontSize: "200%",
               }}
             />
             <Stack
               direction={"row"}
               spacing={0.5}
               justifyContent={"center"}
-              alignItems={"center"}>
+              alignItems={"center"}
+            >
               <PersonIcon
                 sx={{
                   fontSize: "140%",
-                }} />
-              <Typography sx={{ fontSize: "130%" }}>{rate.numberCustomer}</Typography>
+                }}
+              />
+              <Typography sx={{ fontSize: "130%" }}>
+                {rate.numberCustomer}
+              </Typography>
             </Stack>
           </Stack>
-          <Stack className='total--rating__content__left' spacing={0.5}>
+          <Stack className="total--rating__content__left">
             <Stack
               direction={"row"}
               spacing={1}
               sx={{
-                width: "100%"
-              }}>
+                width: "100%",
+              }}
+            >
               <Typography>5</Typography>
               <Box
                 sx={{
                   width: `${rate.fiveStart}%`,
-                  backgroundColor: "darkgreen"
-                }}>
-              </Box>
+                  backgroundColor: "darkgreen",
+                }}
+              ></Box>
             </Stack>
             <Stack
               direction={"row"}
               spacing={1}
               sx={{
-                width: "100%"
-              }}>
+                width: "100%",
+              }}
+            >
               <Typography>4</Typography>
               <Box
                 sx={{
                   width: `${rate.fourStart}%`,
-                  backgroundColor: "green"
-                }}>
-              </Box>
+                  backgroundColor: "green",
+                }}
+              ></Box>
             </Stack>
             <Stack
               direction={"row"}
               spacing={1}
               sx={{
-                width: "100%"
-              }}>
+                width: "100%",
+              }}
+            >
               <Typography>3</Typography>
               <Box
                 sx={{
                   width: `${rate.threeStart}%`,
-                  backgroundColor: "yellow"
-                }}>
-              </Box>
+                  backgroundColor: "yellow",
+                }}
+              ></Box>
             </Stack>
             <Stack
               direction={"row"}
               spacing={1}
               sx={{
-                width: "100%"
-              }}>
+                width: "100%",
+              }}
+            >
               <Typography>2</Typography>
               <Box
                 sx={{
                   width: `${rate.twoStart}%`,
-                  backgroundColor: "orange"
-                }}>
-              </Box>
+                  backgroundColor: "orange",
+                }}
+              ></Box>
             </Stack>
             <Stack
               direction={"row"}
               spacing={1}
               sx={{
-                width: "100%"
-              }}>
+                width: "100%",
+              }}
+            >
               <Typography>1</Typography>
               <Box
                 sx={{
                   width: `${rate.oneStart}%`,
-                  backgroundColor: "red"
-                }}>
-              </Box>
+                  backgroundColor: "red",
+                }}
+              ></Box>
             </Stack>
           </Stack>
         </Stack>
       </Stack>
-      <Stack className='review--comment'>
-        <Stack className='review--comment__content'>
-          <Typography variant='h5' sx={{marginBottom: "0%"}}>Review Comments:</Typography>
-          <Stack className='review--comment__content__all--Comment'>
-            {
-              data.map(item => {
-                return (
-                  <>
-                    <Stack 
+      <Stack className="review--comment">
+        <Stack className="review--comment__content">
+          <Typography variant="h5" sx={{ marginBottom: "0%" }}>
+            Review Comments:
+          </Typography>
+          <Stack className="review--comment__content__all--Comment">
+            {data.map((item) => {
+              return (
+                <>
+                  <Stack
                     sx={{
                       margin: "3% 0",
-                    }}>
-                      <Stack 
-                      direction={"row"} 
-                      justifyContent={"space-between"} 
+                    }}
+                  >
+                    <Stack
+                      direction={"row"}
+                      justifyContent={"space-between"}
                       sx={{
-                        marginBottom: "2%"
-                      }}>
-                        <Stack>
-                          <Typography><strong>{item.name}</strong></Typography>
-                          <Typography>{item.date}</Typography>
-                        </Stack>
-                        <Rating
-                          name="simple-controlled"
-                          value={item.rating}
-                          disabled
-                        />
+                        marginBottom: "2%",
+                      }}
+                    >
+                      <Stack>
+                        <Typography>
+                          <strong>{item.name}</strong>
+                        </Typography>
+                        <Typography>{item.date}</Typography>
                       </Stack>
-                      <Typography>
-                        {item.comment}
-                      </Typography>
+                      <Rating
+                        name="simple-controlled"
+                        value={item.rating}
+                        disabled
+                      />
                     </Stack>
-                    <hr/>
-                  </>
-                )
-
-              })
-            }
+                    <Typography>{item.comment}</Typography>
+                  </Stack>
+                  <hr />
+                </>
+              );
+            })}
           </Stack>
         </Stack>
       </Stack>
     </Stack>
-  )
+  );
 }
