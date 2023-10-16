@@ -15,10 +15,21 @@ import AdbIcon from '@mui/icons-material/Adb';
 import DirectionsBusIcon from '@mui/icons-material/DirectionsBus';
 import { Stack } from '@mui/material';
 import { useNavigate } from 'react-router';
+import LoginAndSignUp from './LoginAndSignUp';
 
 
 
 function MainHeader(props) {
+
+  const [open, setOpen] = React.useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
 
     const navigate = useNavigate()
     return (
@@ -63,7 +74,27 @@ function MainHeader(props) {
                     }}
                     onClick={() => { navigate("/home/contact") }}>Contact</Typography>
             </Stack>
-            <Box></Box>
+            <Button 
+            variant="outlined" 
+            onClick={handleClickOpen}
+            sx={{
+                color: "white",
+                border: "1px solid white",
+                ...(props.changeTheme === "white" && {
+                    border: "1px solid #10af7e",
+                    color: "#10af7e",
+                  }),
+                fontSize: "1vw",
+                "&:hover":{
+                    border: "1px solid white",
+                }
+            }}>
+            Login
+            </Button>
+            <LoginAndSignUp 
+            open={open}
+            onClose={handleClose}
+            />
         </Stack>
     );
 }

@@ -1,7 +1,13 @@
 import { Box, Button, Rating, Stack, Typography } from '@mui/material'
 import React, { useEffect, useState } from 'react'
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
 import MessageIcon from '@mui/icons-material/Message';
 import PersonIcon from '@mui/icons-material/Person';
+import WriteRating from './WriteRating';
 
 
 export default function RatingRoute() {
@@ -257,6 +263,20 @@ export default function RatingRoute() {
     fetchOverallReview();
   }, [])
 
+
+
+  const [open, setOpen] = useState(false);
+  
+  const handleClickOpen = () => {
+    // console.log(open)
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+
   return (
     <Stack className='third--tab__rating'>
       <Stack className='rate'
@@ -265,6 +285,7 @@ export default function RatingRoute() {
         direction={"row"}
       >
         <Button
+          onClick={handleClickOpen}
           variant='contained'
           sx={{
             width: "60%",
@@ -282,6 +303,10 @@ export default function RatingRoute() {
             }} />
           <Typography>Write your rating</Typography>
         </Button>
+        <WriteRating 
+        open={open}
+        onClose={handleClose}
+        />
       </Stack>
       <Stack className='total--rating'>
         <Typography variant='h5' sx={{ marginBottom: "4%" }}>Overall Review:</Typography>
