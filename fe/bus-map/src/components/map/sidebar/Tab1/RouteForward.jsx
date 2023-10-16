@@ -4,7 +4,7 @@ import Tab from '@mui/material/Tab';
 import TabContext from '@mui/lab/TabContext';
 import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
-import { Button, Stack, Tabs, Typography } from '@mui/material';
+import { Button, Rating, Stack, Tabs, Typography } from '@mui/material';
 import { useNavigate } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
 import { storeRouteId } from '../../../../store/features/storeRoute/storeRouteSlice';
@@ -17,17 +17,18 @@ import routeService from '../../../../service/routeService';
 import { useState } from 'react';
 import { setStations } from '../../../../store/features/storeRoute/storeMakersSlice';
 import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt';
+import RatingRoute from './RatingRoute';
 
 export default function RouteForward(props) {
 
   const navigate = useNavigate();
-  
+
   const routeDetail = props.routeDetail
   console.log("routeDetail in route forward: ", routeDetail)
 
-  useEffect(() =>{
-      navigate(`../map/route/${routeDetail[0].routeId.id}`)
-  },[])
+  useEffect(() => {
+    navigate(`../map/route/${routeDetail[0].routeId.id}`)
+  }, [])
 
   const [value, setValue] = React.useState('1');
 
@@ -55,6 +56,7 @@ export default function RouteForward(props) {
             }}>
             <Tab label="Station" value="1" />
             <Tab label="Information" value="2" />
+            <Tab label="Rating" value="3" />
           </TabList>
         </Stack>
         <TabPanel value="1" className="first--tab">
@@ -162,6 +164,9 @@ export default function RouteForward(props) {
               </Stack>
             </Stack>
             : null}
+        </TabPanel>
+        <TabPanel value="3" className="third--tab">
+          <RatingRoute />
         </TabPanel>
       </TabContext>
     </Box>
