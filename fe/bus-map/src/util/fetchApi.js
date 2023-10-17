@@ -1,3 +1,4 @@
+import authService from "../service/authService";
 
 
 export const getData = async (api, options = {}) =>{
@@ -25,13 +26,14 @@ export const getData = async (api, options = {}) =>{
 
 } 
 
-export const postData = async (api, opitons = {}) =>{
+export const postData = async (api, form, opitons = {}) =>{   
     try{
         const response = await fetch(api, {
             method: "POST",
             headers: {
                 "Content-Type": "Application/json",
             },
+            body: JSON.stringify(form), 
             ...opitons
         })
         
@@ -47,3 +49,39 @@ export const postData = async (api, opitons = {}) =>{
         throw err;
     }
 }
+
+//Token
+export const getDataToken = async (api, options = {}) => {
+    const token = JSON.parse(localStorage.getItem("token"));
+  
+    // return 403 if dont have token
+    if (!token)
+      return {
+        status: 403,
+        error: "Forbiden",
+      };
+      
+
+    let response = await fetch(api, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        //
+        Authorization: `Bearer ${token.accessToken}`,
+      },
+      ...options,
+    });
+  
+    if (response.status != 200) {
+      response = await authService.refreshToken({
+        token: token.refreshToken,
+      });
+      if (!response.mess) {
+        token.accessToken = response.accessToken;
+        localStorage.setItem("token", JSON.stringify(token));
+        return getDataToken(`http://localhost:8080/api/auth/access-token`);
+      }
+    }
+  
+    return response.json();
+  };

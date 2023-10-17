@@ -16,23 +16,46 @@ import DirectionsBusIcon from '@mui/icons-material/DirectionsBus';
 import { Stack } from '@mui/material';
 import { useNavigate } from 'react-router';
 import LoginAndSignUp from './LoginAndSignUp';
+import { useDispatch, useSelector } from 'react-redux';
+import { signOut } from '../../store/features/auth/authSlice';
 
 
 
 function MainHeader(props) {
 
-  const [open, setOpen] = React.useState(false);
+    const dispatch = useDispatch()
 
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
+    const [open, setOpen] = React.useState(false);
 
-  const handleClose = () => {
-    setOpen(false);
-  };
+    const auth = useSelector((state) => state.auth)
+    // console.log("auth: ", auth)
+
+    const handleClickOpen = () => {
+        setOpen(true);
+    };
+
+    const handleClose = () => {
+        setOpen(false);
+    };
+
+    const [anchorEl, setAnchorEl] = React.useState(false);
+    const openProfile = Boolean(anchorEl);
+    // console.log(openProfile)
+
+    const handleClick = (event) => {
+        setAnchorEl(event.currentTarget);
+        setAnchorEl(false);
+    };
+
+    const handleCloseProfile = () => {
+        setAnchorEl(false);
+    };
+    const handleLogout = () =>{
+        dispatch(signOut());
+    }
 
     const navigate = useNavigate()
-    return (
+    return (    
         <Stack
             className="main--header"
             direction={"row"}
@@ -41,7 +64,7 @@ function MainHeader(props) {
                 ...(props.changeTheme === "white" && {
                     backgroundColor: "white",
                     color: "#10af7e",
-                  })
+                })
             }}
         >
             <Stack className="main--header__logo"
@@ -74,27 +97,62 @@ function MainHeader(props) {
                     }}
                     onClick={() => { navigate("/home/contact") }}>Contact</Typography>
             </Stack>
-            <Button 
-            variant="outlined" 
-            onClick={handleClickOpen}
-            sx={{
-                color: "white",
-                border: "1px solid white",
-                ...(props.changeTheme === "white" && {
-                    border: "1px solid #10af7e",
-                    color: "#10af7e",
-                  }),
-                fontSize: "1vw",
-                "&:hover":{
-                    border: "1px solid white",
-                }
-            }}>
-            Login
-            </Button>
-            <LoginAndSignUp 
-            open={open}
-            onClose={handleClose}
-            />
+            {auth.isLogin == true ?
+                <>
+                    <Button
+                        variant='text'
+                        disableElevation
+                        id="fade-button"
+                        aria-controls={openProfile ? 'fade-menu' : undefined}
+                        aria-haspopup="true"
+                        aria-expanded={openProfile ? 'true' : undefined}
+                        onClick={handleClick}
+                        sx={{
+                            color: "White",
+                            fontSize: "1.5vw"
+                        }}
+                    >
+                        {auth.user.name}
+                    </Button>
+                    <Menu
+                        id="fade-menu"
+                        MenuListProps={{
+                            'aria-labelledby': 'fade-button',
+                        }}
+                        anchorEl={anchorEl}
+                        open={openProfile}
+                        onClose={handleCloseProfile}
+                    >
+                        <MenuItem onClick={handleCloseProfile}>My account</MenuItem>
+                        <MenuItem onClick={handleLogout}>Logout</MenuItem>
+                    </Menu>
+                </>
+                :
+                <>
+                    <Button
+                        variant="outlined"
+                        onClick={handleClickOpen}
+                        sx={{
+                            color: "white",
+                            border: "1px solid white",
+                            ...(props.changeTheme === "white" && {
+                                border: "1px solid #10af7e",
+                                color: "#10af7e",
+                            }),
+                            fontSize: "1vw",
+                            "&:hover": {
+                                border: "1px solid white",
+                            }
+                        }}>
+                        Login
+                    </Button>
+                    <LoginAndSignUp
+                        open={open}
+                        onClose={handleClose}
+                    />
+                </>
+            }
+
         </Stack>
     );
 }
