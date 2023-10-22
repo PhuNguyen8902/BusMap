@@ -19,6 +19,8 @@ public interface UserRepository extends JpaRepository<User, String> {
 
     @Override
     Optional<User> findById(String id);
+    
+    User findUserById(String id);
 
 //    @Query("SELECT u FROM User u JOIN u.userRoles ur WHERE ur.name = :role")
 //    Page<UserInfoResponse> findByRoles(UserRole role, Pageable pageable);

@@ -8,6 +8,9 @@ import DialogTitle from "@mui/material/DialogTitle";
 import MessageIcon from "@mui/icons-material/Message";
 import PersonIcon from "@mui/icons-material/Person";
 import WriteRating from "./WriteRating";
+import { useParams } from "react-router";
+import feedbackService from "../../../../service/feedbackService";
+import { useSelector } from "react-redux";
 
 export default function RatingRoute() {
   const data = [
@@ -194,6 +197,8 @@ export default function RatingRoute() {
     },
   ];
 
+  const [isChange, setIsChange] = useState(false);
+
   const [rate, setRate] = useState({
     rating: 0,
     numberCustomer: null,
@@ -206,10 +211,25 @@ export default function RatingRoute() {
 
   // console.log(rate.fiveStart)
 
+  const { routeId } = useParams();
+
+  // console.log("routeId in ratingRoute: ", routeId);
+
+  const [feedbackData, setFeedbackData] = useState("");
+
+  const auth = useSelector((state) => state.auth)
+  
+
+  // get all feedbacks from route's id
   useEffect(() => {
-    const fetchOverallReview = () => {
+    const fetchOverallReview = async () => {
+
+      const feedbackData = await feedbackService.getAllFeedbackByRouteId(routeId);
+      // console.log("feedbackData in ratingRoute: ", feedbackData);
+
       let totalRating = null;
-      const totalCustomer = data.length;
+      const totalCustomer = feedbackData.length;
+
       let start = {
         one: null,
         two: null,
@@ -218,9 +238,9 @@ export default function RatingRoute() {
         five: null,
       };
 
-      data.forEach((item) => {
-        totalRating += item.rating;
-        switch (item.rating) {
+      feedbackData.forEach((item) => {
+        totalRating += item.rate;
+        switch (item.rate) {
           case 1:
             start.one += 1;
             break;
@@ -258,6 +278,7 @@ export default function RatingRoute() {
       // console.log('Percentage of 4-star: ', percentages.four.toFixed(2) + '%');
       // console.log('Percentage of 5-star: ', percentages.five.toFixed(2) + '%');
 
+      setFeedbackData(feedbackData);
       setRate({
         rating: averageRating.toFixed(2),
         oneStart: percentages.one,
@@ -270,11 +291,17 @@ export default function RatingRoute() {
     };
 
     fetchOverallReview();
-  }, []);
+  }, [isChange]);
 
   const [open, setOpen] = useState(false);
 
   const handleClickOpen = () => {
+
+    if(auth.isLogin == false){
+      console.log("You must login first");
+      alert("You must login first")
+      return;
+    }
     // console.log(open)
     setOpen(true);
   };
@@ -282,6 +309,10 @@ export default function RatingRoute() {
   const handleClose = () => {
     setOpen(false);
   };
+
+  const handleChange = () =>{
+    setIsChange(pre => !pre)
+  }
 
   return (
     <Stack className="third--tab__rating">
@@ -312,7 +343,7 @@ export default function RatingRoute() {
           />
           <Typography>Write your rating</Typography>
         </Button>
-        <WriteRating open={open} onClose={handleClose} />
+        <WriteRating open={open} onClose={handleClose} onChange={handleChange} />
       </Stack>
       <Stack className="total--rating">
         <Box sx={{ height: "20%" }}>
@@ -435,39 +466,44 @@ export default function RatingRoute() {
             Review Comments:
           </Typography>
           <Stack className="review--comment__content__all--Comment">
-            {data.map((item) => {
-              return (
-                <>
-                  <Stack
-                    sx={{
-                      margin: "3% 0",
-                    }}
-                  >
-                    <Stack
-                      direction={"row"}
-                      justifyContent={"space-between"}
-                      sx={{
-                        marginBottom: "2%",
-                      }}
-                    >
-                      <Stack>
-                        <Typography>
-                          <strong>{item.name}</strong>
-                        </Typography>
-                        <Typography>{item.date}</Typography>
+            {feedbackData != "" ?
+              <>
+                {feedbackData.map((item) => {
+                  return (
+                    <>
+                      <Stack
+                        sx={{
+                          margin: "3% 0",
+                        }}
+                      >
+                        <Stack
+                          direction={"row"}
+                          justifyContent={"space-between"}
+                          sx={{
+                            marginBottom: "2%",
+                          }}
+                        >
+                          <Stack>
+                            <Typography>
+                              <strong>{item.userId.name}</strong>
+                            </Typography>
+                            {/* <Typography>{item.userId.date}</Typography> */}
+                          </Stack>
+                          <Rating
+                            name="simple-controlled"
+                            value={item.rate}
+                            disabled
+                          />
+                        </Stack>
+                        <Typography>{item.content}</Typography>
                       </Stack>
-                      <Rating
-                        name="simple-controlled"
-                        value={item.rating}
-                        disabled
-                      />
-                    </Stack>
-                    <Typography>{item.comment}</Typography>
-                  </Stack>
-                  <hr />
-                </>
-              );
-            })}
+                      <hr />
+                    </>
+                  );
+                })}
+              </>
+              : null}
+
           </Stack>
         </Stack>
       </Stack>

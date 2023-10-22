@@ -38,13 +38,12 @@ function MainHeader(props) {
         setOpen(false);
     };
 
-    const [anchorEl, setAnchorEl] = React.useState(false);
+    const [anchorEl, setAnchorEl] = React.useState(null);
     const openProfile = Boolean(anchorEl);
     // console.log(openProfile)
 
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
-        setAnchorEl(false);
     };
 
     const handleCloseProfile = () => {
@@ -52,6 +51,7 @@ function MainHeader(props) {
     };
     const handleLogout = () =>{
         dispatch(signOut());
+        setAnchorEl(false);
     }
 
     const navigate = useNavigate()

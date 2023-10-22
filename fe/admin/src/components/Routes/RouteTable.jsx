@@ -5,6 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import queryLocation from "../../utils/queryLocation";
 import DriveEtaIcon from "@mui/icons-material/DriveEta";
 import RouteIcon from "@mui/icons-material/Route";
+import MessageIcon from '@mui/icons-material/Message';
 import {
   Box,
   Button,
@@ -252,6 +253,13 @@ export default function RouteTable() {
                 <Link to={`/station-route/route/${row.original.id}`}>
                   <IconButton>
                     <RouteIcon />
+                  </IconButton>
+                </Link>
+              </Tooltip>
+              <Tooltip arrow placement="right" title="Feedback">
+                <Link to={`/feedback/route/${row.original.id}`}>
+                  <IconButton>
+                    <MessageIcon />
                   </IconButton>
                 </Link>
               </Tooltip>

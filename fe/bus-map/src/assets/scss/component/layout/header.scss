@@ -1,6 +1,8 @@
 @import "../../variable";
 .header{
     background-color: $baseColor;
+    display: flex;
+    flex-direction: row;
     height: 10%;
     width: 100%;
     &__avatar{

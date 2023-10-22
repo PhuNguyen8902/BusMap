@@ -5,6 +5,7 @@
 package com.backend.busmap.controller.admin;
 
 import com.backend.busmap.dto.request.EditStation;
+import com.backend.busmap.dto.response.Message;
 import com.backend.busmap.models.Station;
 import com.backend.busmap.service.StationService;
 import java.util.Map;
@@ -12,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -39,6 +41,7 @@ public class AdminStationController {
     public ResponseEntity<?> editRoute(@RequestBody EditStation s) {
         return ResponseEntity.ok(this.stationService.editStation(s));
     }
+    
     
     @GetMapping("")
     public ResponseEntity<?> getAllStationAdmin(@RequestParam Map<String, String> params) {
