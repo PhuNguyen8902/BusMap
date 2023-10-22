@@ -40,6 +40,7 @@ export default function TripTable(props) {
     );
     fetchTripData();
   }, [pagination.pageIndex, pagination.pageSize]);
+  
   const fetchTripData = async () => {
     const urlParams = new URLSearchParams(window.location.search);
     const data = await tripService.getAllTripByRoute(

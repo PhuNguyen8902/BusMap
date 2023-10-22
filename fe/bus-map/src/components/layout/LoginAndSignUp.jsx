@@ -46,7 +46,9 @@ export default function LoginAndSignUp(props) {
                             <Login />
                         </TabPanel>
                         <TabPanel value="2">
-                            <SignUp />
+                            <SignUp 
+                            onChange={handleChange}
+                            />
                         </TabPanel>
                     </TabContext>
                 </Box>

@@ -14,7 +14,7 @@ import { ErrorMessage } from "@hookform/error-message";
 import authService from '../../service/authService';
 
 
-export default function SignUp() {
+export default function SignUp(props) {
 
     const initialForms = {
         field: {
@@ -49,11 +49,13 @@ export default function SignUp() {
             return;
         }
 
-        // const response = await authService.signUp(form);
+        const response = await authService.signUp(form);
         // console.log("response: ", response)
-        // if (response.error) {
-        //     setError("userName", { message: response.error });
-        // } 
+        if (response.error) {
+            setError("userName", { message: response.error });
+            return;
+        } 
+        props.onChange(null, "1");
     };
     // const handleSubmit = (event) => {
     //     event.preventDefault();

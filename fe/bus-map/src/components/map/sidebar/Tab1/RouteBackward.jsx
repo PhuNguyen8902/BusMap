@@ -17,6 +17,7 @@ import routeService from '../../../../service/routeService';
 import { useState } from 'react';
 import { setStations } from '../../../../store/features/storeRoute/storeMakersSlice';
 import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt';
+import RatingRoute from './RatingRoute';
 
 export default function RouteBackward(props) {
 
@@ -76,6 +77,7 @@ export default function RouteBackward(props) {
             }}>
             <Tab label="Station" value="1" />
             <Tab label="Information" value="2" />
+            <Tab label="Rating" value="3" />
           </TabList>
         </Stack>
         <TabPanel value="1" className="first--tab">
@@ -184,6 +186,9 @@ export default function RouteBackward(props) {
 
             </Stack>
             : null}
+        </TabPanel>
+        <TabPanel value="3" className="third--tab">
+          <RatingRoute />
         </TabPanel>
       </TabContext>
     </Box>

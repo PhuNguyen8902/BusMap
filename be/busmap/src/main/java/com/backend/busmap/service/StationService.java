@@ -265,6 +265,8 @@ public class StationService {
         return true;
 
     }
+    
+   
 
     public List<Station3Route> getNearestStationsFor3Route(double la1, double lo1, double la2, double lo2) {
         List<StationDistance> list1 = findNearestStations(la1, lo1);
