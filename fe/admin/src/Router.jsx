@@ -1,7 +1,13 @@
 import React from "react";
 import { Route, Routes, useParams } from "react-router";
 import { useSelector } from "react-redux";
-import { LoginPage, RoutePage, StationPage, UserPage } from "./page";
+import {
+  FeedbackPageByUser,
+  LoginPage,
+  RoutePage,
+  StationPage,
+  UserPage,
+} from "./page";
 import TripPage from "./page/TripPage";
 import StationRoutePage from "./page/StationRoutePage";
 import StationRoutePageByStation from "./page/StationRoutePageByStation";
@@ -22,6 +28,7 @@ export default function Routers() {
       <Route path="/user/" element={<UserPage />} />
       <Route path="/trip/route/:id" element={<TripWithRouteId />} />
       <Route path="/feedback/route/:routeId" element={<FeedbackPage />} />
+      <Route path="/feedback/user/:userId" element={<FeedbackWithUserId />} />
       <Route
         path="/station-route/route/:id"
         element={<StationRouteWithRouteId />}
@@ -47,4 +54,8 @@ function StationRouteWithRouteId() {
 function StationRouteWithStationId() {
   const { id } = useParams();
   return <StationRoutePageByStation stationId={id} />;
+}
+function FeedbackWithUserId() {
+  const { id } = useParams();
+  return <FeedbackPageByUser userId={id} />;
 }

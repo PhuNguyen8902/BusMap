@@ -34,4 +34,9 @@ public class AdminFeedbackController {
         Page<Route> pages = (Page<Route>) this.feedbackService.getAllFeedbackAdminByRouteId(id,params);
         return ResponseEntity.ok(pages);
     }
+     @GetMapping("/user/{id}")
+    public ResponseEntity<?> getAllTripOfUser(@PathVariable String id,@RequestParam Map<String, String> params) {
+        Page<Route> pages = (Page<Route>) this.feedbackService.getAllFeedbackAdminByUserId(id,params);
+        return ResponseEntity.ok(pages);
+    }
 }

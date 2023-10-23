@@ -17,13 +17,14 @@ import org.springframework.data.jpa.repository.JpaRepository;
  *
  * @author vegar
  */
-public interface FeedbackRepository extends JpaRepository<Feedback, String>{
-    
-     Page<Feedback> findFeedbackByRouteId(Route r, Pageable a);
+public interface FeedbackRepository extends JpaRepository<Feedback, String> {
 
-    
+    Page<Feedback> findFeedbackByRouteId(Route r, Pageable a);
+
+    Page<Feedback> findFeedbackByUserId(User r, Pageable a);
+
     List<Feedback> findByRouteId(Route routeId);
-    
+
     Optional<Feedback> findByUserIdAndRouteId(User userId, Route routeId);
 
 }
