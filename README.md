@@ -73,7 +73,19 @@ Hướng dẫn cài đặt
 
 Đường link: https://netbeans.apache.org/download/nb16/
 
-4. Cài đặt Git
+4. Cài đặt JDK bản 19
+
+Đường link: https://download.oracle.com/java/19/archive/jdk-19.0.2_windows-x64_bin.exe
+
+- Ta mở file vừa cài đặt lên và nhấn next
+
+![image](https://github.com/PhuNguyen8902/BusMap/assets/89370742/ac81964d-08fa-43f5-a12e-0b6a2ab4257b)
+
+- Ta chọn đường dẫn và nhấn next và close
+
+![image](https://github.com/PhuNguyen8902/BusMap/assets/89370742/d69a88e6-9088-42a3-ab29-329767eff4d4)
+
+5. Cài đặt Git
 
 Đường link: https://git-scm.com/download/win
 
@@ -116,7 +128,7 @@ Hướng dẫn cài đặt
 
 ![image](https://github.com/PhuNguyen8902/BusMap/assets/89370742/4a9087bc-e4df-4642-ad17-b43979ab5020)
 
-4. Hướng dẫn chạy code
+6. Hướng dẫn chạy code
 
 - Ta vào một nơi chứa code và nhấn Git Bash here
 
