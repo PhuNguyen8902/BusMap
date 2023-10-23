@@ -112,6 +112,8 @@ Hướng dẫn cài đặt
 
 ![image](https://github.com/PhuNguyen8902/BusMap/assets/89370742/4a9087bc-e4df-4642-ad17-b43979ab5020)
 
+4. Hướng dẫn chạy code
+
 - Ta vào một nơi chứa code và nhấn Git Bash here
 
 ![image](https://github.com/PhuNguyen8902/BusMap/assets/89370742/74b2a183-08de-4e85-abf0-3055f95a9d10)
@@ -119,6 +121,21 @@ Hướng dẫn cài đặt
 - Và nhấn lệnh: git clone https://github.com/PhuNguyen8902/BusMap.git và nhấn Enter
 
 ![image](https://github.com/PhuNguyen8902/BusMap/assets/89370742/31839ab9-0cbe-49e3-abd2-905facdebc78)
+
+- Ta mở Visual Code và Open Folder
+
+![image](https://github.com/PhuNguyen8902/BusMap/assets/89370742/4b28cc09-23bc-4045-9815-b643ce854c03)
+
+- Ta vào nơi chứa code theo đường dẫn  (BusMap\fe\admin hoặc là BusMap\fe\bus-map) và mở lên
+
+![image](https://github.com/PhuNguyen8902/BusMap/assets/89370742/9f3891d5-72e5-4f35-8c18-712fa770d33a)
+
+- Ta vào mở Terminal vaf nhập lệnh npm install
+
+![image](https://github.com/PhuNguyen8902/BusMap/assets/89370742/4cf894db-dd4d-473b-b6c2-db7ad1172064)
+![image](https://github.com/PhuNguyen8902/BusMap/assets/89370742/2dffd004-4784-4a4f-8fea-0055dbdb966f)
+
+
 
 
 
