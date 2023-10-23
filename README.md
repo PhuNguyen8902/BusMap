@@ -94,6 +94,31 @@ Hướng dẫn cài đặt
 ![image](https://github.com/PhuNguyen8902/BusMap/assets/89370742/b0ca4a89-f475-4a50-b36e-ba87ed32ad4b)
 ![image](https://github.com/PhuNguyen8902/BusMap/assets/89370742/0a624c86-c8ff-43f0-ba0e-cf5cb5a64952)
 
+- Ta chọn Use Git from GitBash only
+
+![image](https://github.com/PhuNguyen8902/BusMap/assets/89370742/2b83fddf-cd4c-4bb5-a94f-1b3ab1b7cc81)
+
+- Ta chọn Next
+
+![image](https://github.com/PhuNguyen8902/BusMap/assets/89370742/f921899a-6cd2-4d73-ad15-edfdc6b9cdcb)
+![image](https://github.com/PhuNguyen8902/BusMap/assets/89370742/947e5aa4-43dc-40d2-a1cf-cdd14fa8a8e8)
+![image](https://github.com/PhuNguyen8902/BusMap/assets/89370742/7a02def0-ec39-4653-99db-283290cb99c5)
+![image](https://github.com/PhuNguyen8902/BusMap/assets/89370742/bafffd7a-c263-4f16-8fc1-f5864e96c2d2)
+![image](https://github.com/PhuNguyen8902/BusMap/assets/89370742/59f1cd5a-20b2-49de-a1fe-065f73f33a4a)
+![image](https://github.com/PhuNguyen8902/BusMap/assets/89370742/6c21e018-9b58-4983-9108-377332a85a0c)
+![image](https://github.com/PhuNguyen8902/BusMap/assets/89370742/cb0b2472-a02a-496e-8547-8a73fdabd423)
+
+- Ta Install và Finish
+
+![image](https://github.com/PhuNguyen8902/BusMap/assets/89370742/4a9087bc-e4df-4642-ad17-b43979ab5020)
+
+- Ta vào một nơi chứa code và nhấn Git Bash here
+
+![image](https://github.com/PhuNguyen8902/BusMap/assets/89370742/74b2a183-08de-4e85-abf0-3055f95a9d10)
+
+- Và nhấn lệnh: git clone https://github.com/PhuNguyen8902/BusMap.git và nhấn Enter
+
+![image](https://github.com/PhuNguyen8902/BusMap/assets/89370742/31839ab9-0cbe-49e3-abd2-905facdebc78)
 
 
 
