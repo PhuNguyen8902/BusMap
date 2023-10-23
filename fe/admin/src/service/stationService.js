@@ -20,6 +20,11 @@ const stationService = {
     const stationData = await putData(`${stationAdminApi}/edit`, a);
     return stationData;
   },
+
+  async deleteStation(a){
+    const stationData = await putData(`${stationAdminApi}/delete/${a}`);
+    return stationData;
+  }
 };
 
 export default stationService;

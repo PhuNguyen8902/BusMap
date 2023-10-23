@@ -7,9 +7,9 @@ const feedbackService = {
   async gettAllFeedbackByRouteId(routeId, page) {
     // console.log(routeId, page)
     const api = `${feedbackAdminApi}/route/${routeId}?${page}`;
-    console.log(api)
+    // console.log(api)
     const feedbackData = await getData(api);
-    console.log(feedbackData);
+    // console.log(feedbackData);
     return feedbackData;
   },
 

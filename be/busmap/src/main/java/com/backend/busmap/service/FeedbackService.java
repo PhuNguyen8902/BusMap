@@ -14,6 +14,9 @@ import com.backend.busmap.models.User;
 import com.backend.busmap.repository.FeedbackRepository;
 import com.backend.busmap.repository.RouteRepository;
 import com.backend.busmap.repository.UserRepository;
+import java.sql.Date;
+import java.util.Calendar;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -43,8 +46,13 @@ public class FeedbackService {
     public List<Feedback> getAllFeedbackByRouteId(Integer routeId) {
 
         Route route = this.routeRepo.findRouteById(routeId);
+        
+        List<Feedback> feedbackList = this.feedbackRepo.findByRouteId(route);
 
-        return this.feedbackRepo.findByRouteId(route);
+        // Sort the feedbackList by date in ascending order
+        Collections.sort(feedbackList, (feedback1, feedback2) -> feedback2.getDate().compareTo(feedback1.getDate()));
+
+        return feedbackList;
     }
 
     public Optional<Feedback> getFeedbackByUserIdAndRouteId(Integer routeId, String userId) {
@@ -68,7 +76,11 @@ public class FeedbackService {
         feedback.setContent(addFeedback.getContent());
         feedback.setRouteId(route);
         feedback.setUserId(user);
-
+        
+        // Set the current date
+        java.util.Date currentDate = Calendar.getInstance().getTime();
+        feedback.setDate(new Date(currentDate.getTime()));
+        
         this.feedbackRepo.save(feedback);
 
         return "Add Successfully";
@@ -86,6 +98,10 @@ public class FeedbackService {
         feedback.setContent(editFeedback.getContent());
         feedback.setRouteId(route);
         feedback.setUserId(user);
+        
+         // Set the current date
+        java.util.Date currentDate = Calendar.getInstance().getTime();
+        feedback.setDate(new Date(currentDate.getTime()));
 
         this.feedbackRepo.save(feedback);
 
@@ -104,8 +120,10 @@ public class FeedbackService {
             params.put("page", "1");
         }
         try {
-
-            pageable = PageRequest.of(Integer.parseInt(params.get("page")) - 1, Integer.parseInt(params.get("limit")));
+            Sort.Order o = new Sort.Order(Sort.Direction.DESC, "date");
+            Sort sort = Sort.by(o);
+            
+            pageable = PageRequest.of(Integer.parseInt(params.get("page")) - 1, Integer.parseInt(params.get("limit")), sort);
             Route r = routeRepo.findById(id).orElse(null);
 
             feedbacks = this.feedbackRepo.findFeedbackByRouteId(r, pageable);

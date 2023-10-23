@@ -23,6 +23,7 @@ const formatTime = (hours, minutes) => {
   const formattedMinutes = String(minutes).padStart(2, "0");
   return `${formattedHours}:${formattedMinutes}`;
 };
+
 export default function TripTable(props) {
   const [pagination, setPagination] = useState({ pageIndex: 0, pageSize: 5 });
   const [trips, setTrips] = useState([]);
