@@ -51,7 +51,8 @@ export default function StationTable() {
   }, [pagination.pageIndex, pagination.pageSize]);
 
   const handleCreateNewRow = async (values) => {
-    const data = await stationService.addStation(values);
+    // const data = await stationService.addStation(values);
+    console.log(values);
   };
 
   const handleSaveRow = async ({ exitEditingMode, row, values }) => {
@@ -86,7 +87,6 @@ export default function StationTable() {
     //   alert("bi loi roi");
     // }
   };
-
 
   const columns = useMemo(() => [
     {

@@ -57,9 +57,7 @@ export const putData = async (api, form, opitons = {}) => {
 
       ...opitons,
     });
-
     if (!response.ok) {
-      // throw new Error(`Request failed with status ${response.status}`);
       console.log(response);
     }
 

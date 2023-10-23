@@ -9,6 +9,7 @@ import com.backend.busmap.dto.request.RefreshTokenRequest;
 import com.backend.busmap.dto.request.Register;
 import com.backend.busmap.dto.response.AuthenticationResponse;
 import com.backend.busmap.dto.response.Message;
+import com.backend.busmap.models.User;
 import com.backend.busmap.service.AuthenticationService;
 import jakarta.servlet.http.HttpServletRequest;
 import java.io.UnsupportedEncodingException;
@@ -35,7 +36,7 @@ public class AuthController {
     private AuthenticationService authenticationService;
 
     @PostMapping("/register")
-    public ResponseEntity<?> registerUser(@RequestBody Register request) throws UnsupportedEncodingException {
+    public ResponseEntity<?> registerUser(@RequestBody User request) throws UnsupportedEncodingException {
         boolean isSuccess = authenticationService.register(request);
         if (!isSuccess) {
             return ResponseEntity.ok(Message.builder().mess("User existed").build());
@@ -48,7 +49,8 @@ public class AuthController {
         AuthenticationResponse response = authenticationService.signIn(request);
         Message errorResponse = checkError(response);
         if (errorResponse != null) {
-            return ResponseEntity.status(401).body(Message.builder().mess(errorResponse.toString()).build());
+
+            return ResponseEntity.status(401).body(errorResponse);
 
         }
 
@@ -59,7 +61,7 @@ public class AuthController {
         var errorResponse = Message.builder();
 
         if (authenticationResponse == null) {
-            return errorResponse.mess("Email or password is not correct").build();
+            return errorResponse.mess("Username or password is not correct").build();
         }
 
         return null;

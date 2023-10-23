@@ -8,6 +8,7 @@ import Login from "./Auth/Login";
 import Popup from "./Popup/PopUp";
 import Loading from "./Popup/Loading";
 import StationRoutePageByStation from "../page/StationRoutePageByStation";
+import UserTable from "./User/UserTable";
 
 export {
   CreateNewAccountModal,
@@ -20,4 +21,5 @@ export {
   Popup,
   Loading,
   StationRoutePageByStation,
+  UserTable,
 };

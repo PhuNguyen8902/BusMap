@@ -4,7 +4,6 @@
  */
 package com.backend.busmap.dto.request;
 
-import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -16,16 +15,12 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class EditRoute {
-
+public class EditUser {
     private String id;
-    private String direction;
-    private String distance;
-    private String duration;
-    private String endTime;
-    private String startTime;
+    private String email;
+    private String password;
     private String name;
-    private String routeNum;
-    private String tripSpacing;
-
+    private String username;
+    private String phone;
+    private String role;
 }
