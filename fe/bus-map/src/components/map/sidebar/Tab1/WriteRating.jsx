@@ -63,6 +63,7 @@ export default function WriteRating(props) {
     }
 
     const editFeedbackData = feedbackService.editFeedback(rate);
+    setIsComment(true)
     
     console.log("update feedback sucessfully");
     props.onClose();
