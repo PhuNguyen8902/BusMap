@@ -133,4 +133,29 @@ public class FeedbackService {
         }
         return feedbacks;
     }
+      public Page<?> getAllFeedbackAdminByUserId(String id, Map<String, String> params) {
+        Pageable pageable = null;
+        Page<Feedback> feedbacks = null;
+
+        if (params.get("limit") == null) {
+            params.put("limit", "5");
+        }
+
+        if (params.get("page") == null || Integer.parseInt(params.get("page")) < 1) {
+            params.put("page", "1");
+        }
+        try {
+            Sort.Order o = new Sort.Order(Sort.Direction.DESC, "date");
+            Sort sort = Sort.by(o);
+            
+            pageable = PageRequest.of(Integer.parseInt(params.get("page")) - 1, Integer.parseInt(params.get("limit")), sort);
+            User r = userRepo.findById(id).orElse(null);
+            
+            feedbacks = this.feedbackRepo.findFeedbackByUserId(r, pageable);
+        } catch (NumberFormatException exception) {
+            System.out.println(exception.getMessage());
+            return null;
+        }
+        return feedbacks;
+    }
 }
