@@ -69,7 +69,11 @@ Hướng dẫn cài đặt
 
 ![image](https://github.com/PhuNguyen8902/BusMap/assets/89370742/ed0cc102-4f5a-41f3-8736-a606e9fed798)
 
-3. Cài đặt Git
+3. Cài đặt NetBeans
+
+Đường link: https://netbeans.apache.org/download/nb16/
+
+4. Cài đặt Git
 
 Đường link: https://git-scm.com/download/win
 
