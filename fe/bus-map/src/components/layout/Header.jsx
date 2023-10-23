@@ -8,6 +8,7 @@ import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
 import Button from '@mui/material/Button';
 import LoginAndSignUp from './LoginAndSignUp';
+import { useNavigate } from "react-router";
 
 
 
@@ -16,6 +17,8 @@ export default function Header(props) {
   const dispatch = useDispatch()
 
   const [open, setOpen] = useState(false);
+  
+  const navigate = useNavigate();
 
   const auth = useSelector((state) => state.auth)
   // console.log("auth: ", auth)
@@ -41,6 +44,7 @@ export default function Header(props) {
   };
   const handleLogout = () => {
     dispatch(signOut());
+    navigate("/")
     setAnchorEl(false);
   }
 

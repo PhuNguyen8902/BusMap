@@ -13,6 +13,7 @@ import com.backend.busmap.models.Route;
 import com.backend.busmap.models.Station;
 import com.backend.busmap.models.StationRoute;
 import com.backend.busmap.repository.StationRepository;
+import com.backend.busmap.repository.StationRouteRepository;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -39,6 +40,9 @@ public class StationService {
 
     @Autowired
     private StationRouteService stationRouteService;
+    
+    @Autowired
+    private StationRouteRepository stationRouteRepo;
 
     public List<Station> getAllStation() {
         return this.stationRepository.findAll();
@@ -231,13 +235,14 @@ public class StationService {
         return list;
     }
 
-    public boolean addNewStation(Station station) {
+    public String addNewStation(Station station) {
 
         Station checkSta = stationRepository.findStationByCode(station.getCode());
         if (checkSta != null) {
-            return false;
+            return "Station exist";
         }
-
+        
+        
         Station newStation = new Station();
         newStation.setName(station.getName());
         newStation.setLatitude(station.getLatitude());
@@ -247,7 +252,7 @@ public class StationService {
         newStation.setIsActive(1);
 
         stationRepository.save(newStation);
-        return true;
+        return "Add Successfully";
 
     }
 
@@ -265,6 +270,22 @@ public class StationService {
         return true;
 
     }
+    
+    public String deleteStation(Integer id) {
+        Station station = this.stationRepository.findById(id).orElseThrow(null);
+
+        
+        station.setIsActive(0);
+        
+        List<StationRoute> stationRoute = this.stationRouteRepo.findByStationId(station);
+        
+        this.stationRouteRepo.deleteAll(stationRoute);
+        
+        this.stationRepository.save(station);
+        
+        return "Delete Successfully";
+    }
+
     
    
 
