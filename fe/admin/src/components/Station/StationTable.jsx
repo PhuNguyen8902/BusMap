@@ -51,7 +51,19 @@ export default function StationTable() {
   }, [pagination.pageIndex, pagination.pageSize]);
 
   const handleCreateNewRow = async (values) => {
-    const data = await stationService.addStation(values);
+    let hasEmptyValue = false;
+    Object.keys(values).forEach((key) => {
+      if (values[key] === "") {
+        hasEmptyValue = true;
+        alert(key + " cannot be null");
+      }
+    });
+
+    if (!hasEmptyValue) {
+      const data = await stationService.addStation(values);
+      alert(data.mess);
+      fetchData();
+    }
   };
 
   const handleSaveRow = async ({ exitEditingMode, row, values }) => {
@@ -74,7 +86,7 @@ export default function StationTable() {
   };
 
   const handleDeleteRow = async () => {
-    // const data = await routeService.deleteRoute(deleteId);
+    const data = await stationService.deleteStation(deleteId);
     // if (data == true) {
     alert(data.mess);
     fetchData();
@@ -181,7 +193,7 @@ export default function StationTable() {
                 </IconButton>
               </Tooltip>
               <Tooltip arrow placement="right" title="Delete">
-                <IconButton color="error">
+                <IconButton color="error" onClick={() => handleClickOpenDelete(row)}>
                   <Delete />
                 </IconButton>
               </Tooltip>

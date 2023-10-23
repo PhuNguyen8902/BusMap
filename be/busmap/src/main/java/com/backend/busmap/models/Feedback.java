@@ -11,6 +11,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import java.time.LocalTime;
+import java.util.Date;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -32,6 +33,7 @@ public class Feedback {
     private Integer id;
     private String content;
     private Integer rate;
+    private Date date;
     
     @ManyToOne
     @JoinColumn(name = "route_id")

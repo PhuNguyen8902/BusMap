@@ -469,6 +469,11 @@ export default function RatingRoute() {
             {feedbackData != "" ?
               <>
                 {feedbackData.map((item) => {
+                   const formattedDate = new Date(item.date).toLocaleDateString('en-US', {
+                    year: 'numeric',
+                    month: 'long', // You can change 'long' to 'short' or 'numeric' as needed
+                    day: 'numeric',
+                  });
                   return (
                     <>
                       <Stack
@@ -487,7 +492,7 @@ export default function RatingRoute() {
                             <Typography>
                               <strong>{item.userId.name}</strong>
                             </Typography>
-                            {/* <Typography>{item.userId.date}</Typography> */}
+                            <Typography>{formattedDate}</Typography>
                           </Stack>
                           <Rating
                             name="simple-controlled"

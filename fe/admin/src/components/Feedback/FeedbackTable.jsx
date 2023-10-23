@@ -41,6 +41,11 @@ export default function FeedbackTable(props) {
         if (data.totalElements > 0) {
             const formattedFeedbacks = data.content.map((trip) => ({
                 ...trip,
+                dateFormat: new Date(trip.date).toLocaleDateString('en-US', {
+                    year: 'numeric',
+                    month: '2-digit',
+                    day: '2-digit',
+                }),
                 totalPage: data.totalPages,
                 totalElement: data.totalElements,
             }));
@@ -63,6 +68,10 @@ export default function FeedbackTable(props) {
         {
             accessorKey: "rate",
             header: "Rate",
+        },
+        {
+            accessorKey: "dateFormat",
+            header: "Date",
         },
         {
             accessorKey: "routeId.id",

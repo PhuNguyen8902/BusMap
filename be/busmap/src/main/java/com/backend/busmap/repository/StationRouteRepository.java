@@ -30,6 +30,8 @@ public interface StationRouteRepository extends JpaRepository<StationRoute, Inte
     Page<StationRoute> findStationRouteByRouteId(Route routeId, Pageable a);
 
     Page<StationRoute> findStationRouteByStationId(Station id, Pageable a);
+    
+    List<StationRoute> findByStationId(Station station);
 
     @Query("SELECT sr FROM StationRoute sr join Station s on sr.stationId = s WHERE sr.routeId = :routeId and s.code like %:kw%")
     Page<StationRoute> getStationRouteByRouteId(String kw, Route routeId, Pageable a);

@@ -33,16 +33,22 @@ public class AdminStationController {
     private StationService stationService;
 
     @PostMapping("/add")
-    public ResponseEntity<?> addNewRoute(@RequestBody Station s) {
-        return ResponseEntity.ok(this.stationService.addNewStation(s));
+    public ResponseEntity<?> addNewStation(@RequestBody Station s) {
+        String rs = stationService.addNewStation(s);
+        return ResponseEntity.ok(Message.builder().mess(rs).build());
     }
 
     @PutMapping("/edit")
-    public ResponseEntity<?> editRoute(@RequestBody EditStation s) {
+    public ResponseEntity<?> editStation(@RequestBody EditStation s) {
         return ResponseEntity.ok(this.stationService.editStation(s));
     }
-    
-    
+
+    @PutMapping("/delete/{id}")
+    public ResponseEntity<?> deleteStation(@PathVariable Integer id) {
+        String rs = this.stationService.deleteStation(id);
+        return ResponseEntity.ok(Message.builder().mess(rs).build());
+    }
+
     @GetMapping("")
     public ResponseEntity<?> getAllStationAdmin(@RequestParam Map<String, String> params) {
         Page<Station> pages = (Page<Station>) stationService.getAllStationAdmin(params);

@@ -12,6 +12,7 @@ import { useDispatch } from 'react-redux';
 import authService from '../../service/authService';
 import { signIn } from '../../store/features/auth/authSlice';
 import { useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router';
 
 export default function Login() {
 
@@ -23,6 +24,7 @@ export default function Login() {
     };
 
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const {
       register,
@@ -42,6 +44,7 @@ export default function Login() {
       } else {
         setError("userName", { message: response.error });
       }
+      navigate("/")
     };
 
     // const handleLogin = (event) => {
