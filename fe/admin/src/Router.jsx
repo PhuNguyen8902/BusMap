@@ -1,7 +1,7 @@
 import React from "react";
 import { Route, Routes, useParams } from "react-router";
 import { useSelector } from "react-redux";
-import { LoginPage, RoutePage, StationPage } from "./page";
+import { LoginPage, RoutePage, StationPage, UserPage } from "./page";
 import TripPage from "./page/TripPage";
 import StationRoutePage from "./page/StationRoutePage";
 import StationRoutePageByStation from "./page/StationRoutePageByStation";
@@ -19,8 +19,9 @@ export default function Routers() {
 
       <Route path="/route/" element={<RoutePage />} />
       <Route path="/station/" element={<StationPage />} />
+      <Route path="/user/" element={<UserPage />} />
       <Route path="/trip/route/:id" element={<TripWithRouteId />} />
-      <Route path="/feedback/route/:routeId" element={<FeedbackPage />}/>
+      <Route path="/feedback/route/:routeId" element={<FeedbackPage />} />
       <Route
         path="/station-route/route/:id"
         element={<StationRouteWithRouteId />}

@@ -5,7 +5,7 @@ import { useDispatch } from "react-redux";
 import { ErrorMessage } from "@hookform/error-message";
 import authService from "../../service/authService";
 import { signIn } from "../../store/slices/authSlice";
-import { Navigate } from "react-router-dom";
+import { Await, Navigate } from "react-router-dom";
 
 const initialForms = {
   field: {

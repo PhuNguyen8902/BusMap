@@ -14,8 +14,7 @@ import {
   Tooltip,
   Typography,
 } from "@mui/material";
-import { Delete, Edit } from "@mui/icons-material";
-import { CreateNewAccountModal } from "../index";
+import { Delete } from "@mui/icons-material";
 import stationRouteService from "../../service/stationRouteService";
 
 export default function StationRouteTableByStation(props) {
@@ -24,7 +23,6 @@ export default function StationRouteTableByStation(props) {
   const [stationRoutes, setStationRoutes] = useState([]);
   const [openDelete, setOpenDelete] = useState(false);
   const [deleteId, setDeleteId] = useState(null);
-  const [createModalOpen, setCreateModalOpen] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -104,63 +102,6 @@ export default function StationRouteTableByStation(props) {
       enableEditing: false,
     },
   ]);
-  const column2s = useMemo(() => [
-    {
-      accessorKey: "routeId.routeNum",
-      header: "Route Num",
-      enableEditing: false,
-    },
-  ]);
-
-  const checkPriority = async (priority, stationId) => {
-    const data = await stationRouteService.findByPriority(
-      priority,
-      props.stationId,
-      stationId
-    );
-
-    if (data.mess == "Valid Priority") {
-      return true;
-    }
-    alert(data.mess);
-    return false;
-  };
-
-  const handleSaveRow = async ({ exitEditingMode, row, values }) => {
-    var rs = await checkPriority(values.priority, values["stationId.id"]);
-    if (rs == true) {
-      let form = {
-        id: values.id,
-        priority: values.priority,
-      };
-      const data = await stationRouteService.editStationRoute(form);
-
-      alert(data.mess);
-      fetchData();
-      exitEditingMode();
-    }
-  };
-
-  const handleCreateNewRow = async (values) => {
-    let form = {
-      stationId: props.stationId,
-      code: values["stationId.code"],
-      priority: values.priority,
-    };
-    let hasEmptyValue = false;
-    Object.keys(form).forEach((key) => {
-      if (form[key] === "") {
-        hasEmptyValue = true;
-        alert(key + " cannot be null");
-      }
-    });
-
-    if (!hasEmptyValue) {
-      const data = await stationRouteService.addStationRoute(form);
-      alert(data.mess);
-      fetchData();
-    }
-  };
 
   return (
     <>
@@ -179,14 +120,8 @@ export default function StationRouteTableByStation(props) {
           rowCount={
             stationRoutes.length > 0 ? stationRoutes[0].totalElement : 5
           }
-          onEditingRowSave={handleSaveRow}
           renderRowActions={({ row, table }) => (
             <Box sx={{ display: "flex", gap: "1rem" }}>
-              <Tooltip arrow placement="left" title="Edit">
-                <IconButton onClick={() => table.setEditingRow(row)}>
-                  <Edit />
-                </IconButton>
-              </Tooltip>
               <Tooltip arrow placement="right" title="Delete">
                 <IconButton
                   color="error"
@@ -197,23 +132,8 @@ export default function StationRouteTableByStation(props) {
               </Tooltip>
             </Box>
           )}
-          renderTopToolbarCustomActions={() => (
-            <Button
-              color="secondary"
-              onClick={() => setCreateModalOpen(true)}
-              variant="contained"
-            >
-              Create New
-            </Button>
-          )}
         />
       </Box>
-      <CreateNewAccountModal
-        columns={column2s}
-        open={createModalOpen}
-        onClose={() => setCreateModalOpen(false)}
-        onSubmit={handleCreateNewRow}
-      />
       <Dialog
         open={openDelete}
         onClose={handleCloseDelete}

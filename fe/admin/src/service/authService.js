@@ -13,7 +13,7 @@ const authService = {
     });
     return response.status !== 200
       ? {
-          error: (await response.json()).error,
+          error: (await response.json()).mess,
         }
       : {
           ...(await response.json()),

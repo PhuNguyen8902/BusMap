@@ -51,6 +51,7 @@ export default function StationTable() {
   }, [pagination.pageIndex, pagination.pageSize]);
 
   const handleCreateNewRow = async (values) => {
+
     let hasEmptyValue = false;
     Object.keys(values).forEach((key) => {
       if (values[key] === "") {
@@ -64,6 +65,7 @@ export default function StationTable() {
       alert(data.mess);
       fetchData();
     }
+
   };
 
   const handleSaveRow = async ({ exitEditingMode, row, values }) => {
@@ -98,7 +100,6 @@ export default function StationTable() {
     //   alert("bi loi roi");
     // }
   };
-
 
   const columns = useMemo(() => [
     {

@@ -13,6 +13,7 @@ import com.backend.busmap.repository.RouteRepository;
 import java.time.Instant;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -52,7 +53,7 @@ public class RouteService {
         try {
             pageable = PageRequest.of(Integer.parseInt(params.get("page")) - 1, Integer.parseInt(params.get("limit")));
 
-            if (params.get("kw") == "" ) {
+            if (params.get("kw") == "") {
                 routes = routeRepo.findRouteByIsActive(pageable);
 
             } else {
@@ -68,12 +69,12 @@ public class RouteService {
     public List<Route> getAllOneWayRoute(String name) {
         return this.routeRepo.findAllOneWayRoute(name);
     }
-    
-    public List<Route> getRouteByRouteNum(String routeNum){
+
+    public List<Route> getRouteByRouteNum(String routeNum) {
         return this.routeRepo.findRouteByRouteNum(routeNum);
     }
-    
-    public Route getRouteById(Integer routeId){
+
+    public Route getRouteById(Integer routeId) {
         return this.routeRepo.findRouteById(routeId);
     }
 
@@ -94,31 +95,51 @@ public class RouteService {
         Route routeA = new Route();
         Route routeB = new Route();
 
-        LocalTime startLocalTimeA = LocalTime.parse(addRoute.getStartTimeA());
-        LocalTime startLocalTimeB = LocalTime.parse(addRoute.getStartTimeB());
+        LocalTime startLocalTimeA = null;
+        LocalTime startLocalTimeB = null;
+        LocalTime endLocalTimeA = null;
+        LocalTime endLocalTimeB = null;
 
-        LocalTime endLocalTimeA = LocalTime.parse(addRoute.getEndTimeA());
-        LocalTime endLocalTimeB = LocalTime.parse(addRoute.getEndTimeB());
+        try {
+            startLocalTimeA = LocalTime.parse(addRoute.getStartTimeA());
+            startLocalTimeB = LocalTime.parse(addRoute.getStartTimeB());
+
+            endLocalTimeA = LocalTime.parse(addRoute.getEndTimeA());
+            endLocalTimeB = LocalTime.parse(addRoute.getEndTimeB());
+        } catch (DateTimeParseException e) {
+            return "Invalid time format";
+        }
+
+        Double distance = 0.0;
+        Integer duration = 0;
+        Integer tripSpacing = 0;
+        try {
+            distance = Double.valueOf(addRoute.getDistance());
+            duration = Integer.valueOf(addRoute.getDuration());
+            tripSpacing = Integer.valueOf(addRoute.getTripSpacing());
+        } catch (NumberFormatException e) {
+            return "Invalid number format";
+        }
 
         routeA.setName(addRoute.getLocationA() + " - " + addRoute.getLocationB());
-        routeA.setDistance(Double.parseDouble(addRoute.getDistance()));
-        routeA.setDuration(Integer.valueOf(addRoute.getDuration()));
+        routeA.setDistance(distance);
+        routeA.setDuration(duration);
         routeA.setStartTime(startLocalTimeA);
         routeA.setEndTime(endLocalTimeA);
         routeA.setIsActive(1);
         routeA.setRouteNum(addRoute.getRouteNum());
         routeA.setDirection("Đi đến " + addRoute.getLocationB());
-        routeA.setTripSpacing(Integer.valueOf(addRoute.getTripSpacing()));
+        routeA.setTripSpacing(tripSpacing);
 
         routeB.setName(addRoute.getLocationA() + " - " + addRoute.getLocationB());
-        routeB.setDistance(Double.parseDouble(addRoute.getDistance()));
-        routeB.setDuration(Integer.valueOf(addRoute.getDuration()));
+        routeB.setDistance(distance);
+        routeB.setDuration(duration);
         routeB.setStartTime(startLocalTimeB);
         routeB.setEndTime(endLocalTimeB);
         routeB.setIsActive(1);
         routeB.setRouteNum(addRoute.getRouteNum());
         routeB.setDirection("Đi đến " + addRoute.getLocationA());
-        routeB.setTripSpacing(Integer.valueOf(addRoute.getTripSpacing()));
+        routeB.setTripSpacing(tripSpacing);
 
         if (checkNotActive) {
             routeA.setId(existingRoute.get(0).getId());
@@ -161,12 +182,29 @@ public class RouteService {
 
     public String updateRoute(EditRoute route) {
 
+        LocalTime startTime = null;
+        LocalTime endTime = null;
+
+        try {
+            startTime = LocalTime.parse(route.getStartTime());
+            endTime = LocalTime.parse(route.getEndTime());
+
+        } catch (DateTimeParseException e) {
+            return "Invalid time format";
+        }
+        
+         Double distance = 0.0;
+        Integer duration = 0;
+        Integer tripSpace = 0;
+        try {
+            distance = Double.valueOf(route.getDistance());
+            duration = Integer.valueOf(route.getDuration());
+            tripSpace = Integer.valueOf(route.getTripSpacing());
+        } catch (NumberFormatException e) {
+            return "Invalid number format";
+        }
+
         Integer id1 = Integer.valueOf(route.getId());
-        Double distance = Double.valueOf(route.getDistance());
-        Integer duration = Integer.valueOf(route.getDuration());
-        Integer tripSpace = Integer.valueOf(route.getTripSpacing());
-        LocalTime startTime = LocalTime.parse(route.getStartTime());
-        LocalTime endTime = LocalTime.parse(route.getEndTime());
         Instant startinstant = startTime.atDate(java.time.LocalDate.now()).atZone(java.time.ZoneId.systemDefault()).toInstant();
         Instant endinstant = endTime.atDate(java.time.LocalDate.now()).atZone(java.time.ZoneId.systemDefault()).toInstant();
         long startTimeLong = startinstant.getEpochSecond();

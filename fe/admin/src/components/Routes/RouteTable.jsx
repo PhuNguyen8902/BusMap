@@ -5,7 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import queryLocation from "../../utils/queryLocation";
 import DriveEtaIcon from "@mui/icons-material/DriveEta";
 import RouteIcon from "@mui/icons-material/Route";
-import MessageIcon from '@mui/icons-material/Message';
+import MessageIcon from "@mui/icons-material/Message";
 import {
   Box,
   Button,
@@ -72,33 +72,12 @@ export default function RouteTable() {
     alert(data.mess);
     fetchRouteData();
     exitEditingMode();
-    // if (data == true) {
-    //   alert("thanh cong");
-    //   fetchRouteData();
-    //   exitEditingMode();
-    // } else {
-    //   var errorMessages = [];
-
-    //   data.errors.forEach(function (error) {
-    //     var defaultMessage = error.defaultMessage;
-    //     errorMessages.push(defaultMessage);
-    //   });
-
-    //   alert(errorMessages);
-    // }
   };
   const handleDeleteRow = async () => {
     const data = await routeService.deleteRoute(deleteId);
-    // if (data == true) {
     alert(data.mess);
     fetchRouteData();
     setOpenDelete(false);
-    // exitEditingMode();
-    // alert("thanh cong roi");
-    // fetchRouteData();
-    // } else {
-    //   alert("bi loi roi");
-    // }
   };
   const handleClickOpenDelete = (row) => {
     setDeleteId(row._valuesCache.id);
@@ -120,23 +99,9 @@ export default function RouteTable() {
 
     if (!hasEmptyValue) {
       const data = await routeService.addRoute(values);
+      console.log(data);
       alert(data.mess);
       fetchRouteData();
-      // if (data == true) {
-      //   alert("thanh cong roi");
-      //   // setCreateModalOpen(false);
-      //   fetchRouteData();
-      // } else {
-      //   var errorMessages = [];
-
-      //   data.errors.forEach(function (error) {
-      //     var defaultMessage = error.defaultMessage;
-      //     errorMessages.push(defaultMessage);
-      //   });
-
-      //   alert(errorMessages);
-      // }
-      // console.log(values);
     }
   };
   const columns = useMemo(() => [
