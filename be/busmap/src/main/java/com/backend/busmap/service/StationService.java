@@ -4,6 +4,7 @@
  */
 package com.backend.busmap.service;
 
+import com.backend.busmap.dto.request.AddStation;
 import com.backend.busmap.dto.request.EditStation;
 import com.backend.busmap.dto.response.RouteMiddle;
 import com.backend.busmap.dto.response.Station3Route;
@@ -40,7 +41,7 @@ public class StationService {
 
     @Autowired
     private StationRouteService stationRouteService;
-    
+
     @Autowired
     private StationRouteRepository stationRouteRepo;
 
@@ -48,13 +49,14 @@ public class StationService {
         return this.stationRepository.findAll();
     }
 
-    public Station findById(Integer id){
+    public Station findById(Integer id) {
         return stationRepository.findStationById(id);
     }
-      public Station findStationByCode(String code){
+
+    public Station findStationByCode(String code) {
         return stationRepository.findStationByCode(code);
     }
-    
+
     public Page<?> getAllStationAdmin(Map<String, String> params) {
         Pageable pageable = null;
         Page<Station> stations = null;
@@ -235,20 +237,34 @@ public class StationService {
         return list;
     }
 
-    public String addNewStation(Station station) {
+// Helper function to check if a string is numeric
+    private boolean isNumeric(String str) {
+        try {
+            Double.parseDouble(str);
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
+        }
+    }
+
+    public String addNewStation(AddStation station) {
 
         Station checkSta = stationRepository.findStationByCode(station.getCode());
         if (checkSta != null) {
             return "Station exist";
         }
-        
-        
+
+        // Check if latitude and longitude are numeric
+        if (!isNumeric(station.getLatitude()) || !isNumeric(station.getLongitude())) {
+            return "Latitude and longitude must be numeric values";
+        }
+
         Station newStation = new Station();
-        newStation.setName(station.getName());
-        newStation.setLatitude(station.getLatitude());
-        newStation.setLongitude(station.getLongitude());
-        newStation.setCode(station.getCode());
+        newStation.setLatitude(Double.parseDouble(station.getLatitude()));
+        newStation.setLongitude(Double.parseDouble(station.getLongitude()));
         newStation.setAddress(station.getAddress());
+        newStation.setName(station.getName());
+        newStation.setCode(station.getCode());
         newStation.setIsActive(1);
 
         stationRepository.save(newStation);
@@ -270,24 +286,20 @@ public class StationService {
         return true;
 
     }
-    
+
     public String deleteStation(Integer id) {
         Station station = this.stationRepository.findById(id).orElseThrow(null);
 
-        
         station.setIsActive(0);
-        
+
         List<StationRoute> stationRoute = this.stationRouteRepo.findByStationId(station);
-        
+
         this.stationRouteRepo.deleteAll(stationRoute);
-        
+
         this.stationRepository.save(station);
-        
+
         return "Delete Successfully";
     }
-
-    
-   
 
     public List<Station3Route> getNearestStationsFor3Route(double la1, double lo1, double la2, double lo2) {
         List<StationDistance> list1 = findNearestStations(la1, lo1);
@@ -317,7 +329,7 @@ public class StationService {
                 if (routeStart.getId().intValue() != routeEnd.getId().intValue()) {
                     for (StationRoute s1 : stationRoute1) {
                         for (StationRoute s2 : stationRoute2) {
-                            if ((s1.getRouteId().getId().intValue() == s2.getRouteId().getId().intValue()) &&(s1.getPriority()<s2.getPriority())) {
+                            if ((s1.getRouteId().getId().intValue() == s2.getRouteId().getId().intValue()) && (s1.getPriority() < s2.getPriority())) {
                                 StationRoute sRouteStart = stationRouteService.findByStationIdAndRouteId(s1.getStationId(), station1.getStationRoute().getRouteId());
                                 StationRoute sRouteEnd = stationRouteService.findByStationIdAndRouteId(s2.getStationId(), station2.getStationRoute().getRouteId());
 //                                StationRoute sRoute1 = stationRouteService.findByStationIdAndRouteId(s1.getStationId(), s1.getRouteId());
@@ -383,15 +395,15 @@ public class StationService {
         List<StationDistance> list2 = findNearestStations(la2, lo2);
         switch (type) {
             case 1:
-                  List<StationRouteMiddle> l = resultFor1Route(list1, list2);
-                  return l;
+                List<StationRouteMiddle> l = resultFor1Route(list1, list2);
+                return l;
             case 2:
-                 List<StationRouteMiddle> l2 = stationMid(list1, list2);
-                 return l2;
+                List<StationRouteMiddle> l2 = stationMid(list1, list2);
+                return l2;
             case 3:
-                    List<Station3Route> l3 = resultFor3Route(list1, list2);
-                    return l3;
-            
+                List<Station3Route> l3 = resultFor3Route(list1, list2);
+                return l3;
+
         }
         return null;
     }

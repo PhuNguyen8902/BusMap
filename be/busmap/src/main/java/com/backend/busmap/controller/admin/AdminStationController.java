@@ -4,6 +4,7 @@
  */
 package com.backend.busmap.controller.admin;
 
+import com.backend.busmap.dto.request.AddStation;
 import com.backend.busmap.dto.request.EditStation;
 import com.backend.busmap.dto.response.Message;
 import com.backend.busmap.models.Station;
@@ -33,7 +34,7 @@ public class AdminStationController {
     private StationService stationService;
 
     @PostMapping("/add")
-    public ResponseEntity<?> addNewStation(@RequestBody Station s) {
+    public ResponseEntity<?> addNewStation(@RequestBody AddStation s) {
         String rs = stationService.addNewStation(s);
         return ResponseEntity.ok(Message.builder().mess(rs).build());
     }
