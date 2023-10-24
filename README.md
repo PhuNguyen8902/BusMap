@@ -112,26 +112,29 @@ Hướng dẫn cài đặt
 
 - Sau khi thành công ta bắt đầu cài MySql Workbench
 
-Đường link: https://dev.mysql.com/downloads/workbench/
+Đường link: https://dev.mysql.com/downloads/installer/
 
-- Ta Download chỗ này
+- Mở file vừa cài đặt và chọn Custom và nhấn next
 
-![image](https://github.com/PhuNguyen8902/BusMap/assets/89370742/8f0080d6-a59e-4180-91c9-59583cf95fd2)
+![image](https://github.com/PhuNguyen8902/BusMap/assets/89370742/94fb957e-663a-4b16-a720-4478c40a5726)
 
-- Mở file vừa cài đặt và nhấn Next
+- Ta chọn như hình click vào mũi tên đưa qua phải và nhấn next
 
-![image](https://github.com/PhuNguyen8902/BusMap/assets/89370742/f931e36f-0de1-4375-9143-51201e6bb1b7)
+![image](https://github.com/PhuNguyen8902/BusMap/assets/89370742/806b6d99-9c7b-449c-ad2d-1142abb78939)
 
-- Ta chọn đường dẫn nơi chứa Mysql Workbench và nhấn next
+- Ta nhấn Execute. Xong thì ta nhấn Next và next tiếp
 
-![image](https://github.com/PhuNguyen8902/BusMap/assets/89370742/dab93ed7-2a41-4ac4-ba25-4ec7bc3cc406)
+![image](https://github.com/PhuNguyen8902/BusMap/assets/89370742/e416969e-40e0-4a81-ab50-2c57048beaae)
 
-- Ta nhấn Next sau đó Install ở bước sau và Finish
+- Ta next chỗ này
 
-![image](https://github.com/PhuNguyen8902/BusMap/assets/89370742/e37c723f-6a9c-439c-9d0f-3b7a1bdf7b36)
+![image](https://github.com/PhuNguyen8902/BusMap/assets/89370742/bfce1c96-3218-4370-a113-b9c775377f16)
 
+- Ở bước này ta cài đặt mật khẩu (ở đây là 123456789). Và nhấn next tới cuối. Sau đó Execute hoàn tất
 
-5. Cài đặt Git
+![image](https://github.com/PhuNguyen8902/BusMap/assets/89370742/3b1bfcc6-5d3a-4773-a65c-9b05e9c43ed8)
+
+6. Cài đặt Git
 
 Đường link: https://git-scm.com/download/win
 
@@ -174,7 +177,7 @@ Hướng dẫn cài đặt
 
 ![image](https://github.com/PhuNguyen8902/BusMap/assets/89370742/4a9087bc-e4df-4642-ad17-b43979ab5020)
 
-6. Hướng dẫn chạy code
+7. Hướng dẫn chạy code
 
 - Ta vào một nơi chứa code và nhấn Git Bash here
 
@@ -197,7 +200,28 @@ Hướng dẫn cài đặt
 ![image](https://github.com/PhuNguyen8902/BusMap/assets/89370742/4cf894db-dd4d-473b-b6c2-db7ad1172064)
 ![image](https://github.com/PhuNguyen8902/BusMap/assets/89370742/2dffd004-4784-4a4f-8fea-0055dbdb966f)
 
+- Xong thì ta nhấn lệnh npm start để tiến hành chạy code
 
+- Tiếp theo ta mở Mysql Workbench lên và nhấn vào đây
 
+![image](https://github.com/PhuNguyen8902/BusMap/assets/89370742/3f90a59c-a8fa-4adb-b70c-0c4d1fc7b018)
 
+- Ta vào nơi chứa code và kéo thả cosodulieu.sql vào đó
 
+![image](https://github.com/PhuNguyen8902/BusMap/assets/89370742/89a8bb7a-3286-4eb3-99e0-92c120584814)
+
+- Ta nhấn Ctrl A chọn tất cả và nhấn vào đây để chạy code
+
+![image](https://github.com/PhuNguyen8902/BusMap/assets/89370742/06226f7c-2c13-4ac7-95fa-87086f895f9a)
+
+- Ta mở NetBean lên và nhấn Open Project
+
+![image](https://github.com/PhuNguyen8902/BusMap/assets/89370742/86246157-eeb9-47ff-8474-89d6fdd00996)
+
+- Ta vào đường dẫn nơi chứa code và mở file này ra
+
+![image](https://github.com/PhuNguyen8902/BusMap/assets/89370742/c0fe3868-d381-4d96-aea4-370b48bc6f6e)
+
+- Ta nhấn chuột phải vào project và nhấn Clean Build
+
+![image](https://github.com/PhuNguyen8902/BusMap/assets/89370742/6c271e90-1d95-477b-a732-f379223bd6aa)
