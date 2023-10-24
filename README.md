@@ -1,4 +1,4 @@
-Hướng dẫn cài đặt
+                                                                                          Hướng dẫn cài đặt
 1.	Cài đặt NodeJS bản 16.16
 - Đường link 64 bit: https://nodejs.org/dist/v16.16.0/node-v16.16.0-x64.msi
 - Đường link 32 bit: https://nodejs.org/dist/v16.16.0/node-v16.16.0-x86.msi
@@ -214,6 +214,8 @@ Hướng dẫn cài đặt
 
 ![image](https://github.com/PhuNguyen8902/BusMap/assets/89370742/06226f7c-2c13-4ac7-95fa-87086f895f9a)
 
+- Sau đó ta quay về trang Query1 và nhấn lệnh: SET GLOBAL sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY','')); . Và chạy lệnh này
+
 - Ta mở NetBean lên và nhấn Open Project
 
 ![image](https://github.com/PhuNguyen8902/BusMap/assets/89370742/86246157-eeb9-47ff-8474-89d6fdd00996)
@@ -221,6 +223,10 @@ Hướng dẫn cài đặt
 - Ta vào đường dẫn nơi chứa code và mở file này ra
 
 ![image](https://github.com/PhuNguyen8902/BusMap/assets/89370742/c0fe3868-d381-4d96-aea4-370b48bc6f6e)
+
+- Đầu tiên ta vào đường dẫn này và mở application ra kiểm tra. Nếu có sự khác nhau ở bước cài đặt mật khẩu cho MySQL Workbench thì cần thay đổi lại
+
+![image](https://github.com/PhuNguyen8902/BusMap/assets/89370742/4f62e2c7-3e91-440a-ad0a-f4f915613e10)
 
 - Ta nhấn chuột phải vào project và nhấn Clean Build
 
@@ -230,3 +236,11 @@ Hướng dẫn cài đặt
 
 ![image](https://github.com/PhuNguyen8902/BusMap/assets/89370742/ac053ea5-6a52-4665-8e20-18bf248d3d3d)
 
+- Sau khi chạy hoàn tất ta có thể thử chức năng
+
+![image](https://github.com/PhuNguyen8902/BusMap/assets/89370742/4aad3c9b-9610-4e4c-b106-3d9e20782d4b)
+![image](https://github.com/PhuNguyen8902/BusMap/assets/89370742/fb5f413d-3713-4ff1-9cd7-2b0327b2b518)
+
+- Đây là 2 vị trí đã đầy đủ tuyến xe để thử nghiệm (các tuyến đường khác vẫn có thể tìm ra nhưng sẽ xảy ra hiện tượng thiếu tuyến xe do chưa thêm đầy đủ)
+
+Tụi em xin kết thúc bài! Xin cảm ơn ạ!
