@@ -1,4 +1,4 @@
-                                                                                          Hướng dẫn cài đặt
+                                                 Hướng dẫn cài đặt
 1.	Cài đặt NodeJS bản 16.16
 - Đường link 64 bit: https://nodejs.org/dist/v16.16.0/node-v16.16.0-x64.msi
 - Đường link 32 bit: https://nodejs.org/dist/v16.16.0/node-v16.16.0-x86.msi
