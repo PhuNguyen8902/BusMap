@@ -225,3 +225,8 @@ Hướng dẫn cài đặt
 - Ta nhấn chuột phải vào project và nhấn Clean Build
 
 ![image](https://github.com/PhuNguyen8902/BusMap/assets/89370742/6c271e90-1d95-477b-a732-f379223bd6aa)
+
+- Sau khi Build xong ta nhấn chuột phải và Run code
+
+![image](https://github.com/PhuNguyen8902/BusMap/assets/89370742/ac053ea5-6a52-4665-8e20-18bf248d3d3d)
+
