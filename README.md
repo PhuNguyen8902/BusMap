@@ -73,6 +73,23 @@ Hướng dẫn cài đặt
 
 Đường link: https://netbeans.apache.org/download/nb16/
 
+- Ta mở file vừa cài đặt và nhấn Next
+
+![image](https://github.com/PhuNguyen8902/BusMap/assets/89370742/69322949-34a4-4368-8850-8e79ff664134)
+
+- Ta chọn Accept và nhấn next
+
+![image](https://github.com/PhuNguyen8902/BusMap/assets/89370742/5d0acf9b-b7d7-48f1-b59d-59ca3f7b29c2)
+
+- Ta chọn nơi chứa NetBean và nhấn Next
+
+![image](https://github.com/PhuNguyen8902/BusMap/assets/89370742/58a5bb82-2b98-42f3-9336-0b4631a18ef4)
+
+- Ta chọn Install
+
+![image](https://github.com/PhuNguyen8902/BusMap/assets/89370742/80adf923-7253-467c-895b-32c04eff05dd)
+
+
 4. Cài đặt JDK bản 19
 
 Đường link: https://download.oracle.com/java/19/archive/jdk-19.0.2_windows-x64_bin.exe
