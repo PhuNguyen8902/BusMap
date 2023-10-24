@@ -85,10 +85,9 @@ Hướng dẫn cài đặt
 
 ![image](https://github.com/PhuNguyen8902/BusMap/assets/89370742/58a5bb82-2b98-42f3-9336-0b4631a18ef4)
 
-- Ta chọn Install
+- Ta chọn Install, đợi một khoảng thời gian và Finish
 
 ![image](https://github.com/PhuNguyen8902/BusMap/assets/89370742/80adf923-7253-467c-895b-32c04eff05dd)
-
 
 4. Cài đặt JDK bản 19
 
@@ -101,6 +100,36 @@ Hướng dẫn cài đặt
 - Ta chọn đường dẫn và nhấn next và close
 
 ![image](https://github.com/PhuNguyen8902/BusMap/assets/89370742/d69a88e6-9088-42a3-ab29-329767eff4d4)
+
+5. Cài đặt hệ quản trị MySql Workbench
+- Đầu tiên ta cần cài đặt Visual C++ 2019 Redistributable Package
+
+Đường link: https://aka.ms/vs/17/release/vc_redist.x64.exe
+
+- Ta mở file vừa cài đặt ta chọn agree và nhấn Install
+
+![image](https://github.com/PhuNguyen8902/BusMap/assets/89370742/ada70555-d488-4cbc-a6ba-966c4d44912a)
+
+- Sau khi thành công ta bắt đầu cài MySql Workbench
+
+Đường link: https://dev.mysql.com/downloads/workbench/
+
+- Ta Download chỗ này
+
+![image](https://github.com/PhuNguyen8902/BusMap/assets/89370742/8f0080d6-a59e-4180-91c9-59583cf95fd2)
+
+- Mở file vừa cài đặt và nhấn Next
+
+![image](https://github.com/PhuNguyen8902/BusMap/assets/89370742/f931e36f-0de1-4375-9143-51201e6bb1b7)
+
+- Ta chọn đường dẫn nơi chứa Mysql Workbench và nhấn next
+
+![image](https://github.com/PhuNguyen8902/BusMap/assets/89370742/dab93ed7-2a41-4ac4-ba25-4ec7bc3cc406)
+
+- Ta nhấn Next sau đó Install ở bước sau và Finish
+
+![image](https://github.com/PhuNguyen8902/BusMap/assets/89370742/e37c723f-6a9c-439c-9d0f-3b7a1bdf7b36)
+
 
 5. Cài đặt Git
 
