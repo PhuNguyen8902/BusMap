@@ -39,6 +39,10 @@ public class RouteService {
     @Autowired
     private StationRouteService stationRouteSer;
 
+      public List<Route> getAllRoute() {
+        return this.routeRepo.findRouteByIsActive();
+    }
+    
     public Page<?> getAllRoute(Map<String, String> params) {
         Pageable pageable = null;
         Page<Route> routes = null;
@@ -69,7 +73,6 @@ public class RouteService {
     public List<Route> getAllOneWayRoute(String name) {
         return this.routeRepo.findAllOneWayRoute(name);
     }
-
     public List<Route> getRouteByRouteNum(String routeNum) {
         return this.routeRepo.findRouteByRouteNum(routeNum);
     }

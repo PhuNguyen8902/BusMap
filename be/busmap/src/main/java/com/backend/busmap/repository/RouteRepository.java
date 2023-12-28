@@ -32,8 +32,11 @@ public interface RouteRepository extends JpaRepository<Route, Integer> {
 
     @Query(value = "SELECT r FROM Route r WHERE (r.isActive = 1 AND (:name IS NULL OR r.name LIKE %:name% OR r.routeNum like %:name%)) group by r.routeNum")
     List<Route> findAllOneWayRoute(@Param("name") String name);
-
+    
     @Query("select r from Route r where r.routeNum = ?1 and r.id != ?2")
     Route getRemainingRoute(String routeNum, Integer id);
+    
+    @Query("select r from Route r where r.isActive = 1 group by r.routeNum")
+    List<Route> findRouteByIsActive();
 
 }

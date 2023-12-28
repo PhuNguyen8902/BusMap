@@ -25,6 +25,12 @@ public class RouteController {
     @Autowired
     private RouteService routeService;
     
+    
+      @GetMapping("/")
+    public ResponseEntity<?> getAllRoute() {
+        return ResponseEntity.ok(this.routeService.getAllRoute());
+    }
+    
     @GetMapping("/{id}")
     public ResponseEntity<?> getRouteByRouteId(@PathVariable("id") Integer id){
             return ResponseEntity.ok(this.routeService.getRouteById(id));
