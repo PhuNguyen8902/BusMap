@@ -3,6 +3,7 @@ import {View, useWindowDimensions} from 'react-native';
 import {SearchBar} from 'react-native-elements';
 import {TabView, SceneMap, TabBar} from 'react-native-tab-view';
 import {EachElementLookup} from '../components';
+// import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function LookupPage() {
   const [searchQuery, setSearchQuery] = useState('');
@@ -37,6 +38,10 @@ export default function LookupPage() {
     {key: 'first', title: 'Tất cả'},
     {key: 'second', title: 'Yêu thích'},
   ]);
+
+  // const rs = AsyncStorage.getItem('auth');
+  // console.log(rs);
+
   return (
     <>
       <SearchBar

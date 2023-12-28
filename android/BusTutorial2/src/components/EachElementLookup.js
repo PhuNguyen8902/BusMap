@@ -38,6 +38,18 @@ export default function EachElementLookup({search}) {
     // setPage(page + 1);
     setLoading(false);
   };
+  // const readData = async () => {
+  //   try {
+  //     const value = await AsyncStorage.getItem('auth');
+  //     if (value !== null) {
+  //       console.log('Data read successfully:', value);
+  //     } else {
+  //       console.log('No data found');
+  //     }
+  //   } catch (error) {
+  //     console.error('Error reading data:', error);
+  //   }
+  // };
 
   useEffect(() => {
     if (search == '') {

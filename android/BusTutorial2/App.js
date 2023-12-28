@@ -1,7 +1,10 @@
 import {createStackNavigator} from '@react-navigation/stack';
 import {
+  AccountPage,
   DetailNavigatePage,
+  DomainPage,
   HomePage,
+  LoginPage,
   LookupPage,
   NavigatePage,
   SearchBusPage,
@@ -15,6 +18,16 @@ export default function App() {
     <>
       <NavigationContainer>
         <Stack.Navigator>
+          <Stack.Screen
+            name="Domain"
+            component={DomainPage}
+            options={{headerTitle: 'Domain'}}
+          />
+          <Stack.Screen
+            name="Login"
+            component={LoginPage}
+            options={{headerTitle: 'Đăng nhập'}}
+          />
           <Stack.Screen
             name="Home"
             component={HomePage}
@@ -39,6 +52,11 @@ export default function App() {
             name="SearchBus"
             component={SearchBusPage}
             options={{headerTitle: 'Tìm kiếm xe'}}
+          />
+          <Stack.Screen
+            name="Account"
+            component={AccountPage}
+            options={{headerTitle: 'Tài khoản'}}
           />
         </Stack.Navigator>
       </NavigationContainer>

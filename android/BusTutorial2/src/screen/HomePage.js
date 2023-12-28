@@ -21,6 +21,9 @@ export default function HomePage() {
   const handleSearchBusPress = () => {
     navigation.navigate('SearchBus');
   };
+  const handleAccountPress = () => {
+    navigation.navigate('Account');
+  };
 
   return (
     <>
@@ -104,12 +107,14 @@ export default function HomePage() {
             <Text style={styles.textIconFooter}>Yêu thích</Text>
           </View>
           <View style={[styles.elementFooter]}>
-            <Image
-              resizeMode="cover"
-              style={[styles.iconFooter]}
-              source={require('../images/pikachu.jpg')}
-            />
-            <Text style={styles.textIconFooter}>Tài khoản</Text>
+            <TouchableOpacity onPress={handleAccountPress}>
+              <Image
+                resizeMode="cover"
+                style={[styles.iconFooter]}
+                source={require('../images/pikachu.jpg')}
+              />
+              <Text style={styles.textIconFooter}>Tài khoản</Text>
+            </TouchableOpacity>
           </View>
         </View>
       </View>

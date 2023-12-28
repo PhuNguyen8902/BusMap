@@ -56,6 +56,14 @@ public class AuthController {
 
         return ResponseEntity.ok(response);
     }
+     @PostMapping("/loginAPP")
+    public ResponseEntity<?> loginAPP(@RequestBody Login request) {
+        User user = authenticationService.signInAPP(request);
+        if(user != null){
+                return ResponseEntity.ok(user);
+        }
+      return ResponseEntity.status(403).body("Sai tài khoản hoặc mật khẩu");
+    }
 
     private Message checkError(AuthenticationResponse authenticationResponse) {
         var errorResponse = Message.builder();
