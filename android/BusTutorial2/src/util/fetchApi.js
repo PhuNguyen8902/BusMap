@@ -24,29 +24,28 @@ export const getData = async (api, options = {}) => {
   }
 };
 
-// export const postData = async (api, form, opitons = {}) =>{
-//     try{
-//         const response = await fetch(api, {
-//             method: "POST",
-//             headers: {
-//                 "Content-Type": "Application/json",
-//             },
-//             body: JSON.stringify(form),
-//             ...opitons
-//         })
+// export const postData = async (api, form, opitons = {}) => {
+//   try {
+//     const response = await fetch(api, {
+//       method: 'POST',
+//       headers: {
+//         'Content-Type': 'Application/json',
+//       },
+//       body: JSON.stringify(form),
+//       ...opitons,
+//     });
 
-//         if(!response.ok){
-//             throw new Error(`Request failed with status ${response.status}`)
-//         }
-
-//         const data = await response.json();
-//         return data;
-
-//     }catch(err){
-//         console.error("An error occurred: ", err);
-//         throw err;
+//     if (!response.ok) {
+//       throw new Error(`Request failed with status ${response.status}`);
 //     }
-// }
+
+//     const data = await response.json();
+//     return data;
+//   } catch (err) {
+//     console.error('An error occurred: ', err);
+//     throw err;
+//   }
+// };
 
 // // Put
 // export const putData = async (api, form, opitons = {}) =>{

@@ -1,14 +1,15 @@
+import {getIP} from '../common/common';
 import {getData} from '../util/fetchApi';
-import {IP} from '../common/common';
 
+const IP = getIP();
 const routeService = {
   async getAllRoute() {
-    const api = `${IP}api/route/`;
+    const api = `${IP}/api/route/`;
     const data = await getData(api);
     return data;
   },
   async getSearchRoute(search) {
-    const api = `${IP}api/route/oneWay?name=${search}`;
+    const api = `${IP}/api/route/oneWay?name=${search}`;
     const data = await getData(api);
     return data;
   },

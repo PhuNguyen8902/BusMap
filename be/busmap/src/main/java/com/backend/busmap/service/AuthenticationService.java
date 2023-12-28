@@ -13,6 +13,7 @@ import com.backend.busmap.dto.response.AuthenticationResponse;
 import com.backend.busmap.enums.UserRole;
 import com.backend.busmap.models.RefreshToken;
 import com.backend.busmap.models.User;
+import com.backend.busmap.repository.AuthAppRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -37,6 +38,9 @@ public class AuthenticationService {
 
     @Autowired
     private AuthenticationManager authenticationManager;
+
+    @Autowired
+    private AuthAppRepository authAppRepo;
 
     public boolean register(User request) throws UnsupportedEncodingException {
         User userExist = userService.getUserByUserName(request.getUsername()).orElse(null);
@@ -63,6 +67,7 @@ public class AuthenticationService {
 
     public AuthenticationResponse signIn(Login request) {
         User user = userService.getUserByUserName(request.getUserName()).orElse(null);
+
         if (user == null) {
             return null;
         }
@@ -80,6 +85,16 @@ public class AuthenticationService {
                 .refreshToken(refreshToken.getToken())
                 .build();
 
+    }
+
+    public User signInAPP(Login request) {
+        User user = authAppRepo.findUserByUserName(request.getUserName());
+        boolean matches = passwordEncoder.matches(request.getPassword(), user.getPassword());
+
+        if (matches) {
+            return user;
+        }
+        return null;
     }
 
     public AuthenticationResponse refreshToken(RefreshTokenRequest request) {
