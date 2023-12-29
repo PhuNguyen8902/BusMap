@@ -1,10 +1,10 @@
 import {call, delay, put, takeLatest} from 'redux-saga/effects';
-import {setInfo, signOut} from '../features/auth/authSlice';
-import userService from '../../service/userService';
+import {setInfo} from '../slices/authSlice';
+import {UserService} from '../../service';
 // get user info
 function* fetchInfo() {
   try {
-    const response = yield call(userService.getInfo);
+    const response = yield call(UserService.getInfo);
     if (!response.error) {
       // console.log("res: ", response)
       yield put(setInfo(response));
@@ -17,7 +17,7 @@ function* fetchInfo() {
   }
 }
 function* mySaga() {
-  yield takeLatest('FETCH_INFO', fetchInfo);
+  // yield takeLatest('FETCH_INFO', fetchInfo);
 }
 
 export default mySaga;

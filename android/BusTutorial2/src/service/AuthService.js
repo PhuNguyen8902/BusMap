@@ -4,7 +4,7 @@ const IP = getIP();
 const AuthService = {
   async signIn(form) {
     // tra ra 2 du lieu token
-    const response = await fetch(`${IP}/api/auth/loginAPP`, {
+    const response = await fetch(`${IP}/api/auth/login`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
