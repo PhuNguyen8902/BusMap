@@ -1,8 +1,9 @@
 import {useNavigation} from '@react-navigation/native';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {TextInput, Text, StyleSheet, Image, View} from 'react-native';
 import {Button} from 'react-native-elements';
 import {setIP} from '../common/common';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const iconSize = 200;
 
@@ -17,6 +18,8 @@ export default function DomainPage() {
       const response = await fetch(`http://${domain}`);
 
       if (response.status == 200) {
+        await AsyncStorage.setItem('domain', domain);
+
         setIP(`http://${domain}`);
         navigation.navigate('Login');
       } else {
@@ -27,6 +30,15 @@ export default function DomainPage() {
     }
   };
 
+  const checkLocalDomain = async () => {
+    const domain = await AsyncStorage.getItem('domain');
+    if (domain != null) {
+      navigation.navigate('Home');
+    }
+  };
+  useEffect(() => {
+    checkLocalDomain();
+  }, []);
   return (
     <>
       <View style={{alignItems: 'center', justifyContent: 'center'}}>
