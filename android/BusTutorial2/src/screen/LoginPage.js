@@ -19,6 +19,7 @@ export default function LoginPage() {
     };
 
     const data = await AuthService.signIn(userCredentials);
+    // console.log(data);
     if (data == null) {
       Alert.alert('Đăng nhập thất bại', 'Sai tài khoản hoặc mật khẩu', [
         {text: 'OK'},

@@ -1,6 +1,7 @@
 import {createStackNavigator} from '@react-navigation/stack';
 import {
   AccountPage,
+  DetailLookupPage,
   DetailNavigatePage,
   DomainPage,
   HomePage,
@@ -47,6 +48,11 @@ export default function App() {
             name="DetailNavigate"
             component={DetailNavigatePage}
             options={{headerTitle: 'Hướng dẫn'}}
+          />
+          <Stack.Screen
+            name="DetailLookup"
+            component={DetailLookupPage}
+            options={{headerTitle: 'Chi tiết'}}
           />
           <Stack.Screen
             name="SearchBus"

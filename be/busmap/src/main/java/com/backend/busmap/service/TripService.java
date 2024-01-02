@@ -152,6 +152,9 @@ public class TripService {
     public String deleteTrip(Integer id) {
         tripRepo.deleteById(id);
         return "Delete Successfully";
-
+    }
+     public Integer countTripByRouteId(Integer id) {
+        Integer count =  tripRepo.countTripByRouteId(id);
+        return count;
     }
 }

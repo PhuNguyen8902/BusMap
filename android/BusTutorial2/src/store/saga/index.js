@@ -17,7 +17,7 @@ function* fetchInfo() {
   }
 }
 function* mySaga() {
-  // yield takeLatest('FETCH_INFO', fetchInfo);
+  yield takeLatest('FETCH_INFO', fetchInfo);
 }
 
 export default mySaga;

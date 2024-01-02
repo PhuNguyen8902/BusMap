@@ -3,7 +3,6 @@
 // export {IP};
 
 let IP = '';
-
 const getIP = () => IP;
 
 const setIP = newIP => {

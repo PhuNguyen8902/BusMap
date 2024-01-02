@@ -13,6 +13,11 @@ const routeService = {
     const data = await getData(api);
     return data;
   },
+  async getRoutesByRouteNum(routeNum) {
+    const api = `${IP}/api/route/routeBackward/${routeNum}`;
+    const allRoutesByRouteNum = await getData(api);
+    return allRoutesByRouteNum;
+  },
   // async getOneWayRoute(name) {
   //   const oneWayRouteData = await getData(`${routeApi}/oneWay?name=${name}`);
   //   // console.log(oneWayRouteData);
@@ -23,13 +28,6 @@ const routeService = {
   //     `${routeStationApi}/route/${routeId}`,
   //   );
   //   return routeDetailData;
-  // },
-  // async getRoutesByRouteNum(routeNum) {
-  //   const api = `${routeApi}/routeBackward/${routeNum}`;
-  //   // console.log(api)
-  //   const allRoutesByRouteNum = await getData(api);
-  //   // console.log(allRoutesByRouteNum);
-  //   return allRoutesByRouteNum;
   // },
 };
 
