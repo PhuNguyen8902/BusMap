@@ -10,6 +10,7 @@ import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -22,4 +23,7 @@ public interface TripRepository extends JpaRepository<Trip, Integer> {
 
     List<Trip> findAllByRouteId(Route r);
     
+//  @Query("SELECT COUNT(*) FROM trip t WHERE t.route_id = :routeId")
+    @Query(value = "SELECT COUNT(*) FROM trip t WHERE t.route_id = ?1", nativeQuery = true)
+    Integer countTripByRouteId(Integer routeId);
 }

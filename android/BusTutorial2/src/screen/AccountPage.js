@@ -13,8 +13,10 @@ export default function AccountPage() {
 
   const readData = async () => {
     const value = await AsyncStorage.getItem('auth');
-    const storedData = JSON.parse(value);
-    setData(storedData);
+    if (value != null) {
+      const storedData = JSON.parse(value);
+      setData(storedData);
+    }
   };
   useEffect(() => {
     readData();
@@ -25,42 +27,83 @@ export default function AccountPage() {
     AsyncStorage.removeItem('domain');
     navigation.navigate('Domain');
   };
+  const Login = () => {
+    navigation.navigate('Login');
+  };
   return (
     <>
-      <View style={styles.container}>
-        <Image
-          resizeMode="cover"
-          style={[styles.icon]}
-          source={require('../images/pikachu.jpg')}
-        />
-        <View style={styles.row}>
-          <Text style={styles.font}>Tên</Text>
-          <Text style={styles.font}>{data.name}</Text>
+      {data != '' ? (
+        <View style={styles.container}>
+          <Image
+            resizeMode="cover"
+            style={[styles.icon]}
+            source={require('../images/pikachu.jpg')}
+          />
+          <View style={styles.row}>
+            <Text style={styles.font}>Tên</Text>
+            <Text style={styles.font}>{data.name}</Text>
+          </View>
+          <View style={styles.row}>
+            <Text style={styles.font}>Email</Text>
+            <Text style={styles.font}>{data.email}</Text>
+          </View>
+          <View style={styles.row}>
+            <Text style={styles.font}>Số điện thoại</Text>
+            <Text style={styles.font}>{data.phone}</Text>
+          </View>
+          <View style={styles.row}>
+            <Button
+              title={'Thoát Domain'}
+              containerStyle={{
+                width: 200,
+                marginTop: 20,
+                borderRadius: 50,
+                marginHorizontal: 60,
+              }}
+              buttonStyle={{
+                backgroundColor: 'lightgreen',
+                borderRadius: 10,
+              }}
+              onPress={ExitDomain}></Button>
+          </View>
         </View>
-        <View style={styles.row}>
-          <Text style={styles.font}>Email</Text>
-          <Text style={styles.font}>{data.email}</Text>
-        </View>
-        <View style={styles.row}>
-          <Text style={styles.font}>Số điện thoại</Text>
-          <Text style={styles.font}>{data.phone}</Text>
-        </View>
-        <View style={styles.row}>
-          <Button
-            title={'Thoát Domain'}
-            containerStyle={{
-              width: 200,
-              marginTop: 20,
-              borderRadius: 50,
-              marginHorizontal: 60,
-            }}
-            buttonStyle={{
-              backgroundColor: 'lightgreen',
-              borderRadius: 10,
-            }}
-            onPress={ExitDomain}></Button>
-        </View>
-      </View>
+      ) : (
+        <>
+          <View style={styles.container}>
+            <Image
+              resizeMode="cover"
+              style={[styles.icon]}
+              source={require('../images/pikachu.jpg')}
+            />
+            <Button
+              title={'Đăng nhập'}
+              containerStyle={{
+                width: 200,
+                marginTop: 20,
+                borderRadius: 50,
+                marginHorizontal: 60,
+              }}
+              buttonStyle={{
+                backgroundColor: 'lightgreen',
+                borderRadius: 10,
+              }}
+              onPress={Login}></Button>
+            <Button
+              title={'Thoát Domain'}
+              containerStyle={{
+                width: 200,
+                marginTop: 20,
+                borderRadius: 50,
+                marginHorizontal: 60,
+              }}
+              buttonStyle={{
+                backgroundColor: 'lightgreen',
+                borderRadius: 10,
+              }}
+              onPress={ExitDomain}></Button>
+          </View>
+        </>
+      )}
     </>
   );
 }

@@ -21,7 +21,7 @@ export default function DomainPage() {
         await AsyncStorage.setItem('domain', domain);
 
         setIP(`http://${domain}`);
-        navigation.navigate('Login');
+        navigation.navigate('Home');
       } else {
         setResult('Lỗi kết nối đến domain.');
       }
@@ -33,6 +33,7 @@ export default function DomainPage() {
   const checkLocalDomain = async () => {
     const domain = await AsyncStorage.getItem('domain');
     if (domain != null) {
+      setIP(`http://${domain}`);
       navigation.navigate('Home');
     }
   };
