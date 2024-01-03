@@ -60,6 +60,10 @@ public class TripService {
     public List<Trip> getTripByRoute(Route r) {
         return tripRepo.findAllByRouteId(r);
     }
+     public List<Trip> getTripByRoute2(Integer id) {
+         Route r = routeRepo.findRouteById(id);
+        return tripRepo.findAllByRouteId(r);
+    }
 
     public Page<?> getTripByRouteId(Integer id, Map<String, String> params) {
 

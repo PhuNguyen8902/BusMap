@@ -28,6 +28,11 @@ public class TripController {
     public ResponseEntity<?> countTripByRouteId(@PathVariable("routeId") Integer routeId){
             return ResponseEntity.ok(this.tripService.countTripByRouteId(routeId));
     }
+    
+      @GetMapping("/route/{routeId}")
+    public ResponseEntity<?> getTripByRoute(@PathVariable("routeId") Integer routeId){
+            return ResponseEntity.ok(this.tripService.getTripByRoute2(routeId));
+    }
 
   
 }

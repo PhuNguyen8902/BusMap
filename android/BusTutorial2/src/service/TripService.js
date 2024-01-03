@@ -8,6 +8,11 @@ const tripService = {
     const data = await getData(api);
     return data;
   },
+  async getTripByRoute(id) {
+    const api = `${IP}/api/trip/route/${id}`;
+    const data = await getData(api);
+    return data;
+  },
 };
 
 export default tripService;
