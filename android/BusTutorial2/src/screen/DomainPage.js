@@ -31,8 +31,27 @@ export default function DomainPage() {
   };
 
   const checkLocalDomain = async () => {
-    const domain = await AsyncStorage.getItem('domain');
-    if (domain != null) {
+    const d = await AsyncStorage.getItem('domain');
+    setDomain(d);
+    if (d != null) {
+      try {
+        const response = await fetch(`http://${d}`);
+
+        console.log(d);
+        if (response.status == 200) {
+          // await AsyncStorage.setItem('domain', domain);
+
+          setIP(`http://${d}`);
+          navigation.navigate('Home');
+        } else {
+          AsyncStorage.removeItem('domain');
+          setResult('Lỗi kết nối đến domain.');
+        }
+      } catch (error) {
+        AsyncStorage.removeItem('domain');
+        setResult('Lỗi kết nối đến domain.');
+      }
+
       setIP(`http://${domain}`);
       navigation.navigate('Home');
     }
