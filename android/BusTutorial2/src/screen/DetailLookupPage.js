@@ -11,7 +11,7 @@ import React, {useState, useEffect} from 'react';
 import {StyleSheet, View, useWindowDimensions} from 'react-native';
 import {Button} from 'react-native-elements';
 import {TabView, SceneMap, TabBar} from 'react-native-tab-view';
-import {HourlyChart, Information, StationStop} from '../components/Lookup';
+import {HourlyChart, Information, Map, StationStop} from '../components/Lookup';
 import {routeService} from '../service';
 
 export default function DetailLookupPage({route}) {
@@ -61,7 +61,11 @@ export default function DetailLookupPage({route}) {
     <View
       style={{
         flex: 1,
-      }}></View>
+      }}>
+      {btn == 1 && realData != '' ? <Map data={realData[0]} /> : null}
+
+      {btn == 2 && realData != '' ? <Map data={realData[1]} /> : null}
+    </View>
   );
   const FiveRoute = () => (
     <View
