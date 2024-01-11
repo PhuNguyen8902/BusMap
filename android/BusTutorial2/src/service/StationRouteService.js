@@ -1,10 +1,10 @@
-import {getIP} from '../common/common';
+import {IP} from '../common/common';
 import {getData} from '../util/fetchApi';
 
-const IP = getIP();
+const IPs = IP;
 const stationRouteService = {
   async getStationRouteByRouteId(id) {
-    const api = `${IP}/api/station-route/route/${id}`;
+    const api = `${IPs}/api/station-route/route/${id}`;
     const data = await getData(api);
     return data;
   },

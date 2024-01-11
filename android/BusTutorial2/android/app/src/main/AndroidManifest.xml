@@ -9,9 +9,7 @@
     android:roundIcon="@mipmap/ic_launcher_round"
     android:allowBackup="false"
     android:theme="@style/AppTheme">
-    <meta-data
-      android:name="com.google.android.geo.API_KEY"
-      android:value="YOUR_GOOGLE_MAPS_API_KEY" />
+
     <activity
       android:name=".MainActivity"
       android:label="@string/app_name"
@@ -24,5 +22,8 @@
         <category android:name="android.intent.category.LAUNCHER" />
       </intent-filter>
     </activity>
+    <meta-data
+      android:name="com.google.android.geo.API_KEY"
+      android:value="AIzaSyAQypWzXfUTV1dSP-9fZcxr8dYF6o5_7XU" />
   </application>
 </manifest>

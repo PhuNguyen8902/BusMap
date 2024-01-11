@@ -1,8 +1,8 @@
-import {getIP} from '../common/common';
+import {IP} from '../common/common';
 import {getData} from '../util/fetchApi';
-const IP = getIP();
+const IPs = IP;
 
-const stationApi = `${IP}/api/station`;
+const stationApi = `${IPs}/api/station`;
 
 const stationService = {
   async getRouteWithOneTripData(lat1, lon1, lat2, lon2) {
