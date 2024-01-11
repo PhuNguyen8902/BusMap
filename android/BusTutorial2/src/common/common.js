@@ -3,10 +3,11 @@
 // export {IP};
 
 let IP = '';
-const getIP = () => IP;
 
 const setIP = newIP => {
   IP = newIP;
+  console.log(newIP);
+  console.log('ip ne');
 };
 
-export {getIP, setIP};
+export {setIP, IP};

@@ -1,8 +1,8 @@
-import {getIP} from '../common/common';
+import {IP} from '../common/common';
 
-const IP = getIP();
+const IPs = IP;
 
-const API = `${IP}/api`;
+const API = `${IPs}/api`;
 
 // const userAdminApi = "http://localhost:8080/api/admin/user";
 

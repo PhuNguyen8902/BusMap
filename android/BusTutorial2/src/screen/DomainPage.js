@@ -36,11 +36,8 @@ export default function DomainPage() {
     if (d != null) {
       try {
         const response = await fetch(`http://${d}`);
-
         console.log(d);
         if (response.status == 200) {
-          // await AsyncStorage.setItem('domain', domain);
-
           setIP(`http://${d}`);
           navigation.navigate('Home');
         } else {
@@ -52,8 +49,8 @@ export default function DomainPage() {
         setResult('Lỗi kết nối đến domain.');
       }
 
-      setIP(`http://${domain}`);
-      navigation.navigate('Home');
+      // setIP(`http://${domain}`);
+      // navigation.navigate('Home');
     }
   };
   useEffect(() => {
