@@ -19,21 +19,15 @@ function formatTime(timeObject) {
   return `${hours}:${minutes}`;
 }
 
-export default function EachElementLookup({search, user}) {
+export default function EachElementLookupLikes({search, user}) {
   const [fakeRoute, setFakeRoute] = useState([]);
-  const [bonusRoute, setBonusRoute] = useState([]);
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
-
   const navigation = useNavigation();
 
   const fetchData = async () => {
     setLoading(true);
-    const data = await routeService.getAllRoute();
-    if (user != '') {
-      const data2 = await UserRouteLikesService.getAllByUserId(user.id);
-      setBonusRoute(data2);
-    }
+    const data = await UserRouteLikesService.getAllByUserId(user.id);
     setFakeRoute(data);
     setPage(page + 1);
     setLoading(false);
@@ -42,7 +36,7 @@ export default function EachElementLookup({search, user}) {
   const fetchSearchData = async () => {
     setLoading(true);
     // const data = await routeService.getSearchRoute(search);
-    const data = await routeService.getSearchRoute(search);
+    const data = await UserRouteLikesService.getSearchRoute(search, user.id);
     setFakeRoute(data);
     setPage(page + 1);
     setLoading(false);
@@ -83,27 +77,14 @@ export default function EachElementLookup({search, user}) {
             </View>
           </View>
           <View>
-            {bonusRoute.some(
-              route => JSON.stringify(route) == JSON.stringify(item),
-            ) ? (
-              <Icon
-                raised
-                name="heartbeat"
-                type="font-awesome"
-                color="red"
-                onPress={() => console.log(item)}
-                size={30}
-              />
-            ) : (
-              <Icon
-                raised
-                name="heartbeat"
-                type="font-awesome"
-                color="gray"
-                onPress={() => console.log(item)}
-                size={30}
-              />
-            )}
+            <Icon
+              raised
+              name="heartbeat"
+              type="font-awesome"
+              color="red"
+              onPress={() => console.log(item)}
+              size={30}
+            />
           </View>
         </View>
       </TouchableOpacity>

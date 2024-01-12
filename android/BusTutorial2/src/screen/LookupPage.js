@@ -1,18 +1,40 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {View, useWindowDimensions} from 'react-native';
-import {SearchBar} from 'react-native-elements';
+import {Button, SearchBar} from 'react-native-elements';
 import {TabView, SceneMap, TabBar} from 'react-native-tab-view';
 import {EachElementLookup} from '../components';
-// import AsyncStorage from '@react-native-async-storage/async-storage';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {useNavigation} from '@react-navigation/native';
+import {EachElementLookupLikes} from '../components/Lookup';
 
 export default function LookupPage() {
   const [searchQuery, setSearchQuery] = useState('');
+  const [u, setU] = useState('');
+  const navigation = useNavigation();
+
+  const readData = async () => {
+    const value = await AsyncStorage.getItem('auth');
+    if (value != null) {
+      const storedData = JSON.parse(value);
+      setU(storedData);
+    }
+  };
+  useEffect(() => {
+    readData();
+  }, []);
+  const Login = () => {
+    navigation.navigate('Login');
+  };
   const FirstRoute = () => (
     <View
       style={{
         flex: 1,
       }}>
-      <EachElementLookup search={searchQuery} />
+      {u != '' ? (
+        <EachElementLookup search={searchQuery} user={u} />
+      ) : (
+        <EachElementLookup search={searchQuery} user={''} />
+      )}
     </View>
   );
 
@@ -21,7 +43,23 @@ export default function LookupPage() {
       style={{
         flex: 1,
       }}>
-      <EachElementLookup search={searchQuery} />
+      {u != '' ? (
+        <EachElementLookupLikes search={searchQuery} user={u} />
+      ) : (
+        <Button
+          title={'Đăng nhập'}
+          containerStyle={{
+            width: 200,
+            marginTop: 20,
+            borderRadius: 50,
+            marginHorizontal: 120,
+          }}
+          buttonStyle={{
+            backgroundColor: 'lightgreen',
+            borderRadius: 10,
+          }}
+          onPress={Login}></Button>
+      )}
     </View>
   );
 
