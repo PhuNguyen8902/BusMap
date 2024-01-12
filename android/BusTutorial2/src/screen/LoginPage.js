@@ -31,7 +31,9 @@ export default function LoginPage() {
       navigation.navigate('Home');
     }
   };
-
+  const GoHome = () => {
+    navigation.navigate('Home');
+  };
   return (
     <>
       <View style={{alignItems: 'center', justifyContent: 'center'}}>
@@ -61,13 +63,26 @@ export default function LoginPage() {
           width: 200,
           marginTop: 20,
           borderRadius: 50,
-          marginHorizontal: 80,
+          marginHorizontal: 120,
         }}
         buttonStyle={{
           backgroundColor: 'lightgreen',
           borderRadius: 10,
         }}
         onPress={Login}></Button>
+      <Button
+        title={'Không cần tài khoản'}
+        containerStyle={{
+          width: 200,
+          marginTop: 20,
+          borderRadius: 50,
+          marginHorizontal: 120,
+        }}
+        buttonStyle={{
+          backgroundColor: 'lightgreen',
+          borderRadius: 10,
+        }}
+        onPress={GoHome}></Button>
     </>
   );
 }

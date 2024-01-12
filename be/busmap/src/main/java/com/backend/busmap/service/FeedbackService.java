@@ -46,7 +46,7 @@ public class FeedbackService {
     public List<Feedback> getAllFeedbackByRouteId(Integer routeId) {
 
         Route route = this.routeRepo.findRouteById(routeId);
-        
+
         List<Feedback> feedbackList = this.feedbackRepo.findByRouteId(route);
 
         // Sort the feedbackList by date in ascending order
@@ -76,14 +76,56 @@ public class FeedbackService {
         feedback.setContent(addFeedback.getContent());
         feedback.setRouteId(route);
         feedback.setUserId(user);
-        
+
         // Set the current date
         java.util.Date currentDate = Calendar.getInstance().getTime();
         feedback.setDate(new Date(currentDate.getTime()));
-        
+
         this.feedbackRepo.save(feedback);
 
         return "Add Successfully";
+    }
+
+    public String addFeedbackAPP(AddFeedback addFeedback) {
+
+        Route route = this.routeRepo.findRouteById(addFeedback.getRouteId());
+        User user = this.userRepo.findUserById(addFeedback.getUserId());
+
+        Feedback f = feedbackRepo.findByUserIdAndRouteId(user, route).orElseThrow(null);
+
+        if (f == null) {
+
+            Feedback feedback = new Feedback();
+
+            feedback.setRate(addFeedback.getRate());
+            feedback.setContent(addFeedback.getContent());
+            feedback.setRouteId(route);
+            feedback.setUserId(user);
+
+            // Set the current date
+            java.util.Date currentDate = Calendar.getInstance().getTime();
+            feedback.setDate(new Date(currentDate.getTime()));
+
+            this.feedbackRepo.save(feedback);
+
+            return "Successfully";
+        } else {
+            Feedback feedback = new Feedback();
+
+            feedback.setId(f.getId());
+            feedback.setRate(addFeedback.getRate());
+            feedback.setContent(addFeedback.getContent());
+            feedback.setRouteId(route);
+            feedback.setUserId(user);
+
+            // Set the current date
+            java.util.Date currentDate = Calendar.getInstance().getTime();
+            feedback.setDate(new Date(currentDate.getTime()));
+
+            this.feedbackRepo.save(feedback);
+
+            return "Successfully";
+        }
     }
 
     public String updateFeedback(EditFeedback editFeedback) {
@@ -98,8 +140,8 @@ public class FeedbackService {
         feedback.setContent(editFeedback.getContent());
         feedback.setRouteId(route);
         feedback.setUserId(user);
-        
-         // Set the current date
+
+        // Set the current date
         java.util.Date currentDate = Calendar.getInstance().getTime();
         feedback.setDate(new Date(currentDate.getTime()));
 
@@ -122,7 +164,7 @@ public class FeedbackService {
         try {
             Sort.Order o = new Sort.Order(Sort.Direction.DESC, "date");
             Sort sort = Sort.by(o);
-            
+
             pageable = PageRequest.of(Integer.parseInt(params.get("page")) - 1, Integer.parseInt(params.get("limit")), sort);
             Route r = routeRepo.findById(id).orElse(null);
 
@@ -133,7 +175,8 @@ public class FeedbackService {
         }
         return feedbacks;
     }
-      public Page<?> getAllFeedbackAdminByUserId(String id, Map<String, String> params) {
+
+    public Page<?> getAllFeedbackAdminByUserId(String id, Map<String, String> params) {
         Pageable pageable = null;
         Page<Feedback> feedbacks = null;
 
@@ -147,10 +190,10 @@ public class FeedbackService {
         try {
             Sort.Order o = new Sort.Order(Sort.Direction.DESC, "date");
             Sort sort = Sort.by(o);
-            
+
             pageable = PageRequest.of(Integer.parseInt(params.get("page")) - 1, Integer.parseInt(params.get("limit")), sort);
             User r = userRepo.findById(id).orElse(null);
-            
+
             feedbacks = this.feedbackRepo.findFeedbackByUserId(r, pageable);
         } catch (NumberFormatException exception) {
             System.out.println(exception.getMessage());

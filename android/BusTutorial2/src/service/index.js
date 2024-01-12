@@ -4,7 +4,8 @@ import UserService from './UserService';
 import stationService from './StationService';
 import stationRouteService from './StationRouteService';
 import tripService from './TripService';
-import ratingService from './RatingService';
+import feedbackService from './FeedbackService';
+import UserRouteLikesService from './UserRouteLikesService';
 
 export {
   tripService,
@@ -13,5 +14,6 @@ export {
   UserService,
   stationService,
   stationRouteService,
-  ratingService,
+  feedbackService,
+  UserRouteLikesService,
 };

@@ -30,6 +30,11 @@ export default function AccountPage() {
   const Login = () => {
     navigation.navigate('Login');
   };
+  const SignOut = () => {
+    AsyncStorage.removeItem('auth');
+
+    navigation.navigate('Login');
+  };
   return (
     <>
       {data != '' ? (
@@ -51,7 +56,20 @@ export default function AccountPage() {
             <Text style={styles.font}>Số điện thoại</Text>
             <Text style={styles.font}>{data.phone}</Text>
           </View>
-          <View style={styles.row}>
+          <View>
+            <Button
+              title={'Đăng xuất'}
+              containerStyle={{
+                width: 200,
+                marginTop: 20,
+                borderRadius: 50,
+                marginHorizontal: 60,
+              }}
+              buttonStyle={{
+                backgroundColor: 'lightgreen',
+                borderRadius: 10,
+              }}
+              onPress={SignOut}></Button>
             <Button
               title={'Thoát Domain'}
               containerStyle={{
@@ -88,6 +106,7 @@ export default function AccountPage() {
                 borderRadius: 10,
               }}
               onPress={Login}></Button>
+
             <Button
               title={'Thoát Domain'}
               containerStyle={{

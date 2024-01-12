@@ -49,6 +49,12 @@ public class FeedbackController {
         String rs = this.feedbackService.addFeedback(feedback);
         return ResponseEntity.ok(Message.builder().mess(rs).build());
     }
+    
+      @PostMapping("/addAPP")
+    public ResponseEntity<?> addFeedbackAPP(@Valid @RequestBody AddFeedback feedback) {
+        String rs = this.feedbackService.addFeedbackAPP(feedback);
+        return ResponseEntity.ok(Message.builder().mess(rs).build());
+    }
 
     @PutMapping("/edit")
     public ResponseEntity<?> addFeedback(@Valid @RequestBody EditFeedback feedback) {

@@ -5,7 +5,6 @@ const IPs = IP;
 const routeService = {
   async getAllRoute() {
     const api = `${IPs}/api/route/`;
-    console.log(api);
     const data = await getData(api);
     return data;
   },
@@ -19,17 +18,6 @@ const routeService = {
     const allRoutesByRouteNum = await getData(api);
     return allRoutesByRouteNum;
   },
-  // async getOneWayRoute(name) {
-  //   const oneWayRouteData = await getData(`${routeApi}/oneWay?name=${name}`);
-  //   // console.log(oneWayRouteData);
-  //   return oneWayRouteData;
-  // },
-  // async getRouteDetail(routeId) {
-  //   const routeDetailData = await getData(
-  //     `${routeStationApi}/route/${routeId}`,
-  //   );
-  //   return routeDetailData;
-  // },
 };
 
 export default routeService;

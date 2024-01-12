@@ -12,10 +12,10 @@ import {StyleSheet, View, useWindowDimensions} from 'react-native';
 import {Button} from 'react-native-elements';
 import {TabView, SceneMap, TabBar} from 'react-native-tab-view';
 import {
+  Feedback,
   HourlyChart,
   Information,
   Map,
-  Rating,
   StationStop,
 } from '../components/Lookup';
 import {routeService} from '../service';
@@ -78,9 +78,13 @@ export default function DetailLookupPage({route}) {
       style={{
         flex: 1,
       }}>
-      {btn == 1 && realData != '' ? <Rating data={realData[0]} /> : null}
+      {btn == 1 && realData != '' ? (
+        <Feedback data={realData[0]} rate={realData[0]} />
+      ) : null}
 
-      {btn == 2 && realData != '' ? <Rating data={realData[1]} /> : null}
+      {btn == 2 && realData != '' ? (
+        <Feedback data={realData[1]} rate={realData[0]} />
+      ) : null}
     </View>
   );
 
