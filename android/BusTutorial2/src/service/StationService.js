@@ -21,6 +21,21 @@ const stationService = {
     const routeWithThreeTripData = await getData(api);
     return routeWithThreeTripData;
   },
+  async getAllStationIsActive() {
+    const api = `${stationApi}/app`;
+    const data = await getData(api);
+    return data;
+  },
+  async getAllStationIsActive() {
+    const api = `${stationApi}/app`;
+    const data = await getData(api);
+    return data;
+  },
+  async getSearchStation(search) {
+    const api = `${IPs}/search?name=${search}`;
+    const data = await getData(api);
+    return data;
+  },
 };
 
 export default stationService;

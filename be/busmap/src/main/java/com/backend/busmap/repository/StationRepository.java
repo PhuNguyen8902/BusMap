@@ -10,6 +10,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -31,6 +32,12 @@ public interface StationRepository extends JpaRepository<Station, Integer> {
     List<Station> getStationNearAdd(double la, double lo);
 
     Station findStationByCode(String code);
-    
+
     Station findStationById(Integer id);
+
+    @Query(value = "SELECT r FROM Station r WHERE (r.isActive = 1 AND (:name IS NULL OR r.name LIKE %:name% OR r.code like %:name%)) group by r.code")
+    List<Station> getAllStationSearch(@Param("name") String name);
+
+    @Query("select r from Station r where r.isActive = 1 group by r.code")
+    List<Station> getStationByIsActive();
 }

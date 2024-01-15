@@ -33,11 +33,21 @@ public class StationController {
         return ResponseEntity.ok(this.stationService.getAllStation());
     }
 
+    @GetMapping("/app")
+    public ResponseEntity<?> getStationByIsActive() {
+        return ResponseEntity.ok(this.stationService.getStationByIsActive());
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<?> getAllStationSearch(@RequestParam(name = "name", required = false) String name) {
+        return ResponseEntity.ok(this.stationService.getAllStationSearch(name));
+    }
+
     @GetMapping("/count")
     public ResponseEntity<?> getNearestStations(@RequestParam Double latitude, @RequestParam Double longitude) {
         return ResponseEntity.ok(this.stationService.findNearestStations(latitude, longitude));
     }
-    
+
     @GetMapping("/route3")
     public ResponseEntity<?> getNearestStations3(@RequestParam Double latitude1, @RequestParam Double longitude1,
             @RequestParam Double latitude2, @RequestParam Double longitude2) {
@@ -55,23 +65,20 @@ public class StationController {
             @RequestParam Double latitude2, @RequestParam Double longitude2) {
         return ResponseEntity.ok(this.stationService.getNearestStationsFor1Route(latitude1, longitude1, latitude2, longitude2));
     }
-    
+
 //      @GetMapping("/find")
 //    public ResponseEntity<?> getNearestStationsFor1Route(@RequestParam Map<String, String> params) {
 //        return ResponseEntity.ok(this.stationService.findWithManyRoute(params));
 //    }
-    
-
 //    @GetMapping("/find")
 //    public ResponseEntity<?> findStationsOnRoutes(@RequestParam Integer route1, @RequestParam Integer route2) {
 //
 //        return ResponseEntity.ok(this.stationService.findStationsOnRoutes(route1, route2));
 //    }
-
     @GetMapping("/cal")
     public ResponseEntity<?> calculateDistance(@RequestParam Double latitude1, @RequestParam Double longitude1,
             @RequestParam Double latitude2, @RequestParam Double longitude2) {
         return ResponseEntity.ok(this.stationService.calculateDistance(latitude1, longitude1, latitude2, longitude2));
     }
-    
+
 }

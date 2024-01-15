@@ -57,6 +57,14 @@ public class StationService {
         return stationRepository.findStationByCode(code);
     }
 
+    public List<Station> getAllStationSearch(String name) {
+        return stationRepository.getAllStationSearch(name);
+    }
+
+    public List<Station> getStationByIsActive() {
+        return stationRepository.getStationByIsActive();
+    }
+
     public Page<?> getAllStationAdmin(Map<String, String> params) {
         Pageable pageable = null;
         Page<Station> stations = null;
@@ -361,7 +369,7 @@ public class StationService {
                                 List<Station> l3 = stationRouteService.getStationByRouteAndPriority(station2.getStationRoute().getRouteId(), sl3.getPriority(), station2.getStationRoute().getPriority());
                                 l1.addAll(l2);
                                 l1.addAll(l3);
-                                
+
                                 r.setDistance(dis + dStart + dMid + dEnd);
                                 r.setStartStation(station1);
                                 r.setEndStation(station2);

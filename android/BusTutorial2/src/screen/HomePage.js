@@ -86,7 +86,7 @@ export default function HomePage() {
                   style={[styles.icon]}
                   source={require('../images/pikachu.jpg')}
                 />
-                <Text style={styles.textIcon}>Tra cứu</Text>
+                <Text style={styles.textIcon}>Tra cứu tuyến</Text>
               </View>
             </TouchableOpacity>
             <TouchableOpacity onPress={handleNavigatePress}>
@@ -107,7 +107,7 @@ export default function HomePage() {
                 style={[styles.icon]}
                 source={require('../images/pikachu.jpg')}
               />
-              <Text style={styles.textIcon}>Trạm xung quanh</Text>
+              <Text style={styles.textIcon}>Tra cứu trạm</Text>
             </View>
             <TouchableOpacity onPress={handleSearchBusPress}>
               <View style={[styles.element]}>
