@@ -5,7 +5,8 @@ import {
   View,
   FlatList,
   ActivityIndicator,
-  TouchableOpacity, // Add this import
+  TouchableOpacity,
+  Alert, // Add this import
 } from 'react-native';
 import {Image} from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -25,7 +26,7 @@ export default function EachElementLookupLikes({search, user}) {
   const [loading, setLoading] = useState(false);
   const navigation = useNavigation();
 
-  const fetchData = async () => {
+  const fetchData2 = async () => {
     setLoading(true);
     const data = await UserRouteLikesService.getAllByUserId(user.id);
     setFakeRoute(data);
@@ -35,7 +36,6 @@ export default function EachElementLookupLikes({search, user}) {
 
   const fetchSearchData = async () => {
     setLoading(true);
-    // const data = await routeService.getSearchRoute(search);
     const data = await UserRouteLikesService.getSearchRoute(search, user.id);
     setFakeRoute(data);
     setPage(page + 1);
@@ -45,7 +45,7 @@ export default function EachElementLookupLikes({search, user}) {
   useEffect(() => {
     if (search === '') {
       setFakeRoute([]);
-      fetchData();
+      fetchData2();
     } else {
       setFakeRoute([]);
       fetchSearchData();
@@ -56,6 +56,21 @@ export default function EachElementLookupLikes({search, user}) {
     // console.log('Pressed item:', item);
     navigation.navigate('DetailLookup', {data: item});
   };
+
+  const deleteItem = item => {
+    const d = {
+      userId: user.id,
+      routeId: item.id,
+    };
+    const rs = UserRouteLikesService.delete(d);
+    if (rs == null) {
+      Alert.alert('Xóa yêu thích thất bại', 'Đã có lỗi xảy ra', [{text: 'OK'}]);
+    } else {
+      Alert.alert('Xóa yêu thích thành công', '', [{text: 'OK'}]);
+      setFakeRoute(fakeRoute.filter(i => i.id !== item.id));
+    }
+  };
+
   const renderListItem = ({item}) => {
     return (
       <TouchableOpacity onPress={() => handlePress(item)} activeOpacity={0.8}>
@@ -82,7 +97,7 @@ export default function EachElementLookupLikes({search, user}) {
               name="heartbeat"
               type="font-awesome"
               color="red"
-              onPress={() => console.log(item)}
+              onPress={() => deleteItem(item)}
               size={30}
             />
           </View>

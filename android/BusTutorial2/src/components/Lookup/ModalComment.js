@@ -23,8 +23,6 @@ const ModalComment = ({open, click, data, user}) => {
       userId: user.id,
     };
 
-    // Gửi 'feedback' đi ở đây
-    // console.log(feedback);
     const rs = feedbackService.addFeedback(feedback);
     if (rs == null) {
       Alert.alert('Đánh giá thất bại', 'Đã có lỗi xảy ra', [{text: 'OK'}]);

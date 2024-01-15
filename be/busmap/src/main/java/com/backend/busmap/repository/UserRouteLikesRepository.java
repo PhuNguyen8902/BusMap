@@ -27,4 +27,6 @@ public interface UserRouteLikesRepository extends JpaRepository<UserRouteLikes, 
     @Query(value = "SELECT r.route FROM UserRouteLikes r WHERE (r.route.isActive = 1 AND (:name IS NULL OR r.route.name LIKE %:name% OR r.route.routeNum like %:name%)AND r.user = :id) group by r.route.routeNum")
     List<Route> findAllOneWayRoute(@Param("name") String name,@Param("id") User id);
 
+    UserRouteLikes findByUserIdAndRouteId(String u,Integer r);
+    
 }

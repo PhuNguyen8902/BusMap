@@ -55,6 +55,7 @@ public interface StationRouteRepository extends JpaRepository<StationRoute, Inte
             + "and sr.routeId != ?1 and sr.priority is not null group by sr.routeId ")
     List<StationRoute> getAllStationBefore(Route route, Integer priority);
 
-    @Query("select sr.stationId from StationRoute sr where sr.routeId = ?1 and sr.priority >= ?2 and sr.priority <= ?3 ")
+    @Query("select sr.stationId from StationRoute sr where sr.routeId = ?1 and sr.priority >= ?2 and sr.priority <= ?3 order by sr.priority")
     List<Station> getStationByRouteAndPriority(Route route, Integer o1, Integer o2);
+    
 }

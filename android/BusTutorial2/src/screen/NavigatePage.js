@@ -141,8 +141,8 @@ export default function NavigatePage() {
             style={{
               fontWeight: 'bold',
               fontSize: 17,
-              marginHorizontal: 110,
-              marginTop: 10,
+              marginHorizontal: 150,
+              marginTop: 20,
             }}>
             SỐ TUYẾN TỐI ĐA
           </Text>
@@ -170,6 +170,6 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-around',
-    marginTop: 10,
+    marginTop: 20,
   },
 });

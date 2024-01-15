@@ -5,7 +5,8 @@ import {
   View,
   FlatList,
   ActivityIndicator,
-  TouchableOpacity, // Add this import
+  TouchableOpacity,
+  Alert, // Add this import
 } from 'react-native';
 import {Image} from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -62,6 +63,42 @@ export default function EachElementLookup({search, user}) {
     // console.log('Pressed item:', item);
     navigation.navigate('DetailLookup', {data: item});
   };
+
+  const addNew = item => {
+    const addItem = {
+      userId: user.id,
+      routeId: item.id,
+    };
+    const rs = UserRouteLikesService.add(addItem);
+    if (rs == null) {
+      Alert.alert('Thêm yêu thích thất bại', 'Đã có lỗi xảy ra', [
+        {text: 'OK'},
+      ]);
+    } else {
+      Alert.alert('Thêm yêu thích thành công', '', [{text: 'OK'}]);
+      setBonusRoute(oldItems => [...oldItems, item]);
+      // setFakeRoute([]);
+      // fetchData();
+    }
+  };
+
+  const deleteItem = item => {
+    const d = {
+      userId: user.id,
+      routeId: item.id,
+    };
+    const rs = UserRouteLikesService.delete(d);
+    if (rs == null) {
+      Alert.alert('Xóa yêu thích thất bại', 'Đã có lỗi xảy ra', [{text: 'OK'}]);
+    } else {
+      Alert.alert('Xóa yêu thích thành công', '', [{text: 'OK'}]);
+      setBonusRoute(bonusRoute.filter(i => i.id !== item.id));
+
+      // setFakeRoute([]);
+      // fetchData();
+    }
+  };
+
   const renderListItem = ({item}) => {
     return (
       <TouchableOpacity onPress={() => handlePress(item)} activeOpacity={0.8}>
@@ -91,7 +128,7 @@ export default function EachElementLookup({search, user}) {
                 name="heartbeat"
                 type="font-awesome"
                 color="red"
-                onPress={() => console.log(item)}
+                onPress={() => deleteItem(item)}
                 size={30}
               />
             ) : (
@@ -100,7 +137,7 @@ export default function EachElementLookup({search, user}) {
                 name="heartbeat"
                 type="font-awesome"
                 color="gray"
-                onPress={() => console.log(item)}
+                onPress={() => addNew(item)}
                 size={30}
               />
             )}
