@@ -79,7 +79,7 @@ export default function DomainPage() {
           width: 200,
           marginTop: 20,
           borderRadius: 50,
-          marginHorizontal: 80,
+          marginHorizontal: 120,
         }}
         buttonStyle={{
           backgroundColor: 'lightgreen',

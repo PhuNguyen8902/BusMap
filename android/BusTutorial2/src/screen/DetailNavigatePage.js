@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {View, useWindowDimensions} from 'react-native';
 import {TabView, SceneMap, TabBar} from 'react-native-tab-view';
-import {DetailNavigate} from '../components';
+import {DetailNavigate, StationPassing} from '../components';
 
 export default function DetailNavigatePage({route}) {
   const data = route.params?.data;
@@ -21,7 +21,7 @@ export default function DetailNavigatePage({route}) {
       style={{
         flex: 1,
       }}>
-      <DetailNavigate data={data} num={num} />
+      <StationPassing data={data.listStation} />
     </View>
   );
 

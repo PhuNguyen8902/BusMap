@@ -24,5 +24,7 @@ public class StationRouteMiddle {
 
     private StationDistance endStation;
     
+    private List<Station> listStation;
+    
     private Double distance;
 }
