@@ -6,8 +6,6 @@ let IP = '';
 
 const setIP = newIP => {
   IP = newIP;
-  console.log(newIP);
-  console.log('ip ne');
 };
 
 export {setIP, IP};

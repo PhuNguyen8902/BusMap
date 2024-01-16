@@ -59,6 +59,13 @@ export default function HomePage() {
   const handleAccountPress = () => {
     navigation.navigate('Account');
   };
+
+  const handleLookupStationPress = () => {
+    navigation.navigate('LookupStation');
+  };
+  const handleLikesPress = () => {
+    navigation.navigate('FooterLikes');
+  };
   // useEffect(() => {
   //   requestLocationPermission().then(() => {
   //     GetLocation.getCurrentPosition({
@@ -101,14 +108,16 @@ export default function HomePage() {
             </TouchableOpacity>
           </View>
           <View style={[styles.iconContainer]}>
-            <View style={[styles.element]}>
-              <Image
-                resizeMode="cover"
-                style={[styles.icon]}
-                source={require('../images/pikachu.jpg')}
-              />
-              <Text style={styles.textIcon}>Tra cứu trạm</Text>
-            </View>
+            <TouchableOpacity onPress={handleLookupStationPress}>
+              <View style={[styles.element]}>
+                <Image
+                  resizeMode="cover"
+                  style={[styles.icon]}
+                  source={require('../images/pikachu.jpg')}
+                />
+                <Text style={styles.textIcon}>Tra cứu trạm</Text>
+              </View>
+            </TouchableOpacity>
             <TouchableOpacity onPress={handleSearchBusPress}>
               <View style={[styles.element]}>
                 <Image
@@ -156,12 +165,14 @@ export default function HomePage() {
             <Text style={styles.textIconFooter}>Thông báo</Text>
           </View>
           <View style={[styles.elementFooter]}>
-            <Image
-              resizeMode="cover"
-              style={[styles.iconFooter]}
-              source={require('../images/pikachu.jpg')}
-            />
-            <Text style={styles.textIconFooter}>Yêu thích</Text>
+            <TouchableOpacity onPress={handleLikesPress}>
+              <Image
+                resizeMode="cover"
+                style={[styles.iconFooter]}
+                source={require('../images/pikachu.jpg')}
+              />
+              <Text style={styles.textIconFooter}>Yêu thích</Text>
+            </TouchableOpacity>
           </View>
           <View style={[styles.elementFooter]}>
             <TouchableOpacity onPress={handleAccountPress}>
