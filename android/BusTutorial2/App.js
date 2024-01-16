@@ -7,10 +7,12 @@ import {
   HomePage,
   LoginPage,
   LookupPage,
+  LookupStationPage,
   NavigatePage,
   SearchBusPage,
 } from './src/screen';
 import {NavigationContainer} from '@react-navigation/native';
+import FooterLikesPage from './src/screen/FooterLikesPage';
 
 const Stack = createStackNavigator();
 
@@ -40,6 +42,11 @@ export default function App() {
             options={{headerTitle: 'Chọn tuyến xe'}}
           />
           <Stack.Screen
+            name="LookupStation"
+            component={LookupStationPage}
+            options={{headerTitle: 'Chọn trạm xe'}}
+          />
+          <Stack.Screen
             name="Navigate"
             component={NavigatePage}
             options={{headerTitle: 'Tìm đường'}}
@@ -63,6 +70,11 @@ export default function App() {
             name="Account"
             component={AccountPage}
             options={{headerTitle: 'Tài khoản'}}
+          />
+          <Stack.Screen
+            name="FooterLikes"
+            component={FooterLikesPage}
+            options={{headerTitle: 'Yêu thích'}}
           />
         </Stack.Navigator>
       </NavigationContainer>

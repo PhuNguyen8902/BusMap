@@ -10,8 +10,8 @@ import {
 } from 'react-native';
 import {Image} from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import {UserRouteLikesService, routeService} from '../../service/index';
 import {useNavigation} from '@react-navigation/native';
-import {UserStationLikesService} from '../../service';
 
 function formatTime(timeObject) {
   const hours = timeObject[0] < 10 ? `0${timeObject[0]}` : timeObject[0];
@@ -20,7 +20,7 @@ function formatTime(timeObject) {
   return `${hours}:${minutes}`;
 }
 
-export default function EachElementStationLookupLikes({search, user}) {
+export default function EachElementLookupLikes({search, user}) {
   const [fakeRoute, setFakeRoute] = useState([]);
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
@@ -28,7 +28,7 @@ export default function EachElementStationLookupLikes({search, user}) {
 
   const fetchData2 = async () => {
     setLoading(true);
-    const data = await UserStationLikesService.getAllByUserId(user.id);
+    const data = await UserRouteLikesService.getAllByUserId(user.id);
     setFakeRoute(data);
     setPage(page + 1);
     setLoading(false);
@@ -36,7 +36,7 @@ export default function EachElementStationLookupLikes({search, user}) {
 
   const fetchSearchData = async () => {
     setLoading(true);
-    const data = await UserStationLikesService.getSearchRoute(search, user.id);
+    const data = await UserRouteLikesService.getSearchRoute(search, user.id);
     setFakeRoute(data);
     setPage(page + 1);
     setLoading(false);
@@ -60,9 +60,9 @@ export default function EachElementStationLookupLikes({search, user}) {
   const deleteItem = item => {
     const d = {
       userId: user.id,
-      stationId: item.id,
+      routeId: item.id,
     };
-    const rs = UserStationLikesService.delete(d);
+    const rs = UserRouteLikesService.delete(d);
     if (rs == null) {
       Alert.alert('Xóa yêu thích thất bại', 'Đã có lỗi xảy ra', [{text: 'OK'}]);
     } else {
@@ -73,34 +73,36 @@ export default function EachElementStationLookupLikes({search, user}) {
 
   const renderListItem = ({item}) => {
     return (
-      // <TouchableOpacity onPress={() => handlePress(item)} activeOpacity={0.8}>
-      <View style={styles.user}>
-        <View>
-          <View style={{flexDirection: 'row', alignItems: 'center'}}>
-            <Image
-              style={styles.image}
-              resizeMode="cover"
-              source={require('../../images/pikachu.jpg')}
-            />
-            <View>
-              <Text style={styles.routeNum}>{item.code}</Text>
-              <Text style={[styles.name, {width: 200}]}>{item.name}</Text>
-              <Text style={[styles.name, {width: 300}]}>{item.address}</Text>
+      <TouchableOpacity onPress={() => handlePress(item)} activeOpacity={0.8}>
+        <View style={styles.user}>
+          <View>
+            <View style={{flexDirection: 'row', alignItems: 'center'}}>
+              <Image
+                style={styles.image}
+                resizeMode="cover"
+                source={require('../../images/pikachu.jpg')}
+              />
+              <View>
+                <Text style={styles.routeNum}>{item.routeNum}</Text>
+                <Text style={[styles.name, {width: 200}]}>{item.name}</Text>
+                <Text style={styles.name}>
+                  {formatTime(item.startTime)} - {formatTime(item.endTime)}
+                </Text>
+              </View>
             </View>
           </View>
+          <View>
+            <Icon
+              raised
+              name="heartbeat"
+              type="font-awesome"
+              color="red"
+              onPress={() => deleteItem(item)}
+              size={30}
+            />
+          </View>
         </View>
-        <View>
-          <Icon
-            raised
-            name="heartbeat"
-            type="font-awesome"
-            color="red"
-            onPress={() => deleteItem(item)}
-            size={30}
-          />
-        </View>
-      </View>
-      // </TouchableOpacity>
+      </TouchableOpacity>
     );
   };
   return (
