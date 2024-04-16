@@ -1,8 +1,15 @@
 import { getDataToken } from "../util/fetchApi";
-const API = "http://localhost:8080/api";
+import { Ip } from "../common/common";
+
+// const IPs = Ip;
+
+// const API = `${IPs}api`;
 
 const userService = {
   getInfo() {
+    const IPs = Ip;
+
+    const API = `${IPs}api`;
     return getDataToken(`${API}/auth/access-token`);
   },
 };

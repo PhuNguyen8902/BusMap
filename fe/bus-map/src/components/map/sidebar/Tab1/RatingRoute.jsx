@@ -225,7 +225,7 @@ export default function RatingRoute() {
     const fetchOverallReview = async () => {
 
       const feedbackData = await feedbackService.getAllFeedbackByRouteId(routeId);
-      // console.log("feedbackData in ratingRoute: ", feedbackData);
+      console.log("feedbackData in ratingRoute: ", feedbackData);
 
       let totalRating = null;
       const totalCustomer = feedbackData.length;
