@@ -3,11 +3,12 @@ import MapPage from "./routes/MapPage";
 import HomePage from "./routes/HomePage";
 import ContactPage from "./routes/ContactPage";
 import AboutUsPage from "./routes/AboutUsPage";
+import Domain from "./components/domain/Domain";
 
 export default function Routers() {
   return (
     <Routes>
-      <Route path="/" element={<HomePage />} />
+      <Route path="/" element={<Domain />} />
       <Route path="/home" element={<HomePage />} />
       <Route path="/home/contact" element={<ContactPage />} />
       <Route path="/home/aboutus" element={<AboutUsPage />} />
