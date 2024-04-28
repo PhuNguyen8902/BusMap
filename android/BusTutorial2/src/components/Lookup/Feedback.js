@@ -41,7 +41,13 @@ export default function Feedback({data, rate}) {
     }
   };
   const fetchData = async () => {
-    const d = await feedbackService.getAll(rate.id);
+    let domain = await AsyncStorage.getItem('domain');
+    if (domain == null || domain == '') {
+      AsyncStorage.removeItem('domain');
+      navigation.navigate('Domain');
+    }
+    domain = 'http://' + domain;
+    const d = await feedbackService.getAll(rate.id, domain);
     setDataRate(d);
     let sum = 0;
     const length = d.length;
@@ -172,11 +178,11 @@ export default function Feedback({data, rate}) {
               </View>
             </View>
             <View style={{flexDirection: 'column', marginHorizontal: 10}}>
-              <Text style={{flex: 1, marginTop: 5}}>1</Text>
-              <Text style={{flex: 1, marginTop: 5}}>2</Text>
-              <Text style={{flex: 1, marginTop: 5}}>3</Text>
-              <Text style={{flex: 1, marginTop: 5}}>4</Text>
-              <Text style={{flex: 1, marginTop: 5}}>5</Text>
+              <Text style={{flex: 1, marginTop: 5, color: 'black'}}>1</Text>
+              <Text style={{flex: 1, marginTop: 5, color: 'black'}}>2</Text>
+              <Text style={{flex: 1, marginTop: 5, color: 'black'}}>3</Text>
+              <Text style={{flex: 1, marginTop: 5, color: 'black'}}>4</Text>
+              <Text style={{flex: 1, marginTop: 5, color: 'black'}}>5</Text>
             </View>
             <View style={{flex: 1, flexDirection: 'column'}}>
               <View
@@ -242,6 +248,7 @@ const styles = StyleSheet.create({
   titleText: {
     fontSize: 20,
     fontWeight: 'bold',
+    color: 'black',
   },
   containerRatingStart: {
     // flex: 1,

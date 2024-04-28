@@ -9,6 +9,7 @@
 // }
 import React, {useState, useEffect} from 'react';
 import {StyleSheet, View, useWindowDimensions} from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Button} from 'react-native-elements';
 import {TabView, SceneMap, TabBar} from 'react-native-tab-view';
 import {
@@ -26,7 +27,15 @@ export default function DetailLookupPage({route}) {
 
   const data = route.params?.data;
   const fetchData = async () => {
-    const d = await routeService.getRoutesByRouteNum(data.routeNum);
+    let domain = await AsyncStorage.getItem('domain');
+    const data = route.params?.data;
+    console.log(data);
+    if (domain == null || domain == '') {
+      AsyncStorage.removeItem('domain');
+      navigation.navigate('Domain');
+    }
+    domain = 'http://' + domain;
+    const d = await routeService.getRoutesByRouteNum(data.routeNum, domain);
     setRealData(d);
   };
   useEffect(() => {

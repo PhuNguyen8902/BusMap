@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {ScrollView, StyleSheet, Text, View} from 'react-native';
 import {tripService, stationRouteService} from '../../service';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 function formatTime(timeObject) {
   const hours = timeObject[0] < 10 ? `0${timeObject[0]}` : timeObject[0];
@@ -12,13 +13,20 @@ function formatTime(timeObject) {
 export default function Information({data}) {
   const [count, setCount] = useState(0);
   const [dataDirection, setDataDirection] = useState('');
-
+  console.log('hello');
   const fetchData = async () => {
-    const d = await tripService.countTripByRouteId(data.id);
+    let domain = await AsyncStorage.getItem('domain');
+    if (domain == null || domain == '') {
+      AsyncStorage.removeItem('domain');
+      navigation.navigate('Domain');
+    }
+    domain = 'http://' + domain;
+    const d = await tripService.countTripByRouteId(data.id, domain);
     setCount(d);
 
     const dDirection = await stationRouteService.getStationRouteByRouteId(
       data.id,
+      domain,
     );
     setDataDirection(dDirection);
   };
@@ -111,10 +119,12 @@ const styles = StyleSheet.create({
   itemText: {
     fontSize: 16,
     lineHeight: 20,
+    color: 'black',
   },
   itemTextName: {
     fontSize: 16,
     lineHeight: 20,
+    color: 'black',
     marginLeft: 10,
     fontWeight: 'bold',
   },

@@ -45,7 +45,7 @@ export default function EachElementComment({data, check, user}) {
                     // style={{paddingVertical: 10}}
                   />
                 </View>
-                <Text style={{fontSize: 20}}>{u.content}</Text>
+                <Text style={{fontSize: 20, color: 'black'}}>{u.content}</Text>
               </Card>
             );
           })
@@ -67,9 +67,11 @@ const styles = StyleSheet.create({
   },
   userName: {
     fontSize: 17,
+    color: 'black',
     fontWeight: 'bold',
   },
   date: {
     fontSize: 15,
+    color: 'black',
   },
 });

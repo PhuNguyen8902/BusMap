@@ -1,6 +1,8 @@
 import {FlatList, StyleSheet, Text, View} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {tripService} from '../../service';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {color} from 'react-native-reanimated';
 
 function formatTime(timeObject) {
   const hours = timeObject[0] < 10 ? `0${timeObject[0]}` : timeObject[0];
@@ -24,7 +26,13 @@ export default function HourlyChart({data}) {
   const [dataTime, setDataTime] = useState([]);
 
   const fetchData = async () => {
-    const dTime = await tripService.getTripByRoute(data.id);
+    let domain = await AsyncStorage.getItem('domain');
+    if (domain == null || domain == '') {
+      AsyncStorage.removeItem('domain');
+      navigation.navigate('Domain');
+    }
+    domain = 'http://' + domain;
+    const dTime = await tripService.getTripByRoute(data.id, domain);
     setDataTime(dTime);
   };
 
@@ -64,6 +72,7 @@ const styles = StyleSheet.create({
   itemText: {
     fontSize: 16,
     lineHeight: 20,
+    color: 'black',
   },
   backgroudItemText: {
     padding: 5,

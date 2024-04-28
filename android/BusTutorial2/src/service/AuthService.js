@@ -1,10 +1,7 @@
-import {IP} from '../common/common';
-
-const IPs = IP;
 const AuthService = {
-  async signIn(form) {
+  async signIn(form, d) {
     // tra ra 2 du lieu token
-    const response = await fetch(`${IPs}/api/auth/loginAPP`, {
+    const response = await fetch(`${d}/api/auth/loginAPP`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

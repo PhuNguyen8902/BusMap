@@ -146,5 +146,6 @@ const styles = StyleSheet.create({
   },
   font: {
     fontSize: 20,
+    color: 'black',
   },
 });

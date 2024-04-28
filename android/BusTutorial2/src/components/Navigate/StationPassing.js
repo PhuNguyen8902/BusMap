@@ -1,21 +1,8 @@
 import {ScrollView, StyleSheet, Text} from 'react-native';
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import {View} from 'react-native';
-import {stationRouteService} from '../../service';
 
 export default function StationPassing({data}) {
-  //   const [dataStation, setDataStation] = useState('');
-
-  //   const fetchData = async () => {
-  //     const dStation = await stationRouteService.getStationRouteByRouteId(
-  //       data.id,
-  //     );
-  //     setDataStation(dStation);
-  //   };
-
-  //   useEffect(() => {
-  //     fetchData();
-  //   }, [data]);
   return (
     <>
       <ScrollView>
@@ -53,6 +40,7 @@ const styles = StyleSheet.create({
   itemText: {
     fontSize: 16,
     lineHeight: 20,
+    color: 'black',
   },
   itemTextName: {
     fontSize: 16,
