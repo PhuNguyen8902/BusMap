@@ -53,9 +53,7 @@ export default function HomePage() {
   const handleNavigatePress = () => {
     navigation.navigate('Navigate');
   };
-  const handleSearchBusPress = () => {
-    navigation.navigate('SearchBus');
-  };
+
   const handleAccountPress = () => {
     navigation.navigate('Account');
   };
@@ -118,14 +116,14 @@ export default function HomePage() {
                 <Text style={styles.textIcon}>Tra cứu trạm</Text>
               </View>
             </TouchableOpacity>
-            <TouchableOpacity onPress={handleSearchBusPress}>
+            <TouchableOpacity onPress={handleLikesPress}>
               <View style={[styles.element]}>
                 <Image
                   resizeMode="cover"
                   style={[styles.icon]}
                   source={require('../images/pikachu.jpg')}
                 />
-                <Text style={styles.textIcon}>Tìm kiếm xe</Text>
+                <Text style={styles.textIcon}>Yêu thích</Text>
               </View>
             </TouchableOpacity>
           </View>
@@ -157,12 +155,14 @@ export default function HomePage() {
             </TouchableOpacity>
           </View>
           <View style={[styles.elementFooter]}>
-            <Image
-              resizeMode="cover"
-              style={[styles.iconFooter]}
-              source={require('../images/pikachu.jpg')}
-            />
-            <Text style={styles.textIconFooter}>Thông báo</Text>
+            <TouchableOpacity onPress={handleNavigatePress}>
+              <Image
+                resizeMode="cover"
+                style={[styles.iconFooter]}
+                source={require('../images/pikachu.jpg')}
+              />
+              <Text style={styles.textIconFooter}>Tìm đường</Text>
+            </TouchableOpacity>
           </View>
           <View style={[styles.elementFooter]}>
             <TouchableOpacity onPress={handleLikesPress}>
@@ -218,6 +218,7 @@ const styles = StyleSheet.create({
     marginTop: 8,
     fontSize: 16,
     fontWeight: 'bold',
+    color: 'black',
   },
   iconContainer: {
     display: 'flex',
@@ -239,6 +240,7 @@ const styles = StyleSheet.create({
     marginTop: 3,
     fontSize: 10,
     fontWeight: 'bold',
+    color: 'black',
   },
   elementFooter: {
     flexDirection: 'column',

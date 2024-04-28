@@ -1,15 +1,14 @@
-import {IP} from '../common/common';
 import {getData} from '../util/fetchApi';
 
-const IPs = IP;
 const tripService = {
-  async countTripByRouteId(id) {
-    const api = `${IPs}/api/trip/count/${id}`;
+  async countTripByRouteId(id, d) {
+    const api = `${d}/api/trip/count/${id}`;
+    console.log(api);
     const data = await getData(api);
     return data;
   },
-  async getTripByRoute(id) {
-    const api = `${IPs}/api/trip/route/${id}`;
+  async getTripByRoute(id, d) {
+    const api = `${d}/api/trip/route/${id}`;
     const data = await getData(api);
     return data;
   },

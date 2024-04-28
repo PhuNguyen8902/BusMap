@@ -2,12 +2,20 @@ import React, {useEffect, useRef, useState} from 'react';
 import {stationRouteService} from '../../service';
 import MapView, {Marker} from 'react-native-maps';
 import {View, StyleSheet, Text, TouchableOpacity} from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Map = ({data}) => {
   const [dataStation, setDataStation] = useState(null);
   const fetchData = async () => {
+    let domain = await AsyncStorage.getItem('domain');
+    if (domain == null || domain == '') {
+      AsyncStorage.removeItem('domain');
+      navigation.navigate('Domain');
+    }
+    domain = 'http://' + domain;
     const dStation = await stationRouteService.getStationRouteByRouteId(
       data.id,
+      domain,
     );
     const processedStations = dStation.map(item => ({
       id: item.stationId.id,
@@ -80,10 +88,10 @@ const Map = ({data}) => {
 
           <View style={styles.buttonContainer}>
             <TouchableOpacity style={styles.button} onPress={handleZoomIn}>
-              <Text>Zoom In</Text>
+              <Text style={{color: 'black'}}>Zoom In</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.button} onPress={handleZoomOut}>
-              <Text>Zoom Out</Text>
+              <Text style={{color: 'black'}}>Zoom Out</Text>
             </TouchableOpacity>
           </View>
         </>

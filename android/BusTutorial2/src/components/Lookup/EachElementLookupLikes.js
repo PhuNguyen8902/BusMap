@@ -12,6 +12,7 @@ import {Image} from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {UserRouteLikesService, routeService} from '../../service/index';
 import {useNavigation} from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 function formatTime(timeObject) {
   const hours = timeObject[0] < 10 ? `0${timeObject[0]}` : timeObject[0];
@@ -28,7 +29,13 @@ export default function EachElementLookupLikes({search, user}) {
 
   const fetchData2 = async () => {
     setLoading(true);
-    const data = await UserRouteLikesService.getAllByUserId(user.id);
+    let domain = await AsyncStorage.getItem('domain');
+    if (domain == null || domain == '') {
+      AsyncStorage.removeItem('domain');
+      navigation.navigate('Domain');
+    }
+    domain = 'http://' + domain;
+    const data = await UserRouteLikesService.getAllByUserId(user.id, domain);
     setFakeRoute(data);
     setPage(page + 1);
     setLoading(false);
@@ -36,7 +43,17 @@ export default function EachElementLookupLikes({search, user}) {
 
   const fetchSearchData = async () => {
     setLoading(true);
-    const data = await UserRouteLikesService.getSearchRoute(search, user.id);
+    let domain = await AsyncStorage.getItem('domain');
+    if (domain == null || domain == '') {
+      AsyncStorage.removeItem('domain');
+      navigation.navigate('Domain');
+    }
+    domain = 'http://' + domain;
+    const data = await UserRouteLikesService.getSearchRoute(
+      search,
+      user.id,
+      domain,
+    );
     setFakeRoute(data);
     setPage(page + 1);
     setLoading(false);
@@ -57,12 +74,18 @@ export default function EachElementLookupLikes({search, user}) {
     navigation.navigate('DetailLookup', {data: item});
   };
 
-  const deleteItem = item => {
+  const deleteItem = async item => {
     const d = {
       userId: user.id,
       routeId: item.id,
     };
-    const rs = UserRouteLikesService.delete(d);
+    let domain = await AsyncStorage.getItem('domain');
+    if (domain == null || domain == '') {
+      AsyncStorage.removeItem('domain');
+      navigation.navigate('Domain');
+    }
+    domain = 'http://' + domain;
+    const rs = UserRouteLikesService.delete(d, domain);
     if (rs == null) {
       Alert.alert('Xóa yêu thích thất bại', 'Đã có lỗi xảy ra', [{text: 'OK'}]);
     } else {
@@ -142,6 +165,7 @@ const styles = StyleSheet.create({
     borderRadius: 50,
   },
   name: {
+    color: 'black',
     fontSize: 13,
     marginTop: 5,
   },

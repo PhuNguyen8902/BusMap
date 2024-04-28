@@ -19,6 +19,7 @@ export default function DetailNavigate({data, num}) {
                 type="font-awesome"
                 onPress={() => console.log('hello')}
                 size={20}
+                color={'black'}
               />
               <View
                 style={{
@@ -51,6 +52,7 @@ export default function DetailNavigate({data, num}) {
                 type="font-awesome"
                 onPress={() => console.log('hello')}
                 size={20}
+                color={'black'}
               />
               <View
                 style={{
@@ -84,6 +86,7 @@ export default function DetailNavigate({data, num}) {
                 type="font-awesome"
                 onPress={() => console.log('hello')}
                 size={20}
+                color={'black'}
               />
               <View
                 style={{
@@ -121,6 +124,7 @@ export default function DetailNavigate({data, num}) {
                 type="font-awesome"
                 onPress={() => console.log('hello')}
                 size={20}
+                color={'black'}
               />
               <View
                 style={{
@@ -149,6 +153,7 @@ export default function DetailNavigate({data, num}) {
                 name="bus"
                 type="font-awesome"
                 onPress={() => console.log('hello')}
+                color={'black'}
                 size={20}
               />
               <View
@@ -178,6 +183,7 @@ export default function DetailNavigate({data, num}) {
                 name="user"
                 type="font-awesome"
                 onPress={() => console.log('hello')}
+                color={'black'}
                 size={20}
               />
               <Text
@@ -202,6 +208,7 @@ export default function DetailNavigate({data, num}) {
                 name="bus"
                 type="font-awesome"
                 onPress={() => console.log('hello')}
+                color={'black'}
                 size={20}
               />
               <View
@@ -232,6 +239,7 @@ export default function DetailNavigate({data, num}) {
                 name="user"
                 type="font-awesome"
                 onPress={() => console.log('hello')}
+                color={'black'}
                 size={20}
               />
               <View
@@ -269,6 +277,7 @@ export default function DetailNavigate({data, num}) {
                 name="user"
                 type="font-awesome"
                 onPress={() => console.log('hello')}
+                color={'black'}
                 size={20}
               />
               <View
@@ -298,6 +307,7 @@ export default function DetailNavigate({data, num}) {
                 name="bus"
                 type="font-awesome"
                 onPress={() => console.log('hello')}
+                color={'black'}
                 size={20}
               />
               <View
@@ -327,6 +337,7 @@ export default function DetailNavigate({data, num}) {
                 name="user"
                 type="font-awesome"
                 onPress={() => console.log('hello')}
+                color={'black'}
                 size={20}
               />
               <Text
@@ -351,6 +362,7 @@ export default function DetailNavigate({data, num}) {
                 name="bus"
                 type="font-awesome"
                 onPress={() => console.log('hello')}
+                color={'black'}
                 size={20}
               />
               <View
@@ -380,6 +392,7 @@ export default function DetailNavigate({data, num}) {
                 name="user"
                 type="font-awesome"
                 onPress={() => console.log('hello')}
+                color={'black'}
                 size={20}
               />
               <Text
@@ -404,6 +417,7 @@ export default function DetailNavigate({data, num}) {
                 name="bus"
                 type="font-awesome"
                 onPress={() => console.log('hello')}
+                color={'black'}
                 size={20}
               />
               <View
@@ -434,6 +448,7 @@ export default function DetailNavigate({data, num}) {
                 name="user"
                 type="font-awesome"
                 onPress={() => console.log('hello')}
+                color={'black'}
                 size={20}
               />
               <View

@@ -5,6 +5,7 @@ import React, {useEffect, useState} from 'react';
 import {Rating} from 'react-native-ratings';
 import {feedbackService} from '../../service';
 import {useNavigation} from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const ModalComment = ({open, click, data, user}) => {
   const [review, setReview] = useState('');
@@ -15,15 +16,20 @@ const ModalComment = ({open, click, data, user}) => {
     setRating(rating);
   };
   // console.log(user);
-  const submit = () => {
+  const submit = async () => {
     const feedback = {
       content: review,
       rate: rating,
       routeId: data.id,
       userId: user.id,
     };
-
-    const rs = feedbackService.addFeedback(feedback);
+    let domain = await AsyncStorage.getItem('domain');
+    if (domain == null || domain == '') {
+      AsyncStorage.removeItem('domain');
+      navigation.navigate('Domain');
+    }
+    domain = 'http://' + domain;
+    const rs = feedbackService.addFeedback(feedback, domain);
     if (rs == null) {
       Alert.alert('Đánh giá thất bại', 'Đã có lỗi xảy ra', [{text: 'OK'}]);
     } else {

@@ -34,6 +34,22 @@ export default function EachElementNavigate({num, data}) {
   const handleDetailNavigatePress = (u, num) => {
     navigation.navigate('DetailNavigate', {data: u, num: num});
   };
+  if (data.length === 0) {
+    return (
+      <View>
+        <Text
+          style={{
+            fontWeight: 'bold',
+            fontSize: 18,
+            marginHorizontal: 120,
+            marginTop: 20,
+            color: 'red',
+          }}>
+          Không có tuyến xe
+        </Text>
+      </View>
+    );
+  }
   return (
     <>
       <ScrollView>
@@ -88,7 +104,7 @@ export default function EachElementNavigate({num, data}) {
                                         .routeNum
                                     }
                                   </Text>
-                                  <Text> - </Text>
+                                  <Text style={styles.name}> - </Text>
                                   <Icon
                                     raised
                                     name="bus"
@@ -118,7 +134,7 @@ export default function EachElementNavigate({num, data}) {
                                         .routeNum
                                     }
                                   </Text>
-                                  <Text> - </Text>
+                                  <Text style={styles.name}> - </Text>
 
                                   <Icon
                                     raised
@@ -131,7 +147,7 @@ export default function EachElementNavigate({num, data}) {
                                   <Text style={styles.routeNum}>
                                     {u.midRoute.route.routeNum}
                                   </Text>
-                                  <Text> - </Text>
+                                  <Text style={styles.name}> - </Text>
                                   <Icon
                                     raised
                                     name="bus"
@@ -215,6 +231,7 @@ const styles = StyleSheet.create({
   name: {
     fontSize: 15,
     marginLeft: 5,
+    color: 'black',
   },
   routeNum: {
     color: 'green',

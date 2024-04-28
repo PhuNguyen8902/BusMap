@@ -17,8 +17,13 @@ export default function LoginPage() {
       userName: userName,
       password: pass,
     };
-
-    const data = await AuthService.signIn(userCredentials);
+    let domain = await AsyncStorage.getItem('domain');
+    if (domain == null || domain == '') {
+      AsyncStorage.removeItem('domain');
+      navigation.navigate('Domain');
+    }
+    domain = 'http://' + domain;
+    const data = await AuthService.signIn(userCredentials, domain);
     if (data == null) {
       Alert.alert('Đăng nhập thất bại', 'Sai tài khoản hoặc mật khẩu', [
         {text: 'OK'},

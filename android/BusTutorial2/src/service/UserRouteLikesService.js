@@ -1,25 +1,28 @@
-import {IP} from '../common/common';
 import {getData} from '../util/fetchApi';
 
-const IPs = IP;
-
-const API = `${IPs}/api/userRouteLikes`;
+const API = `/api/userRouteLikes`;
 
 const UserRouteLikesService = {
-  async getAllByUserId(id) {
-    const api = `${API}/${id}`;
+  async getAllByUserId(id, d) {
+    const api2 = d + API;
+
+    const api = `${api2}/${id}`;
     const data = await getData(api);
     return data;
   },
-  async getSearchRoute(search, id) {
-    const api = `${API}/oneWay?name=${search}&id=${id}`;
+  async getSearchRoute(search, id, d) {
+    const api2 = d + API;
+
+    const api = `${api2}/oneWay?name=${search}&id=${id}`;
     const data = await getData(api);
     return data;
   },
 
-  async add(form) {
+  async add(form, d) {
     // tra ra 2 du lieu token
-    const response = await fetch(`${API}/add`, {
+    const api2 = d + API;
+
+    const response = await fetch(`${api2}/add`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -33,9 +36,11 @@ const UserRouteLikesService = {
           ...JSON.parse(await response.text()),
         };
   },
-  async delete(form) {
+  async delete(form, d) {
+    const api2 = d + API;
+
     // tra ra 2 du lieu token
-    const response = await fetch(`${API}/delete`, {
+    const response = await fetch(`${api2}/delete`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',

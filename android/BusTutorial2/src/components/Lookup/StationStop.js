@@ -2,13 +2,21 @@ import {ScrollView, StyleSheet, Text} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {View} from 'react-native';
 import {stationRouteService} from '../../service';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function StationStop({data}) {
   const [dataStation, setDataStation] = useState('');
 
   const fetchData = async () => {
+    let domain = await AsyncStorage.getItem('domain');
+    if (domain == null || domain == '') {
+      AsyncStorage.removeItem('domain');
+      navigation.navigate('Domain');
+    }
+    domain = 'http://' + domain;
     const dStation = await stationRouteService.getStationRouteByRouteId(
       data.id,
+      domain,
     );
     setDataStation(dStation);
   };
@@ -52,6 +60,7 @@ const styles = StyleSheet.create({
   },
   itemText: {
     fontSize: 16,
+    color: 'black',
     lineHeight: 20,
   },
   itemTextName: {

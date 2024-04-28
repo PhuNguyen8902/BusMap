@@ -1,17 +1,19 @@
-import {IP} from '../common/common';
 import {getData} from '../util/fetchApi';
-const IPs = IP;
 
-const feedbackApi = `${IPs}/api/feedback`;
+const feedbackApi = `/api/feedback`;
 
 const feedbackService = {
-  async getAll(id) {
-    const api = `${feedbackApi}?routeId=${id}`;
+  async getAll(id, d) {
+    const apifeedback = d + feedbackApi;
+
+    const api = `${apifeedback}?routeId=${id}`;
     const data = await getData(api);
     return data;
   },
-  async addFeedback(form) {
-    const response = await fetch(`${feedbackApi}/addAPP`, {
+  async addFeedback(form, d) {
+    const apifeedback = d + feedbackApi;
+
+    const response = await fetch(`${apifeedback}/addAPP`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
