@@ -2,21 +2,10 @@ import { useState } from "react";
 import { useNavigate } from "react-router";
 import { Box, Button, Stack, Typography, TextField } from "@mui/material";
 import { setIP } from "../../common/common";
-import { storeDomainName } from "../../store/features/storeRoute/storeIpSlice";
-import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import LockIcon from "@mui/icons-material/Lock";
 
 export default function Domain() {
   const [domain, setDomain] = useState();
-
-  // console.log(domain)
-
-  const dispatch = useDispatch();
-
-  const domainName = useSelector((state) => state.storeDomain.domainName);
-
-  // console.log("domain: " + domainName)
 
   // console.log(domain)
 
@@ -40,7 +29,6 @@ export default function Domain() {
     try {
       const ip = await fetchDomain();
       // console.log(ip)
-      dispatch(storeDomainName(`http://${domain}/`));
       localStorage.setItem("domain", JSON.stringify(`http://${domain}/`));
       setIP(ip);
       // console.log(domain)
@@ -51,7 +39,7 @@ export default function Domain() {
   };
 
   const checkLocalDomain = async () => {
-    const d = await domainName;
+    const d = JSON.parse(localStorage.getItem("domain"));
     console.log("domain d:" + d);
     setDomain(d);
     if (d != null) {
@@ -106,7 +94,9 @@ export default function Domain() {
           <LockIcon sx={{ fontSize: "500%", color: "white" }} />
         </Box>
         <Box>
-          <Typography sx={{color: "#10af7e", fontSize: "2em" }}>Domain</Typography>
+          <Typography sx={{ color: "#10af7e", fontSize: "2em" }}>
+            Domain
+          </Typography>
         </Box>
         <TextField
           id="outlined-basic"

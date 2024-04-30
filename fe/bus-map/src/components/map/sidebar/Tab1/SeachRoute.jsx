@@ -2,6 +2,7 @@ import { Box, Stack, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import DirectionsBusIcon from '@mui/icons-material/DirectionsBus';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
+import FavoriteIcon from '@mui/icons-material/Favorite';
 import { useNavigate, useParams } from "react-router";
 import routeService from "../../../../service/routeService";
 import { useDispatch } from "react-redux";
