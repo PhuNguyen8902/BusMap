@@ -4,7 +4,13 @@ import CloseIcon from "@mui/icons-material/Close";
 import imgAboutSearchBar from "../../assets/img/searchRoute.png";
 import imgAboutRouteDetail from "../../assets/img/RouteDetail.png";
 import imgAboutRouteRating from "../../assets/img/RouteRating.png";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import Navigate from "./Navigate";
+import React, { Component } from "react";
+import OneRoute from "./OneRoute"
+import TwoRoute from "./TwoRoute"
+import ThreeRoute from "./ThreeRoute"
+
 
 export default function BusChatBot() {
   const [fullPicture, setFullPiture] = useState(null);
@@ -46,6 +52,11 @@ export default function BusChatBot() {
           value: "four",
           label: "How to use BusMap properly",
           trigger: "How to use BusMap properly",
+        },
+        {
+          value: "five",
+          label: "Navigate location from two points",
+          trigger: "pointOne",
         },
       ],
     },
@@ -116,6 +127,70 @@ export default function BusChatBot() {
           </div>
         </div>
       ),
+      trigger: "ask question number 1",
+    },
+    {
+      id: "pointOne",
+      message: "Your Location: ",
+      trigger: "pointOneAnswer",
+    },
+    {
+      id: "pointOneAnswer",
+      user: true,
+      trigger: "pointTwo",
+    },
+    {
+      id: "pointTwo",
+      message: "Your Destination: ",
+      trigger: "pointTwoAnswer",
+    },
+    {
+      id: "pointTwoAnswer",
+      user: true,
+      trigger: "navigate",
+    },
+    {
+      id: "navigate",
+      waitAction: true,
+      component: <Navigate />,
+      asMessage: true,
+      trigger: "routeChoose",
+    },
+    {
+      id: "routeChoose",
+      options: [
+        {
+          value: "one",
+          label: "One Route",
+          trigger: "oneRoute",
+        },
+        { value: "two", 
+          label: "Two Routes", 
+          trigger: "twoRoute", 
+        },
+        {
+          value: "three",
+          label: "Three Routes",
+          trigger: "threeRoute",
+        },
+      ],
+    },
+    {
+      id: "oneRoute",
+      waitAction: true,
+      component: <OneRoute />,
+      trigger: "ask question number 1",
+    },
+    {
+      id: "twoRoute",
+      waitAction: true,
+      component: <TwoRoute />,
+      trigger: "ask question number 1",
+    },
+    {
+      id: "threeRoute",
+      waitAction: true,
+      component: <ThreeRoute />,
       trigger: "ask question number 1",
     },
   ];

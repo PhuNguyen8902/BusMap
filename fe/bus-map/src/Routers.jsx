@@ -10,6 +10,7 @@ export default function Routers() {
     <Routes>
       <Route path="/" element={<Domain />} />
       <Route path="/home" element={<HomePage />} />
+      <Route path="/home/:location" element={<HomePage />} />
       <Route path="/home/contact" element={<ContactPage />} />
       <Route path="/home/aboutus" element={<AboutUsPage />} />
       <Route path="/map" element={<MapPage />} />
