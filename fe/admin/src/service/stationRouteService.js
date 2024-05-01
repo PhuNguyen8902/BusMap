@@ -1,5 +1,5 @@
 import { deleteData, getData, postData, putData } from "../utils/fetchApi";
-import Ip from "../common/common"
+import { Ip } from "../common/common";
 
 const routeStationAdminApi = "http://localhost:8080/api/admin/station-route";
 
@@ -56,7 +56,7 @@ const stationRouteService = {
     const IPs = Ip;
 
     const routeStationAdminApi = `${IPs}api/admin/station-route`;
-    
+
     const stationRouteData = await postData(`${routeStationAdminApi}/add`, a);
     return stationRouteData;
   },

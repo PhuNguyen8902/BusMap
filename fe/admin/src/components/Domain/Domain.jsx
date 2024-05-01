@@ -3,11 +3,12 @@ import { useNavigate } from "react-router";
 import { Box, Button, Stack, Typography, TextField } from "@mui/material";
 import { setIP } from "../../common/common";
 import { useEffect } from "react";
+import LockIcon from "@mui/icons-material/Lock";
+import { LoginPage } from "../../page";
 
 export default function Domain() {
   const [domain, setDomain] = useState();
-
-  // console.log(domain)
+  const [redirect, setRedirect] = useState(false);
 
   const navigate = useNavigate();
 
@@ -15,7 +16,6 @@ export default function Domain() {
     try {
       const response = await fetch(`http://${domain}/`);
       if (response.status === 200) {
-        // Handle successful response
         return `http://${domain}/`;
       } else {
         throw new Error("Lỗi kết nối đến domain.");
@@ -28,11 +28,9 @@ export default function Domain() {
   const checkDomain = async () => {
     try {
       const ip = await fetchDomain();
-      // console.log(ip)
       localStorage.setItem("domain", JSON.stringify(`http://${domain}/`));
       setIP(ip);
-      // console.log(domain)
-      navigate("/home");
+      setRedirect(true);
     } catch (error) {
       alert("Lỗi kết nối đến domain.");
     }
@@ -48,24 +46,21 @@ export default function Domain() {
         console.log(d);
         if (response.status === 200) {
           setIP(`${d}`);
-          navigate("/home");
+          setRedirect(true);
         } else {
-          dispatch(storeDomainName(""));
           alert("Lỗi kết nối đến domain.");
         }
       } catch (error) {
-        dispatch(storeDomainName(""));
         alert("Lỗi kết nối đến domain.");
       }
-
-      // setIP(`http://${domain}`);
-      // navigation.navigate('Home');
     }
   };
   useEffect(() => {
     checkLocalDomain();
   }, []);
-
+  if (redirect) {
+    return <LoginPage />;
+  }
   return (
     <Stack
       sx={{

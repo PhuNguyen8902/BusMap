@@ -1,11 +1,11 @@
 import { Button, Grid, Paper, TextField, Typography } from "@mui/material";
-import React from "react";
+import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { ErrorMessage } from "@hookform/error-message";
 import authService from "../../service/authService";
 import { signIn } from "../../store/slices/authSlice";
-import { Await, Navigate } from "react-router-dom";
+import { DomainPage } from "../../page";
 
 const initialForms = {
   field: {
@@ -15,6 +15,8 @@ const initialForms = {
 };
 const Login = () => {
   const dispatch = useDispatch();
+  const auth = JSON.parse(localStorage.getItem("token"));
+  const d = JSON.parse(localStorage.getItem("domain"));
 
   const {
     register,
@@ -24,6 +26,16 @@ const Login = () => {
   } = useForm({
     defaultValues: initialForms.field,
   });
+
+  useEffect(() => {
+    if (d == null) {
+      return <DomainPage />;
+    }
+    if (auth != null) {
+      window.location.href = "/route";
+    }
+  }, [d, auth]);
+
   const onSubmit = async (form) => {
     const response = await authService.signIn(form);
     if (!response.error) {

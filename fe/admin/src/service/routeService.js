@@ -1,6 +1,5 @@
 import { getData, postData, putData } from "../utils/fetchApi";
-import Ip from "../common/common"
-
+import { Ip } from "../common/common";
 
 const routeApi = "http://localhost:8080/api/route";
 const routeAdminApi = "http://localhost:8080/api/admin/route";
@@ -32,7 +31,7 @@ const routeService = {
   async addRoute(a) {
     const IPs = Ip;
     const routeAdminApi = `${IPs}api/admin/route`;
-    
+
     const routeData = await postData(`${routeAdminApi}/add`, a);
     return routeData;
   },

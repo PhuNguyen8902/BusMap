@@ -1,5 +1,5 @@
 import { getData } from "../utils/fetchApi";
-import Ip from "../common/common"
+import { Ip } from "../common/common";
 
 // const feedbackAdminApi = "http://localhost:8080/api/admin/feedback";
 
