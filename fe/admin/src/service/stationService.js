@@ -1,5 +1,5 @@
 import { getData, postData, putData } from "../utils/fetchApi";
-import Ip from "../common/common"
+import { Ip } from "../common/common";
 
 const stationApi = "http://localhost:8080/api/station";
 const stationAdminApi = "http://localhost:8080/api/admin/station";
@@ -15,8 +15,8 @@ const stationService = {
     const stationData = await getData(`${stationAdminApi}?${a}`);
     return stationData;
   },
-  
-  async addStation(a){
+
+  async addStation(a) {
     const IPs = Ip;
 
     const stationAdminApi = `${IPs}api/admin/station`;
@@ -34,14 +34,14 @@ const stationService = {
     return stationData;
   },
 
-  async deleteStation(a){
+  async deleteStation(a) {
     const IPs = Ip;
 
     const stationAdminApi = `${IPs}api/admin/station`;
-    
+
     const stationData = await putData(`${stationAdminApi}/delete/${a}`);
     return stationData;
-  }
+  },
 };
 
 export default stationService;

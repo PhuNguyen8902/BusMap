@@ -1,9 +1,14 @@
+import { Ip } from "../common/common";
 import { postData } from "../utils/fetchApi";
+const IPs = Ip;
 
-const API = "http://localhost:8080/api";
-
+const API = `${IPs}api`;
+console.log(API);
 const authService = {
   async signIn(form) {
+    const IPs = Ip;
+
+    const API = `${IPs}api`;
     const response = await fetch(`${API}/auth/login`, {
       method: "POST",
       headers: {

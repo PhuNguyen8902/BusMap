@@ -1,6 +1,5 @@
 import { deleteData, getData, postData, putData } from "../utils/fetchApi";
-import Ip from "../common/common"
-
+import { Ip } from "../common/common";
 
 const tripApi = "http://localhost:8080/api/trip";
 const tripAdminApi = "http://localhost:8080/api/admin/trip";
@@ -33,7 +32,7 @@ const tripService = {
   async addTrip(a) {
     const IPs = Ip;
     const tripAdminApi = `${IPs}api/admin/trip`;
-    
+
     const tripData = await postData(`${tripAdminApi}/add`, a);
     return tripData;
   },

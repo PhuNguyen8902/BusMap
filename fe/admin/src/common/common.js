@@ -2,16 +2,16 @@
 
 // export default IP;
 
-let Ip = '';
+let Ip = "";
 
-if(JSON.parse(localStorage.getItem('domain')) !== null){
-  Ip = JSON.parse(localStorage.getItem('domain'));
+if (JSON.parse(localStorage.getItem("domain")) !== null) {
+  Ip = JSON.parse(localStorage.getItem("domain"));
 }
 
 // console.log(Ip);
 
-const setIP = newIP => {
+const setIP = (newIP) => {
   Ip = newIP;
 };
 
-export {setIP, Ip};
+export { setIP, Ip };
