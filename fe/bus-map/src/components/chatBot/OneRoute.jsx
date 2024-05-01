@@ -1,6 +1,6 @@
 import { Box, Stack, Typography } from "@mui/material";
 import DirectionsRunIcon from "@mui/icons-material/DirectionsRun";
-import DirectionsBusIcon from '@mui/icons-material/DirectionsBus';
+import DirectionsBusIcon from "@mui/icons-material/DirectionsBus";
 import RouteIcon from "@mui/icons-material/Route";
 import { useNavigate, useParams } from "react-router";
 import { useEffect, useState } from "react";
@@ -22,8 +22,10 @@ export default function RouteWithOnetrip({ triggerNextStep }) {
         lat2,
         lon2
       );
-      console.log(routeWithOnetripData[0]);
-      setRouteWithOneTrip(routeWithOnetripData[0]);
+      // console.log(routeWithOnetripData[0]);
+      if (routeWithOnetripData.length != 0) {
+        setRouteWithOneTrip(routeWithOnetripData[0]);
+      }
       triggerNextStep();
       // console.log("route with one trip: ", routeWithOnetripData);
     };
@@ -51,22 +53,34 @@ export default function RouteWithOnetrip({ triggerNextStep }) {
                 <Typography sx={{ fontSize: "1.2vw" }}>
                   <strong>
                     walk to route{" "}
-                    {routeWithOneTripData.startStation.stationRoute.routeId.routeNum}
+                    {
+                      routeWithOneTripData.startStation.stationRoute.routeId
+                        .routeNum
+                    }
                   </strong>
                 </Typography>
               </Stack>
               <Box>
                 <Typography sx={{ fontSize: "1vw" }}>
                   From your location, go to route{" "}
-                  {routeWithOneTripData.startStation.stationRoute.routeId.routeNum}
+                  {
+                    routeWithOneTripData.startStation.stationRoute.routeId
+                      .routeNum
+                  }
                 </Typography>
                 <Typography sx={{ fontSize: "1vw" }}>
                   At station:{" "}
-                  {routeWithOneTripData.startStation.stationRoute.stationId.name}
+                  {
+                    routeWithOneTripData.startStation.stationRoute.stationId
+                      .name
+                  }
                 </Typography>
                 <Typography sx={{ fontSize: "1vw" }}>
                   With the address:{" "}
-                  {routeWithOneTripData.startStation.stationRoute.stationId.address}
+                  {
+                    routeWithOneTripData.startStation.stationRoute.stationId
+                      .address
+                  }
                 </Typography>
               </Box>
             </Box>
@@ -87,14 +101,20 @@ export default function RouteWithOnetrip({ triggerNextStep }) {
                 <Typography sx={{ fontSize: "1.2vw" }}>
                   <strong>
                     Go on route{" "}
-                    {routeWithOneTripData.startStation.stationRoute.routeId.routeNum}
+                    {
+                      routeWithOneTripData.startStation.stationRoute.routeId
+                        .routeNum
+                    }
                   </strong>
                 </Typography>
               </Stack>
               <Stack>
                 <Typography sx={{ fontSize: "1vw" }}>
                   From station:{" "}
-                  {routeWithOneTripData.startStation.stationRoute.stationId.name}
+                  {
+                    routeWithOneTripData.startStation.stationRoute.stationId
+                      .name
+                  }
                 </Typography>
                 <Typography sx={{ fontSize: "1vw" }}>
                   Go to station:{" "}
@@ -127,7 +147,10 @@ export default function RouteWithOnetrip({ triggerNextStep }) {
                 </Typography>
                 <Typography sx={{ fontSize: "1vw" }}>
                   With the address:{" "}
-                  {routeWithOneTripData.endStation.stationRoute.stationId.address}
+                  {
+                    routeWithOneTripData.endStation.stationRoute.stationId
+                      .address
+                  }
                 </Typography>
                 <Typography sx={{ fontSize: "1vw" }}>
                   Go to destination
@@ -136,7 +159,21 @@ export default function RouteWithOnetrip({ triggerNextStep }) {
             </Box>
           </Stack>
         </Stack>
-      ) : null}
+      ) : (
+        <>
+          <Typography
+            sx={{
+              fontSize: "1vw",
+              margin: "0 0 5% 0",
+              color: "red",
+              display: "flex",
+              justifyContent: "center",
+            }}
+          >
+            <strong>Unfound</strong>
+          </Typography>
+        </>
+      )}
     </>
   );
 }
