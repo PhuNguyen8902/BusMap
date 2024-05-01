@@ -30,9 +30,9 @@ const routeService = {
     const routeApi = `${IPs}api/route`;
     const routeStationApi = `${IPs}api/station-route`;
     // console.log(IPs);
-    // console.log(routeApi); 
+    // console.log(routeApi);
     const oneWayRouteData = await getData(`${routeApi}/oneWay?name=${name}`);
-    // console.log(oneWayRouteData);
+    console.log(oneWayRouteData);
     return oneWayRouteData;
   },
   async getRouteDetail(routeId) {

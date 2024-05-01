@@ -1,6 +1,6 @@
 import { Box, Stack, Typography } from "@mui/material";
 import DirectionsRunIcon from "@mui/icons-material/DirectionsRun";
-import DirectionsBusIcon from '@mui/icons-material/DirectionsBus';
+import DirectionsBusIcon from "@mui/icons-material/DirectionsBus";
 import RouteIcon from "@mui/icons-material/Route";
 import stationService from "../../service/stationService";
 import { useNavigate, useParams } from "react-router";
@@ -21,7 +21,9 @@ export default function RouteWithTwotrip({ triggerNextStep }) {
         lat2,
         lon2
       );
-      setRouteWithTwoTrip(routeWithTwotripData[0]);
+      if (routeWithTwoTripData.length != 0) {
+        setRouteWithTwoTrip(routeWithTwotripData[0]);
+      }
       triggerNextStep();
       // console.log("route with two trips: ", routeWithTwotripData);
     };
@@ -49,22 +51,34 @@ export default function RouteWithTwotrip({ triggerNextStep }) {
                 <Typography sx={{ fontSize: "1.2vw" }}>
                   <strong>
                     walk to route{" "}
-                    {routeWithTwoTripData.startStation.stationRoute.routeId.routeNum}
+                    {
+                      routeWithTwoTripData.startStation.stationRoute.routeId
+                        .routeNum
+                    }
                   </strong>
                 </Typography>
               </Stack>
               <Box>
                 <Typography sx={{ fontSize: "1vw" }}>
                   From your location, go to route{" "}
-                  {routeWithTwoTripData.startStation.stationRoute.routeId.routeNum}
+                  {
+                    routeWithTwoTripData.startStation.stationRoute.routeId
+                      .routeNum
+                  }
                 </Typography>
                 <Typography sx={{ fontSize: "1vw" }}>
                   At station:{" "}
-                  {routeWithTwoTripData.startStation.stationRoute.stationId.name}
+                  {
+                    routeWithTwoTripData.startStation.stationRoute.stationId
+                      .name
+                  }
                 </Typography>
                 <Typography sx={{ fontSize: "1vw" }}>
                   With the address:{" "}
-                  {routeWithTwoTripData.startStation.stationRoute.stationId.address}
+                  {
+                    routeWithTwoTripData.startStation.stationRoute.stationId
+                      .address
+                  }
                 </Typography>
               </Box>
             </Box>
@@ -85,14 +99,20 @@ export default function RouteWithTwotrip({ triggerNextStep }) {
                 <Typography sx={{ fontSize: "1.2vw" }}>
                   <strong>
                     Go on route{" "}
-                    {routeWithTwoTripData.startStation.stationRoute.routeId.routeNum}
+                    {
+                      routeWithTwoTripData.startStation.stationRoute.routeId
+                        .routeNum
+                    }
                   </strong>
                 </Typography>
               </Stack>
               <Stack>
                 <Typography sx={{ fontSize: "1vw" }}>
                   From station:{" "}
-                  {routeWithTwoTripData.startStation.stationRoute.stationId.name}
+                  {
+                    routeWithTwoTripData.startStation.stationRoute.stationId
+                      .name
+                  }
                 </Typography>
                 <Typography sx={{ fontSize: "1vw" }}>
                   Go to station: {routeWithTwoTripData.midStation.name}
@@ -116,8 +136,15 @@ export default function RouteWithTwotrip({ triggerNextStep }) {
                 <Typography sx={{ fontSize: "1.1vw" }}>
                   <strong>
                     Change From route{" "}
-                    {routeWithTwoTripData.startStation.stationRoute.routeId.routeNum} to
-                    route {routeWithTwoTripData.endStation.stationRoute.routeId.routeNum}
+                    {
+                      routeWithTwoTripData.startStation.stationRoute.routeId
+                        .routeNum
+                    }{" "}
+                    to route{" "}
+                    {
+                      routeWithTwoTripData.endStation.stationRoute.routeId
+                        .routeNum
+                    }
                   </strong>
                 </Typography>
               </Stack>
@@ -147,7 +174,10 @@ export default function RouteWithTwotrip({ triggerNextStep }) {
                 <Typography sx={{ fontSize: "1.2vw" }}>
                   <strong>
                     Go on route{" "}
-                    {routeWithTwoTripData.endStation.stationRoute.routeId.routeNum}
+                    {
+                      routeWithTwoTripData.endStation.stationRoute.routeId
+                        .routeNum
+                    }
                   </strong>
                 </Typography>
               </Stack>
@@ -186,7 +216,10 @@ export default function RouteWithTwotrip({ triggerNextStep }) {
                 </Typography>
                 <Typography sx={{ fontSize: "1vw" }}>
                   With the address:{" "}
-                  {routeWithTwoTripData.endStation.stationRoute.stationId.address}
+                  {
+                    routeWithTwoTripData.endStation.stationRoute.stationId
+                      .address
+                  }
                 </Typography>
                 <Typography sx={{ fontSize: "1vw" }}>
                   Go to destination
@@ -195,7 +228,21 @@ export default function RouteWithTwotrip({ triggerNextStep }) {
             </Box>
           </Stack>
         </Stack>
-      ) : null}
+      ) : (
+        <>
+          <Typography
+            sx={{
+              fontSize: "1vw",
+              margin: "0 0 5% 0",
+              color: "red",
+              display: "flex",
+              justifyContent: "center",
+            }}
+          >
+            <strong>Unfound</strong>
+          </Typography>
+        </>
+      )}
     </>
   );
 }
