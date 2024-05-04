@@ -73,7 +73,6 @@ export default function EachElementLookup({search, user}) {
   }, [search]);
 
   const handlePress = item => {
-    // console.log('Pressed item:', item);
     navigation.navigate('DetailLookup', {data: item});
   };
 
@@ -96,8 +95,6 @@ export default function EachElementLookup({search, user}) {
     } else {
       Alert.alert('Thêm yêu thích thành công', '', [{text: 'OK'}]);
       setBonusRoute(oldItems => [...oldItems, item]);
-      // setFakeRoute([]);
-      // fetchData();
     }
   };
 
@@ -133,7 +130,7 @@ export default function EachElementLookup({search, user}) {
               <Image
                 style={styles.image}
                 resizeMode="cover"
-                source={require('../../images/pikachu.jpg')}
+                source={require('../../images/bustutorial.png')}
               />
               <View>
                 <Text style={styles.routeNum}>{item.routeNum}</Text>
@@ -144,29 +141,31 @@ export default function EachElementLookup({search, user}) {
               </View>
             </View>
           </View>
-          <View>
-            {bonusRoute.some(
-              route => JSON.stringify(route) == JSON.stringify(item),
-            ) ? (
-              <Icon
-                raised
-                name="heartbeat"
-                type="font-awesome"
-                color="red"
-                onPress={() => deleteItem(item)}
-                size={30}
-              />
-            ) : (
-              <Icon
-                raised
-                name="heartbeat"
-                type="font-awesome"
-                color="gray"
-                onPress={() => addNew(item)}
-                size={30}
-              />
-            )}
-          </View>
+          {user == '' ? null : (
+            <View>
+              {bonusRoute.some(
+                route => JSON.stringify(route) == JSON.stringify(item),
+              ) ? (
+                <Icon
+                  raised
+                  name="heartbeat"
+                  type="font-awesome"
+                  color="red"
+                  onPress={() => deleteItem(item)}
+                  size={30}
+                />
+              ) : (
+                <Icon
+                  raised
+                  name="heartbeat"
+                  type="font-awesome"
+                  color="gray"
+                  onPress={() => addNew(item)}
+                  size={30}
+                />
+              )}
+            </View>
+          )}
         </View>
       </TouchableOpacity>
     );

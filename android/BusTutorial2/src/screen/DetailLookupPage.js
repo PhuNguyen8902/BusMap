@@ -29,7 +29,7 @@ export default function DetailLookupPage({route}) {
   const fetchData = async () => {
     let domain = await AsyncStorage.getItem('domain');
     const data = route.params?.data;
-    console.log(data);
+    // console.log(data);
     if (domain == null || domain == '') {
       AsyncStorage.removeItem('domain');
       navigation.navigate('Domain');

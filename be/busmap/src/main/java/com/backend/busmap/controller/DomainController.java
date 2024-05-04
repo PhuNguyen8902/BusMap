@@ -14,10 +14,28 @@ import org.springframework.web.bind.annotation.RestController;
  * @author ADMIN
  */
 @RestController
-@RequestMapping("")
 public class DomainController {
-     @GetMapping("/")
-    public ResponseEntity<String> checkDomain() {
-        return ResponseEntity.ok("Domain is working!");
+
+    @GetMapping("/")
+    public ResponseEntity<?> checkDomain() {
+        // Trả về một đối tượng JSON đơn giản
+        return ResponseEntity.ok().body(new ResponseMessage("Domain is working!"));
+    }
+
+    // Class định nghĩa cấu trúc của đối tượng JSON
+    static class ResponseMessage {
+        private String message;
+
+        public ResponseMessage(String message) {
+            this.message = message;
+        }
+
+        public String getMessage() {
+            return message;
+        }
+
+        public void setMessage(String message) {
+            this.message = message;
+        }
     }
 }

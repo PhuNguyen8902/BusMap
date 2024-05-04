@@ -4,6 +4,7 @@ import {TextInput, Text, StyleSheet, Image, View, Alert} from 'react-native';
 import {Button} from 'react-native-elements';
 import {AuthService} from '../service';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {color} from 'react-native-reanimated';
 
 const iconSize = 200;
 
@@ -44,9 +45,17 @@ export default function LoginPage() {
         <Image
           resizeMode="cover"
           style={[styles.img]}
-          source={require('../images/pikachu.jpg')}
+          source={require('../images/bus.png')}
         />
-        <Text style={{marginVertical: 10, fontWeight: 'bold'}}>Đăng nhập</Text>
+        <Text
+          style={{
+            marginVertical: 10,
+            fontWeight: 'bold',
+            color: 'black',
+            fontSize: 15,
+          }}>
+          Đăng nhập
+        </Text>
       </View>
 
       <TextInput
@@ -60,6 +69,7 @@ export default function LoginPage() {
         placeholder="Mật khẩu"
         value={pass}
         onChangeText={text => setPass(text)}
+        secureTextEntry={true}
       />
       <Button
         title={'Xác nhận'}
@@ -103,5 +113,6 @@ const styles = StyleSheet.create({
     marginHorizontal: 20,
     borderRadius: 50,
     padding: 10,
+    color: 'black',
   },
 });

@@ -13,7 +13,7 @@ function formatTime(timeObject) {
 export default function Information({data}) {
   const [count, setCount] = useState(0);
   const [dataDirection, setDataDirection] = useState('');
-  console.log('hello');
+  // console.log('hello');
   const fetchData = async () => {
     let domain = await AsyncStorage.getItem('domain');
     if (domain == null || domain == '') {

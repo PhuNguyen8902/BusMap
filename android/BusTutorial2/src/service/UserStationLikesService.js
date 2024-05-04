@@ -36,7 +36,7 @@ const UserStationLikesService = {
           ...JSON.parse(await response.text()),
         };
   },
-  async delete(form) {
+  async delete(form, d) {
     const api2 = d + API;
 
     // tra ra 2 du lieu token

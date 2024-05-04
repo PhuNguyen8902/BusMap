@@ -103,7 +103,7 @@ export default function EachElementStationLookupLikes({search, user}) {
             <Image
               style={styles.image}
               resizeMode="cover"
-              source={require('../../images/pikachu.jpg')}
+              source={require('../../images/bustutorial.png')}
             />
             <View>
               <Text style={styles.routeNum}>{item.code}</Text>
@@ -163,6 +163,7 @@ const styles = StyleSheet.create({
     borderRadius: 50,
   },
   name: {
+    color: 'black',
     fontSize: 13,
     marginTop: 5,
   },

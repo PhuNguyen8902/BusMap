@@ -13,7 +13,7 @@ const routeService = {
   },
   async getRoutesByRouteNum(routeNum, d) {
     const api = `${d}/api/route/routeBackward/${routeNum}`;
-    console.log(api);
+    // console.log(api);
     const allRoutesByRouteNum = await getData(api);
     return allRoutesByRouteNum;
   },
