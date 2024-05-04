@@ -5,7 +5,7 @@ const stationService = {
   async getRouteWithOneTripData(lat1, lon1, lat2, lon2, d) {
     const apistation = d + stationApi;
     const api = `${apistation}/route1?latitude1=${lat1}&longitude1=${lon1}&latitude2=${lat2}&longitude2=${lon2}`;
-    console.log(api);
+    // console.log(api);
     const routeWithOneTripData = await getData(api);
     return routeWithOneTripData;
   },

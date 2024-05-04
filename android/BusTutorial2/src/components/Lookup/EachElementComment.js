@@ -28,7 +28,7 @@ export default function EachElementComment({data, check, user}) {
                     <Image
                       resizeMode="cover"
                       style={[styles.icon]}
-                      source={require('../../images/pikachu.jpg')}
+                      source={require('../../images/bustutorial.png')}
                     />
                     <View style={{marginLeft: 10}}>
                       <Text style={styles.userName}>{u.userId.username}</Text>

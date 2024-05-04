@@ -42,7 +42,7 @@ export default function AccountPage() {
           <Image
             resizeMode="cover"
             style={[styles.icon]}
-            source={require('../images/pikachu.jpg')}
+            source={require('../images/bustutorial.png')}
           />
           <View style={styles.row}>
             <Text style={styles.font}>Tên</Text>
@@ -91,7 +91,7 @@ export default function AccountPage() {
             <Image
               resizeMode="cover"
               style={[styles.icon]}
-              source={require('../images/pikachu.jpg')}
+              source={require('../images/bus.png')}
             />
             <Button
               title={'Đăng nhập'}

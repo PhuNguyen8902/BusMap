@@ -4,6 +4,7 @@ import {TextInput, Text, StyleSheet, Image, View} from 'react-native';
 import {Button} from 'react-native-elements';
 import {setIP} from '../common/common';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {AuthService} from '../service';
 
 const iconSize = 200;
 
@@ -15,9 +16,10 @@ export default function DomainPage() {
 
   const checkDomain = async () => {
     try {
-      const response = await fetch(`http://${domain}`);
+      const api = `http://${domain}`;
+      const response = await AuthService.domain(api);
 
-      if (response.status == 200) {
+      if (response.message != '') {
         await AsyncStorage.setItem('domain', domain);
 
         setIP(`http://${domain}`);
@@ -36,7 +38,6 @@ export default function DomainPage() {
     if (d != null) {
       try {
         const response = await fetch(`http://${d}`);
-        console.log(d);
         if (response.status == 200) {
           setIP(`http://${d}`);
           navigation.navigate('Home');
@@ -48,9 +49,6 @@ export default function DomainPage() {
         AsyncStorage.removeItem('domain');
         setResult('Lỗi kết nối đến domain.');
       }
-
-      // setIP(`http://${domain}`);
-      // navigation.navigate('Home');
     }
   };
   useEffect(() => {
@@ -62,9 +60,11 @@ export default function DomainPage() {
         <Image
           resizeMode="cover"
           style={[styles.img]}
-          source={require('../images/pikachu.jpg')}
+          source={require('../images/domain.png')}
         />
-        <Text style={{marginVertical: 10}}>Domain</Text>
+        <Text style={{marginVertical: 10, color: 'black', fontSize: 20}}>
+          Domain
+        </Text>
       </View>
 
       <TextInput

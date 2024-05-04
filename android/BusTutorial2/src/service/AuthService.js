@@ -1,3 +1,5 @@
+import {getData} from '../util/fetchApi';
+
 const AuthService = {
   async signIn(form, d) {
     // tra ra 2 du lieu token
@@ -14,6 +16,11 @@ const AuthService = {
       : {
           ...JSON.parse(await response.text()),
         };
+  },
+  async domain(d) {
+    const api = `${d}/`;
+    const data = await getData(api);
+    return data;
   },
 };
 

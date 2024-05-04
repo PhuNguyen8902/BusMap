@@ -14,35 +14,11 @@ import GetLocation from 'react-native-get-location';
 import {MapComponent} from '../components';
 
 const iconSize = 50;
-const iconFooterSize = 25;
+const iconFooterSize = 30;
 
 export default function HomePage() {
   const navigation = useNavigation();
-  // const [location, setLocation] = useState(null);
 
-  // const requestLocationPermission = async () => {
-  //   try {
-  //     const granted = await PermissionsAndroid.request(
-  //       PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
-  //       {
-  //         title: 'Ứng dụng cần quyền truy cập vị trí của bạn',
-  //         message:
-  //           'Ứng dụng cần quyền truy cập vị trí của bạn ' +
-  //           'để mang lại trải nghiệm tốt nhất cho bạn.',
-  //         buttonNeutral: 'Hỏi tôi sau',
-  //         buttonNegative: 'Hủy',
-  //         buttonPositive: 'Đồng ý',
-  //       },
-  //     );
-  //     if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-  //       console.log('Bạn đã cấp quyền truy cập vị trí');
-  //     } else {
-  //       console.log('Quyền truy cập vị trí bị từ chối');
-  //     }
-  //   } catch (err) {
-  //     console.warn(err);
-  //   }
-  // };
   const handleLookupPress = () => {
     navigation.navigate('Lookup');
   };
@@ -64,21 +40,7 @@ export default function HomePage() {
   const handleLikesPress = () => {
     navigation.navigate('FooterLikes');
   };
-  // useEffect(() => {
-  //   requestLocationPermission().then(() => {
-  //     GetLocation.getCurrentPosition({
-  //       enableHighAccuracy: true,
-  //       timeout: 60000,
-  //     })
-  //       .then(location => {
-  //         setLocation(location);
-  //       })
-  //       .catch(error => {
-  //         const {code, message} = error;
-  //         console.warn(code, message);
-  //       });
-  //   });
-  // }, []);
+
   return (
     <>
       <View style={[styles.container]}>
@@ -89,7 +51,7 @@ export default function HomePage() {
                 <Image
                   resizeMode="cover"
                   style={[styles.icon]}
-                  source={require('../images/pikachu.jpg')}
+                  source={require('../images/tuyen.png')}
                 />
                 <Text style={styles.textIcon}>Tra cứu tuyến</Text>
               </View>
@@ -99,7 +61,7 @@ export default function HomePage() {
                 <Image
                   resizeMode="cover"
                   style={[styles.icon]}
-                  source={require('../images/pikachu.jpg')}
+                  source={require('../images/timduong.jpg')}
                 />
                 <Text style={styles.textIcon}>Tìm đường</Text>
               </View>
@@ -111,7 +73,7 @@ export default function HomePage() {
                 <Image
                   resizeMode="cover"
                   style={[styles.icon]}
-                  source={require('../images/pikachu.jpg')}
+                  source={require('../images/tram.jpg')}
                 />
                 <Text style={styles.textIcon}>Tra cứu trạm</Text>
               </View>
@@ -121,7 +83,7 @@ export default function HomePage() {
                 <Image
                   resizeMode="cover"
                   style={[styles.icon]}
-                  source={require('../images/pikachu.jpg')}
+                  source={require('../images/tym.jpg')}
                 />
                 <Text style={styles.textIcon}>Yêu thích</Text>
               </View>
@@ -129,18 +91,6 @@ export default function HomePage() {
           </View>
         </View>
         <View style={[styles.box2]}>
-          {/* <Image
-            resizeMode="cover"
-            source={require('../images/map.jpg')}
-            style={{width: '100%', height: '100%'}}
-          /> */}
-          {/* <MapView
-            initialRegion={{
-              latitude: location?.latitude,
-              longitude: location?.longitude,
-              latitudeDelta: 0.1,
-              longitudeDelta: 0.1,
-            }}></MapView> */}
           <MapComponent />
         </View>
         <View style={[styles.box3]}>
@@ -149,7 +99,7 @@ export default function HomePage() {
               <Image
                 resizeMode="cover"
                 style={[styles.iconFooter]}
-                source={require('../images/pikachu.jpg')}
+                source={require('../images/home.png')}
               />
               <Text style={styles.textIconFooter}>Trang chủ</Text>
             </TouchableOpacity>
@@ -159,7 +109,7 @@ export default function HomePage() {
               <Image
                 resizeMode="cover"
                 style={[styles.iconFooter]}
-                source={require('../images/pikachu.jpg')}
+                source={require('../images/timduong.jpg')}
               />
               <Text style={styles.textIconFooter}>Tìm đường</Text>
             </TouchableOpacity>
@@ -169,7 +119,7 @@ export default function HomePage() {
               <Image
                 resizeMode="cover"
                 style={[styles.iconFooter]}
-                source={require('../images/pikachu.jpg')}
+                source={require('../images/tym.jpg')}
               />
               <Text style={styles.textIconFooter}>Yêu thích</Text>
             </TouchableOpacity>
@@ -179,7 +129,7 @@ export default function HomePage() {
               <Image
                 resizeMode="cover"
                 style={[styles.iconFooter]}
-                source={require('../images/pikachu.jpg')}
+                source={require('../images/account.png')}
               />
               <Text style={styles.textIconFooter}>Tài khoản</Text>
             </TouchableOpacity>
@@ -199,6 +149,7 @@ const styles = StyleSheet.create({
     flex: 2,
     flexDirection: 'row',
     justifyContent: 'space-around',
+    backgroundColor: 'lightgray',
   },
   box2: {
     flex: 3,
@@ -206,6 +157,7 @@ const styles = StyleSheet.create({
   box3: {
     flex: 0.5,
     flexDirection: 'row',
+    backgroundColor: 'lightgray',
     justifyContent: 'space-around',
   },
   icon: {
