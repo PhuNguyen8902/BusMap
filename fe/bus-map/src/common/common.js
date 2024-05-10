@@ -1,4 +1,4 @@
-// var IP = 'http://192.168.0.11:8080/';
+// var IP = 'http://192.168.0.3:8080/';
 
 // export default IP;
 

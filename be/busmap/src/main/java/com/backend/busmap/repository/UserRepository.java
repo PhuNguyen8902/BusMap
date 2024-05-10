@@ -32,7 +32,7 @@ public interface UserRepository extends JpaRepository<User, String> {
     
      @Query("SELECT r FROM User r WHERE r.isActive = 1")
     Page<User> findUserByIsActive( Pageable a);
-
+    
 //    @Query("SELECT u FROM User u JOIN u.userRoles ur WHERE ur.name = :role")
 //    Page<UserInfoResponse> findByRoles(UserRole role, Pageable pageable);
 }

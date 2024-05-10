@@ -46,7 +46,7 @@ function Navigate({ steps, triggerNextStep }) {
       }
     };
     fetchRouteWithOnetrip();
-  }, [steps]);
+  }, []);
 
   return (
     <Box>

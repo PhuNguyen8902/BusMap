@@ -50,7 +50,7 @@ public class AuthController {
         Message errorResponse = checkError(response);
         if (errorResponse != null) {
 
-            return ResponseEntity.status(401).body(errorResponse);
+            return ResponseEntity.status(401).body(errorResponse.getMess());
 
         }
 
@@ -68,7 +68,8 @@ public class AuthController {
     private Message checkError(AuthenticationResponse authenticationResponse) {
         var errorResponse = Message.builder();
 
-        if (authenticationResponse == null) {
+//        if (authenticationResponse == null || "1".equals(authenticationResponse.accessToken)) {
+        if (authenticationResponse == null ) {
             return errorResponse.mess("Username or password is not correct").build();
         }
 

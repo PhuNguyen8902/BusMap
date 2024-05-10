@@ -6,6 +6,7 @@ import { storeDomainName } from "../../store/features/storeRoute/storeIpSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import LockIcon from "@mui/icons-material/Lock";
+import HomePage from "../../routes/HomePage";
 
 export default function Domain() {
   const [domain, setDomain] = useState();
@@ -15,6 +16,9 @@ export default function Domain() {
   const dispatch = useDispatch();
 
   const domainName = useSelector((state) => state.storeDomain.domainName);
+
+  const [redirect, setRedirect] = useState(false);
+
 
   // console.log("domain: " + domainName)
 
@@ -39,44 +43,49 @@ export default function Domain() {
   const checkDomain = async () => {
     try {
       const ip = await fetchDomain();
-      // console.log(ip)
+      console.log(ip)
       dispatch(storeDomainName(`http://${domain}/`));
       localStorage.setItem("domain", JSON.stringify(`http://${domain}/`));
       setIP(ip);
       // console.log(domain)
-      navigate("/home");
+      setRedirect(true);
+
     } catch (error) {
       alert("Lỗi kết nối đến domain.");
     }
   };
 
-  const checkLocalDomain = async () => {
-    const d = await domainName;
-    console.log("domain d:" + d);
-    setDomain(d);
-    if (d != null) {
-      try {
-        const response = await fetch(`${d}`);
-        console.log(d);
-        if (response.status === 200) {
-          setIP(`${d}`);
-          navigate("/home");
-        } else {
-          dispatch(storeDomainName(""));
-          alert("Lỗi kết nối đến domain.");
-        }
-      } catch (error) {
-        dispatch(storeDomainName(""));
-        alert("Lỗi kết nối đến domain.");
-      }
+  // const checkLocalDomain = async () => {
+  //   const d = await domainName;
+  //   // console.log("domain d:" + d);
+  //   setDomain(d);
+  //   if (d != null) {
+  //     try {
+  //       const response = await fetch(`${d}`);
+  //       // console.log(d);
+  //       if (response.status === 200) {
+  //         setIP(`${d}`);
+  //         navigate("/home");
+  //       } else {
+  //         dispatch(storeDomainName(""));
+  //         alert("Lỗi kết nối đến domain.");
+  //       }
+  //     } catch (error) {
+  //       dispatch(storeDomainName(""));
+  //       alert("Lỗi kết nối đến domain.");
+  //     }
 
-      // setIP(`http://${domain}`);
-      // navigation.navigate('Home');
-    }
-  };
-  useEffect(() => {
-    checkLocalDomain();
-  }, []);
+  //     // setIP(`http://${domain}`);
+  //     // navigation.navigate('Home');
+  //   }
+  // };
+  // useEffect(() => {
+  //   checkLocalDomain();
+  // }, []);
+
+  if (redirect) {
+    return <HomePage />;
+  }
 
   return (
     <Stack

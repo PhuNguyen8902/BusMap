@@ -23,6 +23,30 @@ export default function BusChatBot() {
     setFullPiture(null);
   };
 
+  
+  // const steps=[
+  //   {
+  //     id: '1',
+  //     message: 'What is your name?',
+  //     trigger: '2',
+  //   },
+  //   {
+  //     id: '2',
+  //     user: true,
+  //     trigger: '3',
+  //   },
+  //   {
+  //     id: '3',
+  //     message: 'What is your name?',
+  //     trigger: '4',
+  //   },
+  //   {
+  //     id: '4',
+  //     user: true,
+  //     trigger: '1',
+  //   },
+  // ]
+
   const steps = [
     {
       id: "Greet",
@@ -179,19 +203,38 @@ export default function BusChatBot() {
       id: "oneRoute",
       waitAction: true,
       component: <OneRoute />,
-      trigger: "ask question number 1",
+      trigger: "endQuestion",
     },
     {
       id: "twoRoute",
       waitAction: true,
       component: <TwoRoute />,
-      trigger: "ask question number 1",
+      trigger: "endQuestion",
     },
     {
       id: "threeRoute",
       waitAction: true,
       component: <ThreeRoute />,
-      trigger: "ask question number 1",
+      trigger: "endQuestion",
+    },
+    {
+      id: "endQuestion",
+      message: "Choose another route?",
+      trigger: "chooseAnotherRoute",
+    },
+    {
+      id: "chooseAnotherRoute",
+      options: [
+        {
+          value: "yes",
+          label: "Yes", 
+          trigger: "routeChoose",
+        },
+        { value: "no", 
+          label: "No", 
+          trigger: "ask question number 1", 
+        },
+      ]
     },
   ];
 

@@ -21,7 +21,8 @@ const authService = {
     });
     return response.status !== 200
       ? {
-          error: (await response.json()).error,
+          // error: (await response.json()).error,
+          error: "Login Fail",
         }
       : {
           ...(await response.json()),

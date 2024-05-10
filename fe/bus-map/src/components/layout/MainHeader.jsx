@@ -51,7 +51,7 @@ function MainHeader(props) {
     };
     const handleLogout = () =>{
         dispatch(signOut());
-        navigate("/")
+        navigate("/home");
         setAnchorEl(false);
     }
 

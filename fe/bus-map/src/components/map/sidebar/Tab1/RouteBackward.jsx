@@ -42,12 +42,12 @@ export default function RouteBackward(props) {
       // console.log("routeNum in route backward: ", routeNum);
 
       const RouteByRouteNumData = await routeService.getRoutesByRouteNum(routeNum);
-
+      console.log("numdata: ", RouteByRouteNumData);
       const RouteBackwardId = RouteByRouteNumData[1].id;
-      // console.log("Route backward id: ", RouteBackwardId);
+      console.log("Route backward id: ", RouteBackwardId);
 
       const routeDetailData = await routeService.getRouteDetail(RouteBackwardId);
-      // console.log("Route detail data: ", routeDetailData);
+      console.log("Route detail data: ", routeDetailData);
 
       setRouteDetail(routeDetailData)
       navigate(`../map/route/${RouteBackwardId}`)

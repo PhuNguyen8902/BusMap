@@ -25,8 +25,8 @@ public interface StationRouteRepository extends JpaRepository<StationRoute, Inte
 
     StationRoute findByPriorityAndRouteId(Integer o, Route r);
 
-    List<StationRoute> findByRouteId(Route routeId);
-
+    List<StationRoute> findByRouteIdOrderByPriorityAsc(Route routeId);
+    
     Page<StationRoute> findStationRouteByRouteId(Route routeId, Pageable a);
 
     Page<StationRoute> findStationRouteByStationId(Station id, Pageable a);

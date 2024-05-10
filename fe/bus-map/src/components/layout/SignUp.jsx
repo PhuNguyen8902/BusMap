@@ -33,7 +33,7 @@ export default function SignUp(props) {
     defaultValues: initialForms.field,
   });
   const onSubmit = async (form) => {
-    if (form.password != form.confirmPassword) {
+    if (form.password !== form.confirmPassword) {
       setError("confirmPassword", { message: "Wrong password" });
       return;
     }
@@ -43,8 +43,9 @@ export default function SignUp(props) {
     }
 
     const response = await authService.signUp(form);
-    if (response.error) {
-      setError("userName", { message: response.error });
+
+    if (response.mess === "User existed") {
+      setError("userName", { message: response.mess });
       return;
     } else {
       alert("Successful registration");

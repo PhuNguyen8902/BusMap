@@ -45,11 +45,11 @@ public class StationRouteService {
     public List<StationRoute> getStationRouteByRouteId(Integer routeId) {
         Route route = this.routeRepo.findById(routeId).orElse(null);
 
-        return this.stationRouteRepo.findByRouteId(route);
+        return this.stationRouteRepo.findByRouteIdOrderByPriorityAsc(route);
     }
 
     public void deleteAllStationRouteByRoute(Route r) {
-        List<StationRoute> list = stationRouteRepo.findByRouteId(r);
+        List<StationRoute> list = stationRouteRepo.findByRouteIdOrderByPriorityAsc(r);
         for (StationRoute t : list) {
             stationRouteRepo.deleteById(t.getId());
         }
@@ -232,7 +232,7 @@ public class StationRouteService {
         }
         Route route = routeRepo.findById(Integer.valueOf(s.getRouteId())).orElse(null);
 
-        List<StationRoute> list = stationRouteRepo.findByRouteId(route);
+        List<StationRoute> list = stationRouteRepo.findByRouteIdOrderByPriorityAsc(route);
         boolean kq = checkStationUnique(list, sta);
         if (!kq) {
             return "Station Duplicate";

@@ -32,7 +32,7 @@ const routeService = {
     // console.log(IPs);
     // console.log(routeApi);
     const oneWayRouteData = await getData(`${routeApi}/oneWay?name=${name}`);
-    console.log(oneWayRouteData);
+    // console.log(oneWayRouteData);
     return oneWayRouteData;
   },
   async getRouteDetail(routeId) {

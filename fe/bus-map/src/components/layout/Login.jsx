@@ -13,6 +13,7 @@ import authService from '../../service/authService';
 import { signIn } from '../../store/features/auth/authSlice';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router';
+import { ErrorMessage } from '@hookform/error-message';
 
 export default function Login() {
 
@@ -36,15 +37,14 @@ export default function Login() {
     });
     const onSubmit = async (form) => {
       const response = await authService.signIn(form);
-    //   console.log("form: ", form)
       if (!response.error) {
         dispatch(signIn(response));
         dispatch({ type: "FETCH_INFO" });
         // window.location.href = "/";
+        navigate("/home")
       } else {
         setError("userName", { message: response.error });
       }
-      navigate("/")
     };
 
     // const handleLogin = (event) => {
@@ -80,7 +80,16 @@ export default function Login() {
                         name="userName"
                         autoComplete="userName"
                         autoFocus
-                        {...register("userName")}
+                        {...register("userName", {
+                            required: "username is required",
+                          })}
+                    />
+                     <ErrorMessage
+                        errors={errors}
+                        name={"userName"}
+                        render={({ message }) => (
+                        <Typography color="red">{message}</Typography>
+                        )}
                     />
                     <TextField
                         margin="normal"
@@ -91,8 +100,17 @@ export default function Login() {
                         type="password"
                         id="password"
                         autoComplete="current-password"
-                        {...register("password")}
+                        {...register("password", {
+                            required: "password is required",
+                          })}
 
+                    />
+                      <ErrorMessage
+                        errors={errors}
+                        name={"password"}
+                        render={({ message }) => (
+                        <Typography color="red">{message}</Typography>
+                        )}
                     />
                     <Button
                         type="submit"

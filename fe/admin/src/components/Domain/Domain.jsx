@@ -64,10 +64,12 @@ export default function Domain() {
   return (
     <Stack
       sx={{
-        alignItems: "center",
-        justifyContent: "center",
-        width: "100%",
-        height: "100%",
+        position: "absolute",
+        bottom: "50%",
+        left: "50%",
+        width: "20%",
+        height: "20%",
+        transform: "translate(-50%, -50%)",
       }}
     >
       <Stack
@@ -81,8 +83,8 @@ export default function Domain() {
         <Box
           sx={{
             borderRadius: "50%",
-            padding: "10%",
-            margin: "-20% 0 15% 0",
+            padding: "5%",
+            margin: "0 0 15% 0",
             backgroundColor: "#10af7e",
           }}
         >

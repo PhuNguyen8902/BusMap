@@ -19,7 +19,7 @@ export default function SearchRoute() {
 
     // if there all routeId in params it will update to routeId store in redux
     const dispatch = useDispatch();
-    if(routeId != undefined)
+    if(routeId !== undefined)
         dispatch(storeRouteId(routeId));
 
     const searchRouteChangeHandle = (event) => {
