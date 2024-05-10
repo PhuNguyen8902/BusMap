@@ -1,4 +1,4 @@
-import { Route, Routes } from "react-router";
+import { Route, Routes, useNavigate } from "react-router";
 import MapPage from "./routes/MapPage";
 import HomePage from "./routes/HomePage";
 import ContactPage from "./routes/ContactPage";
@@ -6,6 +6,11 @@ import AboutUsPage from "./routes/AboutUsPage";
 import Domain from "./components/domain/Domain";
 
 export default function Routers() {
+
+  if(JSON.parse(localStorage.getItem('domain')) === null){
+    return <Domain />;
+  }
+
   return (
     <Routes>
       <Route path="/" element={<Domain />} />

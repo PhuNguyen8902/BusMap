@@ -14,6 +14,7 @@ import com.backend.busmap.enums.UserRole;
 import com.backend.busmap.models.RefreshToken;
 import com.backend.busmap.models.User;
 import com.backend.busmap.repository.AuthAppRepository;
+import io.jsonwebtoken.JwtException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -45,6 +46,7 @@ public class AuthenticationService {
     public boolean register(User request) throws UnsupportedEncodingException {
         User userExist = userService.getUserByUserName(request.getUsername()).orElse(null);
         User userExist2 = userService.getUserByEmail(request.getEmail()).orElse(null);
+        
 
         if (userExist != null || userExist2 != null) {
             return false;
@@ -67,7 +69,16 @@ public class AuthenticationService {
 
     public AuthenticationResponse signIn(Login request) {
         User user = userService.getUserByUserName(request.getUserName()).orElse(null);
-
+//        try {
+//           System.out.print("user: " + user.getName());
+//        } catch (Exception e) {
+//                    var authenticationResponse1 = AuthenticationResponse.builder();
+//
+//             return authenticationResponse1
+//                .accessToken("1")
+//                .refreshToken("1")
+//                .build();
+//        }
         if (user == null) {
             return null;
         }

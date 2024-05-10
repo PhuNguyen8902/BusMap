@@ -3,12 +3,12 @@ import "leaflet/dist/leaflet.css";
 import {
   MapContainer,
   TileLayer,
-  // Marker,
+  Marker,
   Popup,
   ScaleControl,
 } from "react-leaflet";
 import MarkerClusterGroup from "react-leaflet-cluster";
-import { Icon, divIcon, point, SearchControl } from "leaflet";
+import { Icon, divIcon, point, SearchControl, icon } from "leaflet";
 import { OpenStreetMapProvider } from "leaflet-geosearch";
 import { GeoSearchControl, MapBoxProvider } from "leaflet-geosearch";
 import SearchField from "./SearchField";
@@ -18,7 +18,7 @@ import SideBar from "./sidebar/SideBar";
 import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
 import {
-  // Autocomplete,
+  Autocomplete,
   IconButton,
   Input,
   InputBase,
@@ -33,34 +33,36 @@ import { useDispatch, useSelector } from "react-redux";
 import routeService from "../../service/routeService";
 import { setStations } from "../../store/features/storeRoute/storeMakersSlice";
 import RoutingMap from "./RoutingMap";
-import {
-  useJsApiLoader,
-  GoogleMap,
-  Marker,
-  Autocomplete,
-} from "@react-google-maps/api";
+// import {
+//   useJsApiLoader,
+//   GoogleMap,
+//   Marker,
+//   Autocomplete,
+// } from "@react-google-maps/api";
 import BusChatBot from "../chatBot/BusChatBot";
 import { setIP } from "../../common/common";
 
-
 export default function Map() {
-
-
   // valuable section
   const [position, setPosition] = useState({
     lat: 10.8231,
-    lng: 106.6297,
+    lon: 106.6297,
+    zoom: 10,
   });
-
-  const [zoom, setZoom] = useState(12);
 
   const [active, setActive] = useState(false);
   const [address, setAddress] = useState("");
 
   // address for searching
-  const [strAddress, setStrAddress] = useState({
+  const [searchAddress, setSearchAddress] = useState({
+    name: "",
     lat: "",
-    lng: "",
+    lon: "",
+  });
+
+  const customIcon = new Icon({
+    iconUrl: require("../../assets/img/mark.png"),
+    iconSize: [38, 38], // size of the icon
   });
 
   const dispatch = useDispatch();
@@ -73,14 +75,15 @@ export default function Map() {
   // console.log("all stations: ", stations)
   // get stations in select route
   useEffect(() => {
-    if (routeId != null) {
+    if (routeId !== undefined) {
       const fetchRoute = async () => {
         const routeData = await routeService.getRouteDetail(routeId);
-        console.log("route detail in Map: ", routeData);
-        const getAllStationDetail = routeData.map((route, index) => {
+        // console.log("route detail in Map: ", routeData);
+        const getAllStationDetail = routeData.map((route) => {
           return {
             lat: route.stationId.latitude,
             lon: route.stationId.longitude,
+            name: route.stationId.name,
           };
         });
         dispatch(setStations(getAllStationDetail));
@@ -91,10 +94,12 @@ export default function Map() {
   // console.log("Station detail: ", stations)
 
   // function section
-  const fetchAddressInfo = async (ar) => {
+  //
+
+  const fetchSearchAddressInfo = async (address) => {
     // const ar = "62 Gò Vấp, Việt Nam";
     const apiUrl = `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(
-      ar
+      address.name
     )}&format=json`;
 
     console.log(apiUrl);
@@ -102,41 +107,24 @@ export default function Map() {
     try {
       const response = await fetch(apiUrl);
       const addressInfo = await response.json();
+      console.log("res: ", addressInfo);
 
-      const latitude1 = addressInfo[0].lat;
-      const longitude1 = addressInfo[0].lon;
-      setStrAddress({
-        latitude: latitude1,
-        longitude: longitude1,
-      });
-      setPosition({
-        lat: latitude1,
-        lon: longitude1,
-      });
-      setZoom(15);
+      const latitude = addressInfo[0].lat;
+      const longitude = addressInfo[0].lon;
 
+      setSearchAddress({ ...searchAddress, lat: latitude, lon: longitude });
       // Tiếp tục xử lý dữ liệu ở đây
     } catch (error) {
       console.error("Error fetching data:", error);
     }
   };
 
-  const searchAddressChangeHandle = (event) => {
-    setAddress(event.target.value);
-  };
-
   const enterKeyPressHandle = (event) => {
     if (event.key === "Enter") {
-      fetchAddressInfo(address);
+      fetchSearchAddressInfo(searchAddress);
       console.log("enter");
     }
   };
-
-  console.log(strAddress);
-  const { isLoaded } = useJsApiLoader({
-    googleMapsApiKey: "AIzaSyAQypWzXfUTV1dSP-9fZcxr8dYF6o5_7XU",
-    libraries: ["places"],
-  });
 
   return (
     <Stack
@@ -145,49 +133,8 @@ export default function Map() {
       sx={{ position: "relative" }}
     >
       <SideBar className="map--wrap__sidebar" />
-      <Box className="map--wrap__map">
-        {isLoaded ? (
-          <GoogleMap
-            center={position}
-            zoom={zoom}
-            mapContainerStyle={{ width: "100%", height: "100%" }}
-            options={{
-              streetViewControl: true,
-              mapTypeControl: true,
-            }}
-          >
-            <Box className="map--wrap__map__search--field">
-              <Stack
-                className="map--wrap__map__search--field__content"
-                direction={"row"}
-              >
-                {/*Cai Atuocomplete cua cai google map no yeu cau  libraries: ["places"], nhung ma muon xai thi phai co tai khoan roi phai kich hoat cai gi do...*/}
-                <Autocomplete>
-                  <input
-                    type="text"
-                    value={address}
-                    onChange={searchAddressChangeHandle}
-                    onKeyDown={enterKeyPressHandle}
-                  />
-                </Autocomplete>
 
-                {/* <Box className="map--wrap__map__search--field__content__search--icon">
-                  <SearchIcon
-                    sx={{ cursor: "pointer", width: "100%", height: "100%" }}
-                  />
-                </Box> */}
-              </Stack>
-            </Box>
-            <Marker position={position} />
-
-            {(strAddress.latitude != "") & (strAddress.longitude != "") ? (
-              <Marker position={[strAddress.latitude, strAddress.longitude]} />
-            ) : null}
-          </GoogleMap>
-        ) : null}
-      </Box>
-
-      {/* <MapContainer
+      <MapContainer
         center={position}
         zoom={position.zoom}
         className="map--wrap__map"
@@ -196,11 +143,41 @@ export default function Map() {
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         />
-        <UpdateMapView coords={position} />
+        <Box className="map--wrap__map__search--field">
+          <Stack
+            className="map--wrap__map__search--field__content"
+            direction={"row"}
+          >
+            <input
+              type="text"
+              value={searchAddress.name}
+              onChange={(e) => {
+                setSearchAddress({ ...searchAddress, name: e.target.value });
+              }}
+              onKeyDown={enterKeyPressHandle}
+            />
+            <Box className="map--wrap__map__search--field__content__search--icon">
+              <SearchIcon
+                sx={{ cursor: "pointer", width: "100%", height: "100%" }}
+              />
+            </Box>
+          </Stack>
+        </Box>
 
-       */}
+        {searchAddress?.lat !== "" ? (
+          <Marker
+            position={[searchAddress?.lat, searchAddress?.lon]}
+            icon={customIcon}
+          >
+            <Popup>
+              <strong>{searchAddress?.name}</strong>
+            </Popup>
+          </Marker>
+        ) : null}
 
-      {/* <SearchField
+        {/* <UpdateMapView coords={position} /> */}
+
+        {/* <SearchField
           provider={provider}
           showMarker={true}
           showPopup={false}
@@ -213,26 +190,27 @@ export default function Map() {
           keepResult={true}
         /> */}
 
-      {}
-
-      {
-        // stations.length > 1 ?
-        // <>
-        //   {stations.map((station, index) => (
-        //     <>
-        //       <Marker
-        //         key={index} // Use a unique key for each Marker (you can use station ID if available)
-        //         position={[station.lat, station.lon]}
-        //         icon={customIcon}
-        //       />
-        //     </>
-        //   ))}
-        //   {/* <RoutingMap/> */}
-        // </>
-        // : null
-      }
-
-      {/* </MapContainer> */}
+        {stations?.length > 1 ? (
+          <>
+            {stations?.map((station, index) => {
+              return (
+                <>
+                  <Marker
+                    key={index} // Use a unique key for each Marker (you can use station ID if available)
+                    position={[station.lat, station.lon]}
+                    icon={customIcon}
+                  >
+                    <Popup>
+                      <strong>{station.name}</strong>
+                    </Popup>
+                  </Marker>
+                </>
+              );
+            })}
+            {/* <RoutingMap/> */}
+          </>
+        ) : null}
+      </MapContainer>
     </Stack>
   );
 }
@@ -281,3 +259,49 @@ export default function Map() {
 
 // }
 // // const provider = new OpenStreetMapProvider();
+
+// const { isLoaded } = useJsApiLoader({
+//   googleMapsApiKey: "AIzaSyAQypWzXfUTV1dSP-9fZcxr8dYF6o5_7XU",
+//   libraries: ["places"],
+// });
+
+/* <Box className="map--wrap__map">
+{isLoaded ? (
+  <GoogleMap
+    center={position}
+    zoom={zoom}
+    mapContainerStyle={{ width: "100%", height: "100%" }}
+    options={{
+      streetViewControl: true,
+      mapTypeControl: true,
+    }}
+  >
+    <Box className="map--wrap__map__search--field">
+      <Stack
+        className="map--wrap__map__search--field__content"
+        direction={"row"}
+      >
+        <Autocomplete>
+          <input
+            type="text"
+            value={address}
+            onChange={searchAddressChangeHandle}
+            onKeyDown={enterKeyPressHandle}
+          />
+        </Autocomplete>
+        <Box className="map--wrap__map__search--field__content__search--icon">
+          <SearchIcon
+            sx={{ cursor: "pointer", width: "100%", height: "100%" }}
+          />
+        </Box>
+       
+      </Stack>
+    </Box>
+    <Marker position={position} />
+
+    {(strAddress.latitude != "") & (strAddress.longitude != "") ? (
+      <Marker position={[strAddress.latitude, strAddress.longitude]} />
+    ) : null}
+  </GoogleMap>
+) : null}
+</Box> */

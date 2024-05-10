@@ -44,7 +44,7 @@ export default function Header(props) {
   };
   const handleLogout = () => {
     dispatch(signOut());
-    navigate("/")
+    navigate("/home");
     setAnchorEl(false);
   }
 
@@ -52,16 +52,16 @@ export default function Header(props) {
     <CardHeader
       className="header"
       avatar={
-        <Avatar className="header__avatar__background">
+        <Avatar className="header__avatar__background" onClick={() => {navigate("/home")}}>
           <DirectionsBusFilledIcon className="header__avatar__icon" />
         </Avatar>
       }
       title={
         <Stack className="header__wrap" direction={"row"} justifyContent={"space-between"}>
-          <Typography className="header__wrap__title">
+          <Typography className="header__wrap__title" onClick={() => {navigate("/home")}}>
             Bus Tutorial
           </Typography>
-          {auth.isLogin == true ?
+          {auth.isLogin === true ?
                 <>
                     <Button
                         variant='text'

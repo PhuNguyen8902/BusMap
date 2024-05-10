@@ -34,6 +34,7 @@ public class UserService implements UserDetailsService {
     public Optional<User> getUserByUserName(String userName) {
         return userRepository.findByUserName(userName);
     }
+    
      public Optional<User> getUserByEmail(String email) {
         return userRepository.findByEmail(email);
     }
