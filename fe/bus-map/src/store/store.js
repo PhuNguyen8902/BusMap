@@ -3,6 +3,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import storeRoutesReducer from "./features/storeRoute/storeRouteSlice";
 import storeMakersReducer from "./features/storeRoute/storeMakersSlice";
 import storeDomainReducer from "./features/storeRoute/storeIpSlice"
+import storeStationsReducer from "./features/storeStation/storeStationSlice"
 import createSagaMiddleWare from "redux-saga";
 import authSlice from "./features/auth/authSlice";
 import mySaga from "./saga";
@@ -14,6 +15,7 @@ export const store = configureStore({
         storeRoute: storeRoutesReducer,
         storeMarkers: storeMakersReducer,
         storeDomain: storeDomainReducer,
+        storeStations: storeStationsReducer,
         auth: authSlice,
     },
     middleware: [sagaMiddleWare],

@@ -3,9 +3,26 @@ import DirectionsRunIcon from "@mui/icons-material/DirectionsRun";
 import DirectionsBusIcon from "@mui/icons-material/DirectionsBus";
 import FiberManualRecordIcon from "@mui/icons-material/FiberManualRecord";
 import { TabPanel } from "@mui/lab";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { storeStationsOneRoute } from "../../../../store/features/storeStation/storeStationSlice";
 
 export default function RouteOneDetail(props) {
   const selectRoute = props.selectRoute;
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const stations = selectRoute.listStation.map((station) => {
+      return {
+        lat: station.latitude,
+        lon: station.longitude,
+        name: station.name,
+      }
+    });
+    // console.log("stations: ", stations);
+    dispatch(storeStationsOneRoute(stations));
+  },[])
 
   return (
     <>
