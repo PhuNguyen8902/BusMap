@@ -6,12 +6,13 @@ import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
 import SearchRoute from './Tab1/SeachRoute';
 import SearchTwoLocationsForSpecifyingRoute from './Tab2/SearchTwoLocationsForSpecifyingRoute';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import RouteDetail from './Tab1/RouteDetail';
 import { useNavigate, useParams } from 'react-router';
 import RoutesDetail from './Tab2/RoutesDetail';
 import { useState } from 'react';
 import { useEffect } from 'react';
+import { storeDestination, storeStartLocation } from '../../../store/features/storeStation/storeStationSlice';
 
 export default function SideBar() {
 
@@ -23,6 +24,7 @@ export default function SideBar() {
     };
 
     const navigate = useNavigate()
+    const dispatch = useDispatch();
 
     //
     const routeId = useSelector((state) => state.storeRoute.routeId);
@@ -38,6 +40,11 @@ export default function SideBar() {
         }
       }, [location]);
     
+    const backSearchRoute = () => {
+        navigate("/map")
+        dispatch(storeStartLocation({}))
+        dispatch(storeDestination({}))
+    }
     return (
         <Box className="map--wrap__sidebar__container" 
         sx={{ backgroundColor: "white" }}
@@ -47,7 +54,7 @@ export default function SideBar() {
                 <TabContext value={value}>
                     <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                         <TabList onChange={handleChange} aria-label="lab API tabs example"  variant='fullWidth'>
-                            <Tab label="Search Route" value="1" onClick={() => {navigate("/map")}} />
+                            <Tab label="Search Route" value="1" onClick={backSearchRoute} />
                             <Tab label="Navigate" value="2" />
                         </TabList>
                     </Box>

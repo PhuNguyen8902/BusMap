@@ -8,10 +8,14 @@ import { TabContext, TabList, TabPanel } from "@mui/lab";
 import RouteOneDetail from "./RouteOneDetail";
 import RouteTwoDetail from "./RouteTwoDetail";
 import RouteThreeDetail from "./RouteThreeDetail";
+import { useDispatch } from "react-redux";
+import { storeStationsOneRoute, storeStationsTwoRoute, storeStationsThreeRoute } from "../../../../store/features/storeStation/storeStationSlice";
+
 
 export default function RoutesDetail() {
 
     const navigate = useNavigate();
+    const dispatch = useDispatch();
     const { location, withManyTrip, order } = useParams();
 
     const [lat1, lon1, lat2, lon2] = location.split("_");
@@ -54,11 +58,17 @@ export default function RoutesDetail() {
         setValue(newValue);
     };
 
+    const returnFromRouteDetail = () => {
+        navigate(`/map/routes/${location}`)
+        dispatch(storeStationsOneRoute([]));
+        dispatch(storeStationsTwoRoute([]));
+        dispatch(storeStationsThreeRoute([]));
+    }
     return (
         <>
             {selectRoute != "" ?
                 <Box sx={{ width: "100%", height: "100%", margin: "2% 0 0 0" }}>
-                    <Stack direction={"row"} onClick={() => { navigate(`/map/routes/${location}`) }}
+                    <Stack direction={"row"} onClick={returnFromRouteDetail}
                         sx={{
                             width: "100%",
                             height: "5%",

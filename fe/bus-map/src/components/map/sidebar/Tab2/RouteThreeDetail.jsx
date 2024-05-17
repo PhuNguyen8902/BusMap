@@ -3,9 +3,66 @@ import DirectionsRunIcon from "@mui/icons-material/DirectionsRun";
 import DirectionsBusIcon from "@mui/icons-material/DirectionsBus";
 import FiberManualRecordIcon from "@mui/icons-material/FiberManualRecord";
 import { TabPanel } from "@mui/lab";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import {
+  storeStationsOneRoute,
+  storeStationsTwoRoute,
+  storeStationsThreeRoute,
+} from "../../../../store/features/storeStation/storeStationSlice";
 
 export default function RouteThreeDetail(props) {
   const selectRoute = props.selectRoute;
+
+  const dispatch = useDispatch();
+  // console.log(selectRoute);
+  // console.log(selectRoute.listStation);
+
+  useEffect(() => {
+    let stationsOneRoute = [];
+    let stationsTwoRoute = [];
+    let stationsThreeRoute = [];
+    let routeOrder = 1;
+
+    const stations = selectRoute.listStation.forEach((station) => {
+      if (station.name === selectRoute.midRoute.startStation.name)
+        routeOrder = routeOrder + 1;
+      if (station.name === selectRoute.midRoute.endStation.name)
+        routeOrder = routeOrder + 1;
+      switch (routeOrder) {
+        case 1:
+          stationsOneRoute.push({
+            lat: station.latitude,
+            lon: station.longitude,
+            name: station.name,
+          });
+          break;
+        case (2, 3):
+          stationsTwoRoute.push({
+            lat: station.latitude,
+            lon: station.longitude,
+            name: station.name,
+          });
+          break;
+        case (4, 5):
+          stationsThreeRoute.push({
+            lat: station.latitude,
+            lon: station.longitude,
+            name: station.name,
+          });
+          break;
+        default:
+          break;
+      }
+    });
+    // console.log("stationsOneRoute: ", stationsOneRoute);
+    // console.log("stationsTwoRoute: ", stationsTwoRoute);
+    // console.log("stationsThreeRoute: ", stationsThreeRoute);
+
+    dispatch(storeStationsOneRoute(stationsOneRoute));
+    dispatch(storeStationsTwoRoute(stationsTwoRoute));
+    dispatch(storeStationsThreeRoute(stationsThreeRoute));
+  }, []);
 
   return (
     <>

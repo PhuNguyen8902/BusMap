@@ -9,9 +9,12 @@ import RouteWithOnetrip from "./RouteWithOneTrip";
 import RouteWithTwotrip from "./RouteWithTwoTrip";
 import RouteWithThreetrip from "./RouteWithThreeTrip";
 import { useNavigate, useParams } from "react-router";
+import { useDispatch } from "react-redux";
+import { storeDestination, storeStartLocation } from "../../../../store/features/storeStation/storeStationSlice";
 
 export default function SearchTwoLocationsForSpecifyingRoute() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [startLocation, setStartLocation] = useState("");
   const [destinationLocation, setDestinationLocation] = useState("");
   const [isEnter, setIsEnter] = useState(false);
@@ -36,9 +39,10 @@ export default function SearchTwoLocationsForSpecifyingRoute() {
   };
 
   const enterHandle = (event) => {
-    if (event.key == "Enter") {
-      if (startLocation != "" && destinationLocation != "") {
-        console.log("enter");
+    if (event.key === "Enter") {
+      if (startLocation !== "" && destinationLocation !== "") {
+        // console.log("enter");
+
         setIsEnter(true);
       }
     }
@@ -66,6 +70,16 @@ export default function SearchTwoLocationsForSpecifyingRoute() {
           const longitude1 = addressInfo1[0].lon;
           const latitude2 = addressInfo2[0].lat;
           const longitude2 = addressInfo2[0].lon;
+
+          dispatch(storeStartLocation({
+            lat: latitude1,
+            lon: longitude1,
+          }));
+          dispatch(storeDestination({
+            lat: latitude2,
+            lon: longitude2,
+          }));
+
 
           setLat1(latitude1);
           // setLon1(longitude1)

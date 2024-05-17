@@ -3,9 +3,49 @@ import DirectionsRunIcon from "@mui/icons-material/DirectionsRun";
 import DirectionsBusIcon from "@mui/icons-material/DirectionsBus";
 import FiberManualRecordIcon from "@mui/icons-material/FiberManualRecord";
 import { TabPanel } from "@mui/lab";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { storeStationsOneRoute, storeStationsTwoRoute } from "../../../../store/features/storeStation/storeStationSlice";
 
 export default function RouteTwoDetail(props) {
   const selectRoute = props.selectRoute;
+  console.log(selectRoute);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    let stationsOneRoute = [];
+    let stationsTwoRoute = [];
+    let routeOrder = 1;
+
+    const stations = selectRoute.listStation.forEach((station) => {
+      if (station.name === selectRoute.midStation.name)
+        routeOrder = routeOrder + 1;
+      switch (routeOrder) {
+        case 1:
+          stationsOneRoute.push({
+            lat: station.latitude,
+            lon: station.longitude,
+            name: station.name,
+          });
+          break;
+        case (2, 3):
+          stationsTwoRoute.push({
+            lat: station.latitude,
+            lon: station.longitude,
+            name: station.name,
+          });
+          break;
+        default:
+          break;
+      }
+    });
+    // console.log("stationsOneRoute: ", stationsOneRoute);
+    // console.log("stationsTwoRoute: ", stationsTwoRoute);
+
+    dispatch(storeStationsOneRoute(stationsOneRoute));
+    dispatch(storeStationsTwoRoute(stationsTwoRoute));
+  }, []);
 
   return (
     <>

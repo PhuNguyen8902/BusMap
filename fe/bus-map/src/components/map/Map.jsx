@@ -14,6 +14,8 @@ import { GeoSearchControl, MapBoxProvider } from "leaflet-geosearch";
 import SearchField from "./SearchField";
 import { useMap } from "react-leaflet";
 import L from "leaflet";
+import { createControlComponent } from "@react-leaflet/core";
+import "leaflet-routing-machine";
 import SideBar from "./sidebar/SideBar";
 import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
@@ -41,6 +43,9 @@ import RoutingMap from "./RoutingMap";
 // } from "@react-google-maps/api";
 import BusChatBot from "../chatBot/BusChatBot";
 import { setIP } from "../../common/common";
+import RoutingDestinationOneRoute from "./RoutingDestinationOneRoute";
+import RoutingDestinationTwoRoute from "./RoutingDestinationTwoRoutes";
+import RoutingDestinationThreeRoute from "./RoutingDestinationThreeRoutes";
 
 export default function Map() {
   // valuable section
@@ -63,6 +68,26 @@ export default function Map() {
   const customIcon = new Icon({
     iconUrl: require("../../assets/img/mark.png"),
     iconSize: [38, 38], // size of the icon
+  });
+
+  const homeIcon = new Icon({
+    iconUrl: require("../../assets/img/homeMarker.png"),
+    iconSize: [38, 38], // size of the icon
+  });
+
+  const destinationIcon = new Icon({
+    iconUrl: require("../../assets/img/destinationMarker.png"),
+    iconSize: [38, 38], // size of the icon
+  });
+
+  const stationsTwoRoutesIcon = new Icon({
+    iconUrl: require("../../assets/img/stationsTwoRoutesMarker.png"),
+    iconSize: [30, 30], // size of the icon
+  });
+
+  const stationsThreeRouteIcon = new Icon({
+    iconUrl: require("../../assets/img/stationsThreeRoutesMarker.png"),
+    iconSize: [30, 30], // size of the icon
   });
 
   const dispatch = useDispatch();
@@ -93,8 +118,22 @@ export default function Map() {
   }, [routeId]);
   // console.log("Station detail: ", stations)
 
-  // function section
-  //
+  // stations with routes
+  const startLocation = useSelector(
+    (state) => state.storeStations.startLocation
+  );
+  const destination = useSelector((state) => state.storeStations.destination);
+  const stationsOneRoute = useSelector(
+    (state) => state.storeStations.stationsOneRoute
+  );
+  const stationsTwoRoute = useSelector(
+    (state) => state.storeStations.stationsTwoRoute
+  );
+  const stationsThreeRoute = useSelector(
+    (state) => state.storeStations.stationsThreeRoute
+  );
+
+  // console.log("station with one route: ", stationsOneRoute);
 
   const fetchSearchAddressInfo = async (address) => {
     // const ar = "62 Gò Vấp, Việt Nam";
@@ -163,7 +202,6 @@ export default function Map() {
             </Box>
           </Stack>
         </Box>
-
         {searchAddress?.lat !== "" ? (
           <Marker
             position={[searchAddress?.lat, searchAddress?.lon]}
@@ -174,9 +212,7 @@ export default function Map() {
             </Popup>
           </Marker>
         ) : null}
-
         {/* <UpdateMapView coords={position} /> */}
-
         {/* <SearchField
           provider={provider}
           showMarker={true}
@@ -189,6 +225,32 @@ export default function Map() {
           searchLabel={"Enter Location"}
           keepResult={true}
         /> */}
+
+        {startLocation.lat !== undefined ? (
+          <>
+            <Marker
+              position={[startLocation.lat, startLocation.lon]}
+              icon={homeIcon}
+            >
+              <Popup>
+                <strong>Your Location</strong>
+              </Popup>
+            </Marker>
+          </>
+        ) : null}
+
+        {destination.lat !== undefined ? (
+          <>
+            <Marker
+              position={[destination.lat, destination.lon]}
+              icon={destinationIcon}
+            >
+              <Popup>
+                <strong>Destination</strong>
+              </Popup>
+            </Marker>
+          </>
+        ) : null}
 
         {stations?.length > 1 ? (
           <>
@@ -208,6 +270,87 @@ export default function Map() {
               );
             })}
             {/* <RoutingMap/> */}
+          </>
+        ) : null}
+
+        {stationsOneRoute?.length ? (
+          <>
+            {stationsOneRoute?.map((station, index) => {
+              return (
+                <>
+                  <Marker
+                    key={index} // Use a unique key for each Marker (you can use station ID if available)
+                    position={[station.lat, station.lon]}
+                    icon={customIcon}
+                  >
+                    <Popup>
+                      <strong>{station.name}</strong>
+                    </Popup>
+                  </Marker>
+                </>
+              );
+            })}
+          </>
+        ) : null}
+
+        {stationsTwoRoute?.length ? (
+          <>
+            {stationsTwoRoute?.map((station, index) => {
+              return (
+                <>
+                  <Marker
+                    key={index} // Use a unique key for each Marker (you can use station ID if available)
+                    position={[station.lat, station.lon]}
+                    icon={stationsTwoRoutesIcon}
+                  >
+                    <Popup>
+                      <strong>{station.name}</strong>
+                    </Popup>
+                  </Marker>
+                </>
+              );
+            })}
+          </>
+        ) : null}
+
+        {stationsThreeRoute?.length ? (
+          <>
+            {stationsThreeRoute?.map((station, index) => {
+              return (
+                <>
+                  <Marker
+                    key={index} // Use a unique key for each Marker (you can use station ID if available)
+                    position={[station.lat, station.lon]}
+                    icon={stationsThreeRouteIcon}
+                  >
+                    <Popup>
+                      <strong>{station.name}</strong>
+                    </Popup>
+                  </Marker>
+                </>
+              );
+            })}
+          </>
+        ) : null}
+
+        {stationsThreeRoute?.length ? (
+          <RoutingDestinationThreeRoute />
+        ) : (
+          <>
+            {stationsTwoRoute?.length ? (
+              <RoutingDestinationTwoRoute />
+            ) : (
+              <>
+                {stationsOneRoute?.length ? (
+                  <RoutingDestinationOneRoute />
+                ) : null}
+              </>
+            )}
+          </>
+        )}
+        {stationsOneRoute?.length ? (
+          <>
+            <RoutingMap />
           </>
         ) : null}
       </MapContainer>
