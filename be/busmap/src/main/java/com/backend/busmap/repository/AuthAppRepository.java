@@ -14,5 +14,5 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface AuthAppRepository  extends JpaRepository<User, String> {
-    User findUserByUserName(String userName);
+    User findUserByUserNameAndIsActive(String userName,int active);
 }
