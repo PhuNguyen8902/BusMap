@@ -23,7 +23,7 @@ export default function RouteWithTwotrip(props) {
         lon2
       );
       setIsLoading(false);
-      
+
       setRouteWithTwoTrip(routeWithTwotripData);
       // console.log("route with two trips: ", routeWithTwotripData);
     };
@@ -36,7 +36,7 @@ export default function RouteWithTwotrip(props) {
       {isLoading === false ? (
         <>
           {" "}
-          {routeWithTwoTripData !== "" ? (
+          {routeWithTwoTripData.length > 0 ? (
             <>
               {routeWithTwoTripData.map((route, index) => {
                 return (

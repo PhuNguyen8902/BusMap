@@ -35,7 +35,7 @@ export default function RouteWithThreetrip() {
     <>
       {isLoading === false ? (
         <>
-          {routeWithThreeTripData !== "" ? (
+          {routeWithThreeTripData.length > 0 ? (
             <>
               {routeWithThreeTripData.map((route, index) => {
                 return (
