@@ -13,190 +13,6 @@ import feedbackService from "../../../../service/feedbackService";
 import { useSelector } from "react-redux";
 
 export default function RatingRoute() {
-  const data = [
-    {
-      name: "Hoang Phan",
-      rating: 4,
-      date: "14-10-2023",
-      comment:
-        "The route is fine, I love it so much, pls keep improving. I can't wait until that",
-    },
-    {
-      name: "Luc An",
-      rating: 5,
-      date: "15-10-2023",
-      comment: "This is a great route for me",
-    },
-    {
-      name: "Ma Dam",
-      rating: 4,
-      date: "15-10-2023",
-      comment: "",
-    },
-    {
-      name: "Ma Dam",
-      rating: 4,
-      date: "10:54pm 15-10-2023",
-      comment: "",
-    },
-    {
-      name: "Ma Dam",
-      rating: 2,
-      date: "10:54pm 15-10-2023",
-      comment: "",
-    },
-    {
-      name: "Ma Dam",
-      rating: 3,
-      date: "10:54pm 15-10-2023",
-      comment: "",
-    },
-    {
-      name: "Ma Dam",
-      rating: 4,
-      date: "10:54pm 15-10-2023",
-      comment: "",
-    },
-    {
-      name: "Ma Dam",
-      rating: 4,
-      date: "10:54pm 15-10-2023",
-      comment: "",
-    },
-    {
-      name: "Ma Dam",
-      rating: 4,
-      date: "10:54pm 15-10-2023",
-      comment: "",
-    },
-    {
-      name: "Ma Dam",
-      rating: 2,
-      date: "10:54pm 15-10-2023",
-      comment: "",
-    },
-    {
-      name: "Ma Dam",
-      rating: 1,
-      date: "10:54pm 15-10-2023",
-      comment: "",
-    },
-    {
-      name: "Ma Dam",
-      rating: 5,
-      date: "10:54pm 15-10-2023",
-      comment: "",
-    },
-    {
-      name: "Ma Dam",
-      rating: 5,
-      date: "10:54pm 15-10-2023",
-      comment: "",
-    },
-    {
-      name: "Ma Dam",
-      rating: 5,
-      date: "10:54pm 15-10-2023",
-      comment: "",
-    },
-    {
-      name: "Ma Dam",
-      rating: 5,
-      date: "10:54pm 15-10-2023",
-      comment: "",
-    },
-    {
-      name: "Ma Dam",
-      rating: 5,
-      date: "10:54pm 15-10-2023",
-      comment: "",
-    },
-    {
-      name: "Ma Dam",
-      rating: 5,
-      date: "10:54pm 15-10-2023",
-      comment: "",
-    },
-    {
-      name: "Ma Dam",
-      rating: 5,
-      date: "10:54pm 15-10-2023",
-      comment: "",
-    },
-    {
-      name: "Ma Dam",
-      rating: 4,
-      date: "10:54pm 15-10-2023",
-      comment: "",
-    },
-    {
-      name: "Ma Dam",
-      rating: 5,
-      date: "10:54pm 15-10-2023",
-      comment: "",
-    },
-    {
-      name: "Ma Dam",
-      rating: 5,
-      date: "10:54pm 15-10-2023",
-      comment: "",
-    },
-    {
-      name: "Ma Dam",
-      rating: 5,
-      date: "10:54pm 15-10-2023",
-      comment: "",
-    },
-    {
-      name: "Ma Dam",
-      rating: 5,
-      date: "10:54pm 15-10-2023",
-      comment: "",
-    },
-    {
-      name: "Ma Dam",
-      rating: 5,
-      date: "10:54pm 15-10-2023",
-      comment: "",
-    },
-    {
-      name: "Ma Dam",
-      rating: 5,
-      date: "10:54pm 15-10-2023",
-      comment: "",
-    },
-    {
-      name: "Ma Dam",
-      rating: 5,
-      date: "10:54pm 15-10-2023",
-      comment: "",
-    },
-    {
-      name: "Ma Dam",
-      rating: 5,
-      date: "10:54pm 15-10-2023",
-      comment: "",
-    },
-    {
-      name: "Ma Dam",
-      rating: 5,
-      date: "10:54pm 15-10-2023",
-      comment: "",
-    },
-    {
-      name: "Ma Dam",
-      rating: 5,
-      date: "10:54pm 15-10-2023",
-      comment: "",
-    },
-    {
-      name: "Ma Dam",
-      rating: 5,
-      date: "10:54pm 15-10-2023",
-      comment: "",
-    },
-  ];
-
   const [isChange, setIsChange] = useState(false);
 
   const [rate, setRate] = useState({
@@ -217,14 +33,14 @@ export default function RatingRoute() {
 
   const [feedbackData, setFeedbackData] = useState("");
 
-  const auth = useSelector((state) => state.auth)
-  
+  const auth = useSelector((state) => state.auth);
 
   // get all feedbacks from route's id
   useEffect(() => {
     const fetchOverallReview = async () => {
-
-      const feedbackData = await feedbackService.getAllFeedbackByRouteId(routeId);
+      const feedbackData = await feedbackService.getAllFeedbackByRouteId(
+        routeId
+      );
       console.log("feedbackData in ratingRoute: ", feedbackData);
 
       let totalRating = null;
@@ -296,10 +112,9 @@ export default function RatingRoute() {
   const [open, setOpen] = useState(false);
 
   const handleClickOpen = () => {
-
-    if(auth.isLogin == false){
+    if (auth.isLogin == false) {
       console.log("You must login first");
-      alert("You must login first")
+      alert("You must login first");
       return;
     }
     // console.log(open)
@@ -310,9 +125,9 @@ export default function RatingRoute() {
     setOpen(false);
   };
 
-  const handleChange = () =>{
-    setIsChange(pre => !pre)
-  }
+  const handleChange = () => {
+    setIsChange((pre) => !pre);
+  };
 
   return (
     <Stack className="third--tab__rating">
@@ -343,7 +158,11 @@ export default function RatingRoute() {
           />
           <Typography>Write your rating</Typography>
         </Button>
-        <WriteRating open={open} onClose={handleClose} onChange={handleChange} />
+        <WriteRating
+          open={open}
+          onClose={handleClose}
+          onChange={handleChange}
+        />
       </Stack>
       <Stack className="total--rating">
         <Box sx={{ height: "20%" }}>
@@ -466,14 +285,17 @@ export default function RatingRoute() {
             Review Comments:
           </Typography>
           <Stack className="review--comment__content__all--Comment">
-            {feedbackData != "" ?
+            {feedbackData != "" ? (
               <>
                 {feedbackData.map((item) => {
-                   const formattedDate = new Date(item.date).toLocaleDateString('en-US', {
-                    year: 'numeric',
-                    month: 'long', // You can change 'long' to 'short' or 'numeric' as needed
-                    day: 'numeric',
-                  });
+                  const formattedDate = new Date(item.date).toLocaleDateString(
+                    "en-US",
+                    {
+                      year: "numeric",
+                      month: "long", // You can change 'long' to 'short' or 'numeric' as needed
+                      day: "numeric",
+                    }
+                  );
                   return (
                     <>
                       <Stack
@@ -507,8 +329,7 @@ export default function RatingRoute() {
                   );
                 })}
               </>
-              : null}
-
+            ) : null}
           </Stack>
         </Stack>
       </Stack>

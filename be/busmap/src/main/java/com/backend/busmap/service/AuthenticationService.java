@@ -99,7 +99,10 @@ public class AuthenticationService {
     }
 
     public User signInAPP(Login request) {
-        User user = authAppRepo.findUserByUserName(request.getUserName());
+        User user = authAppRepo.findUserByUserNameAndIsActive(request.getUserName(),1);
+        if (user == null){
+                return null;
+        }
         boolean matches = passwordEncoder.matches(request.getPassword(), user.getPassword());
 
         if (matches) {
