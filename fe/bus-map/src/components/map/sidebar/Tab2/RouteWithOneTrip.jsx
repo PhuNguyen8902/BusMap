@@ -17,6 +17,10 @@ export default function RouteWithOnetrip() {
   useEffect(() => {
     const fetchRouteWithOneTrip = async () => {
       setIsLoading(true);
+      console.log(lat1);
+      console.log(lon1);
+      console.log(lat2);
+      console.log(lon2);
       const routeWithOnetripData = await stationService.getRouteWithOneTripData(
         lat1,
         lon1,
@@ -37,7 +41,7 @@ export default function RouteWithOnetrip() {
       {isLoading === false ? (
         <>
           {" "}
-          {routeWithOneTripData !== "" ? (
+          {routeWithOneTripData.length > 0 ? (
             <>
               {routeWithOneTripData.map((route, index) => {
                 return (

@@ -10,7 +10,10 @@ import RouteWithTwotrip from "./RouteWithTwoTrip";
 import RouteWithThreetrip from "./RouteWithThreeTrip";
 import { useNavigate, useParams } from "react-router";
 import { useDispatch } from "react-redux";
-import { storeDestination, storeStartLocation } from "../../../../store/features/storeStation/storeStationSlice";
+import {
+  storeDestination,
+  storeStartLocation,
+} from "../../../../store/features/storeStation/storeStationSlice";
 
 export default function SearchTwoLocationsForSpecifyingRoute() {
   const navigate = useNavigate();
@@ -71,15 +74,18 @@ export default function SearchTwoLocationsForSpecifyingRoute() {
           const latitude2 = addressInfo2[0].lat;
           const longitude2 = addressInfo2[0].lon;
 
-          dispatch(storeStartLocation({
-            lat: latitude1,
-            lon: longitude1,
-          }));
-          dispatch(storeDestination({
-            lat: latitude2,
-            lon: longitude2,
-          }));
-
+          dispatch(
+            storeStartLocation({
+              lat: latitude1,
+              lon: longitude1,
+            })
+          );
+          dispatch(
+            storeDestination({
+              lat: latitude2,
+              lon: longitude2,
+            })
+          );
 
           setLat1(latitude1);
           // setLon1(longitude1)
