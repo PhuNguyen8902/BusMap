@@ -25,7 +25,7 @@ export default function RouteWithThreetrip() {
       setIsLoading(false);
 
       setRouteWithThreeTripData(routeWithThreetripData);
-      // console.log("route with three trips: ", routeWithThreetripData);
+      console.log("route with three trips: ", routeWithThreetripData);
     };
     // get route with one trip
     fetchRouteWithThreeTrip();

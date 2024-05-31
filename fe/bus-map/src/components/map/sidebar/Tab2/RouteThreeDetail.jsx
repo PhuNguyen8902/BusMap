@@ -24,11 +24,15 @@ export default function RouteThreeDetail(props) {
     let stationsThreeRoute = [];
     let routeOrder = 1;
 
+    console.log(selectRoute);
     const stations = selectRoute.listStation.forEach((station) => {
-      if (station.name === selectRoute.midRoute.startStation.name)
+      if (station.latitude === selectRoute.midRoute.startStation.latitude && station.longitude === selectRoute.midRoute.startStation.longitude){
+        
         routeOrder = routeOrder + 1;
-      if (station.name === selectRoute.midRoute.endStation.name)
+      }
+      if (station.latitude === selectRoute.midRoute.endStation.latitude && station.longitude === selectRoute.midRoute.endStation.longitude){
         routeOrder = routeOrder + 1;
+      }
       switch (routeOrder) {
         case 1:
           stationsOneRoute.push({
