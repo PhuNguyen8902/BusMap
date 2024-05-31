@@ -44,8 +44,8 @@ export default function SearchTwoLocationsForSpecifyingRoute() {
   const enterHandle = (event) => {
     if (event.key === "Enter") {
       if (startLocation !== "" && destinationLocation !== "") {
-        // console.log("enter");
-
+        console.log("enter");
+        // console.log(destinationLocation);
         setIsEnter(true);
       }
     }
@@ -74,6 +74,7 @@ export default function SearchTwoLocationsForSpecifyingRoute() {
           const latitude2 = addressInfo2[0].lat;
           const longitude2 = addressInfo2[0].lon;
 
+
           dispatch(
             storeStartLocation({
               lat: latitude1,
@@ -96,20 +97,7 @@ export default function SearchTwoLocationsForSpecifyingRoute() {
             `/map/routes/${latitude1}_${longitude1}_${latitude2}_${longitude2}`
           );
 
-          // // get route with one trip
-          // const routeWithOnetripData = await stationService.getRouteWithOneTripData(latitude1, longitude1, latitude2, longitude2)
-          // // console.log("route with one trip: ", routeWithOnetripData);
-          // setRouteWithOneTrip(routeWithOnetripData);
-
-          // // get route with t2o trip
-          // const routeWithTwotripData = await stationService.getRouteWithTwoTripData(latitude1, longitude1, latitude2, longitude2)
-          // // console.log("route with two trips: ", routeWithTwotripData);
-          // setRouteWithTwoTrip(routeWithTwotripData);
-
-          // // get route with three trip
-          // const routeWithThreetripData = await stationService.getRouteWithThreeTripData(latitude1, longitude1, latitude2, longitude2)
-          // // console.log("route with three trips: ", routeWithThreetripData);
-          // setRouteWithThreeTrip(routeWithThreetripData);
+        
         } catch (error) {
           //check err
           console.error("Error fetching data:", error);

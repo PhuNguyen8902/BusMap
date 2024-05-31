@@ -19,7 +19,7 @@ export default function RouteTwoDetail(props) {
     let routeOrder = 1;
 
     const stations = selectRoute.listStation.forEach((station) => {
-      if (station.name === selectRoute.midStation.name)
+      if (station.latitude === selectRoute.midStation.latitude && station.longitude === selectRoute.midStation.longitude)
         routeOrder = routeOrder + 1;
       switch (routeOrder) {
         case 1:
